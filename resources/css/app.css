@@ -4,9 +4,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* For Webkit-based browsers like Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+    width: 8px;
+    /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    /* Transparent background for the track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    /* Slightly transparent thumb (optional) */
+    border-radius: 4px;
+    /* Optional: rounded thumb */
+}
+
+/* Optional: When the scrollbar is hovered */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+    /* Darker thumb on hover */
+}
+
+
 @layer base {
     :root {
-        --background: 0 0% 100%;
+        --background: 210, 20%, 90%;
         --foreground: 240 10% 3.9%;
         --card: 0 0% 100%;
         --card-foreground: 240 10% 3.9%;
