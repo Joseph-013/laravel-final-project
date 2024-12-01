@@ -6,12 +6,6 @@ interface BaseLayoutProps {
     headerContent?: React.ReactNode;
 }
 
-export const layoutMaxWidth = '1200px';
-const height = '16';
-const headerHeight = `h-${height}`;
-const headerTopPadding = `pt-${height}`;
-const headerBottomPadding = `pb-${height}`;
-
 /**
  * The app's base layout wrapping the main content with layout components.
  * @param children - Displays the page's main content.
@@ -24,9 +18,7 @@ export default function BaseLayout({
     return (
         <div className="flex flex-col items-center">
             <Header>{headerContent}</Header>
-            <div
-                className={`w-full max-w-[${layoutMaxWidth}] min-h-screen p-3 ${headerTopPadding} ${headerBottomPadding}`}
-            >
+            <div className={`min-h-screen w-full max-w-[1200px] p-3 py-16`}>
                 <main className="pt-3">{children}</main>
             </div>
             <Footer />
@@ -41,15 +33,15 @@ export default function BaseLayout({
 function Header({ children }: PropsWithChildren) {
     return (
         <header
-            className={`fixed inset-x-0 top-0 flex w-full justify-center bg-[#C8D6E8] ${headerHeight}`}
+            className={`fixed inset-x-0 top-0 flex h-16 w-full justify-center bg-[#C8D6E8]`}
         >
             <div
-                className={`max-w-[${layoutMaxWidth}] flex w-full items-center justify-between px-3`}
+                className={`flex w-full max-w-[1200px] items-center justify-between px-3`}
             >
                 <Link href="/">
                     <img src="/ohsheet-3.png" alt="" className="h-5" />
                 </Link>
-                {children ? children : 'default header content'}
+                {children ? children : <>default header content</>}
             </div>
         </header>
     );
@@ -61,13 +53,19 @@ function Header({ children }: PropsWithChildren) {
 function Footer({ children }: PropsWithChildren) {
     return (
         <footer className="flex min-h-56 w-full flex-col items-center border-t-2 border-slate-400">
-            <div className="bg-background -mt-16 px-2">
-                <img src="/ohsheet-2.png" alt="" className="size-32" />
+            <div className="-mt-16 bg-background px-2">
+                <img src="/ohsheet-2.png" className="size-32" />
             </div>
-            <div className={`max-w-[${layoutMaxWidth}] w-full p-3`}>
-                footer <br />
-                footer <br />
-                footer <br />
+            <div className={`w-full max-w-[1200px] p-3`}>
+                {children ? (
+                    children
+                ) : (
+                    <>
+                        footer <br />
+                        footer <br />
+                        footer <br />
+                    </>
+                )}
             </div>
         </footer>
     );
