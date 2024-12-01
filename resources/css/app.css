@@ -70,3 +70,21 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* UI debuggin classes */
+
+.b {
+    border: red 1px solid;
+}
+
+.bc * {
+    border: red 1px solid;
+}
+
+.o {
+    outline: red 1px solid;
+}
+
+.oc * {
+    outline: red 1px solid;
+}
