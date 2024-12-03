@@ -1,7 +1,10 @@
+import HeaderSearch from '@/Components/HeaderSearch';
+import { Head } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 import BaseLayout from './BaseLayout';
+import { HeaderNavLink } from './LayoutComponents';
 
-export default function Guest({ children }: PropsWithChildren) {
+export default function GuestLayout({ children }: PropsWithChildren) {
     return (
         // <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
         //     <div>
@@ -14,6 +17,42 @@ export default function Guest({ children }: PropsWithChildren) {
         //         {children}
         //     </div>
         // </div>
-        <BaseLayout>{children}</BaseLayout>
+        <BaseLayout headerContent={<HeaderContent />}>{children}</BaseLayout>
+    );
+}
+
+function HeaderContent() {
+    return (
+        <div className="flex items-center gap-x-5">
+            <Head title="Welcome" />
+            <div>
+                <HeaderSearch
+                    className="w-96"
+                    inputProps={{
+                        type: 'text',
+                        placeholder: 'Search',
+                    }}
+                />
+            </div>
+            <nav>
+                <ul className="flex gap-x-1">
+                    <li>
+                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                            Home
+                        </HeaderNavLink>
+                    </li>
+                    <li>
+                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                            Products
+                        </HeaderNavLink>
+                    </li>
+                    <li>
+                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                            Orders
+                        </HeaderNavLink>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     );
 }
