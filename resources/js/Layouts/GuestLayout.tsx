@@ -7,7 +7,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
-import { Head } from '@inertiajs/react';
 import {
     IconHome,
     IconListDetails,
@@ -36,7 +35,6 @@ export default function GuestLayout({ children, className }: GuestLayoutProps) {
 export function HeaderContent() {
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
-            <Head title="Welcome" />
             <HeaderSearch
                 className="ml-10 w-full max-w-80"
                 inputProps={{
@@ -48,7 +46,7 @@ export function HeaderContent() {
                 }}
             />
             <nav>
-                <DropdownMenu open={true}>
+                <DropdownMenu>
                     <DropdownMenuTrigger className="block rounded-lg p-2 hover:bg-white/50 sm:hidden">
                         <IconMenu2 />
                     </DropdownMenuTrigger>
