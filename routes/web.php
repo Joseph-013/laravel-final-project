@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Guest
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         // 'canLogin' => Route::has('login'),
@@ -15,25 +16,19 @@ Route::get('/', function () {
     ]);
 })->middleware('guest')->name('index');
 
-// Route group for neither guest nor authenticated
+// Any
 Route::middleware([])->group(function () {
     Route::get('/products', function () {
         return Inertia::render('products');
     });
 });
 
+// Auth
 Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
         return Inertia::render('Welcome', []);
     })->name('home');
-});
 
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
