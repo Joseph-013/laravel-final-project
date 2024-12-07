@@ -6,6 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+!/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php
 .env
 .env.backup
 .env.production
