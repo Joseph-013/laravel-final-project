@@ -58,7 +58,7 @@ export function HeaderContent() {
                         <HeaderNavLink
                             icon={<IconHome />}
                             href="#"
-                            targetRouteNames={['index']}
+                            targetRouteNames={['welcome']}
                         >
                             Home
                         </HeaderNavLink>
@@ -67,7 +67,7 @@ export function HeaderContent() {
                         <HeaderNavLink
                             icon={<IconListDetails />}
                             href="#"
-                            targetRouteNames={['index']}
+                            targetRouteNames={['welcome']}
                         >
                             Products
                         </HeaderNavLink>
@@ -76,7 +76,7 @@ export function HeaderContent() {
                         <HeaderNavLink
                             icon={<IconPackage />}
                             href="#"
-                            targetRouteNames={['index']}
+                            targetRouteNames={['welcome']}
                         >
                             Orders
                         </HeaderNavLink>
@@ -85,12 +85,12 @@ export function HeaderContent() {
                         <Line variant={'v'} />
                     </li>
                     <li className="contents">
-                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                        <HeaderNavLink href="#" targetRouteNames={['welcome']}>
                             <IconShoppingCart />
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                        <HeaderNavLink href="#" targetRouteNames={['welcome']}>
                             <IconUserCircle />
                         </HeaderNavLink>
                     </li>
