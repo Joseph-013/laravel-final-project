@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::middleware([])->group(function () {
     Route::get('/products', function () {
         return Inertia::render('Products');
-    });
+    })->name('products');
 });
 
 // Auth

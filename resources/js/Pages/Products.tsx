@@ -1,3 +1,9 @@
+import GuestLayout from '@/Layouts/GuestLayout';
+
 export default function Products() {
-    return <div>hello</div>;
+    return (
+        <GuestLayout>
+            <div className="text-black">Hello World</div>
+        </GuestLayout>
+    );
 }

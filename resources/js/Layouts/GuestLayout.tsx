@@ -57,8 +57,8 @@ export function HeaderContent() {
                     <li className="contents">
                         <HeaderNavLink
                             icon={<IconHome />}
-                            href="#"
-                            targetRouteNames={['welcome']}
+                            href={route('index')}
+                            targetRouteNames={['index']}
                         >
                             Home
                         </HeaderNavLink>
@@ -66,8 +66,8 @@ export function HeaderContent() {
                     <li className="contents">
                         <HeaderNavLink
                             icon={<IconListDetails />}
-                            href="#"
-                            targetRouteNames={['welcome']}
+                            href={route('products')}
+                            targetRouteNames={['products']}
                         >
                             Products
                         </HeaderNavLink>
