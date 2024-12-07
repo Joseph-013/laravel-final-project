@@ -3,8 +3,12 @@ import Line from '@/Components/Line';
 import { Button } from '@/Components/ui/button';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-export default function Welcome() {
-    const carouselImages = [
+type WelcomeProps = {
+    carouselImages: string[];
+};
+
+export default function Welcome({ carouselImages }: WelcomeProps) {
+    carouselImages = [
         '/storage/carousel/alskdj.png',
         '/storage/carousel/ashjkldkjh.jpg',
         '/storage/carousel/alkjsduhkajhf.jpg',
@@ -14,7 +18,12 @@ export default function Welcome() {
             <ImageSlider
                 containerProps={{ className: 'o' }}
                 imgSrc={carouselImages}
+                autoScroll
+                startsFrom={1}
             />
+            {/* {carouselImages.map((src) => (
+                <img key={src} src={src} alt="" />
+            ))} */}
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae
             recusandae officia cumque eaque, rem quasi culpa natus odio dicta,
             ipsum qui? Provident totam sed enim blanditiis explicabo sit ipsam

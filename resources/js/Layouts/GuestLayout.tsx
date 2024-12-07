@@ -38,6 +38,7 @@ function HeaderContent() {
                         type: 'text',
                         placeholder: 'Search',
                     }}
+                    buttonProps={{}}
                 />
             </div>
             <nav>

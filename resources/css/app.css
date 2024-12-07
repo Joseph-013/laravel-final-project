@@ -116,3 +116,9 @@
 .oc * {
     outline: red 1px solid;
 }
+
+/* Carousel Styles */
+
+.img-slider-img {
+    transition: translate 300ms ease-in-out;
+}
