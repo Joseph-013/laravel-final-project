@@ -5,17 +5,18 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route group for non-guest and non-auth
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        // 'canLogin' => Route::has('login'),
+        // 'canRegister' => Route::has('register'),
+        // 'laravelVersion' => Application::VERSION,
+        // 'phpVersion' => PHP_VERSION,
+        'guest' => true,
+    ]);
+})->middleware('guest')->name('index');
+
+// Route group for neither guest nor authenticated
 Route::middleware([])->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Welcome', [
-            // 'canLogin' => Route::has('login'),
-            // 'canRegister' => Route::has('register'),
-            // 'laravelVersion' => Application::VERSION,
-            // 'phpVersion' => PHP_VERSION,
-            'guest' => true,
-        ]);
-    })->name('index');
     Route::get('/products', function () {
         return Inertia::render('products');
     });
