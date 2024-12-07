@@ -1,18 +1,22 @@
 import HeaderSearch from '@/Components/HeaderSearch';
 import Line from '@/Components/Line';
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/Components/ui/popover';
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/Components/ui/dropdown-menu';
 import { Head } from '@inertiajs/react';
 import {
     IconHome,
     IconListDetails,
+    IconMenu2,
     IconPackage,
     IconShoppingCart,
     IconUserCircle,
 } from '@tabler/icons-react';
+
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
@@ -44,14 +48,65 @@ export function HeaderContent() {
                 }}
             />
             <nav>
-                <Popover>
-                    <PopoverTrigger className="block sm:hidden">
-                        Open
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        Place content for the popover here.
-                    </PopoverContent>
-                </Popover>
+                <DropdownMenu open={true}>
+                    <DropdownMenuTrigger className="block rounded-lg p-2 hover:bg-white/50 sm:hidden">
+                        <IconMenu2 />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-40">
+                        <DropdownMenuItem>
+                            {' '}
+                            <HeaderNavLink
+                                icon={<IconHome />}
+                                href={route('index')}
+                                targetRouteNames={['index']}
+                                dropdown
+                            >
+                                Home
+                            </HeaderNavLink>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <HeaderNavLink
+                                icon={<IconListDetails />}
+                                href={route('products')}
+                                targetRouteNames={['products']}
+                                dropdown
+                            >
+                                Products
+                            </HeaderNavLink>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <HeaderNavLink
+                                icon={<IconPackage />}
+                                href="#"
+                                targetRouteNames={['welcome']}
+                                dropdown
+                            >
+                                Orders
+                            </HeaderNavLink>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <HeaderNavLink
+                                icon={<IconShoppingCart />}
+                                href="#"
+                                targetRouteNames={['welcome']}
+                                dropdown
+                            >
+                                Cart
+                            </HeaderNavLink>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <HeaderNavLink
+                                icon={<IconUserCircle />}
+                                href="#"
+                                targetRouteNames={['welcome']}
+                                dropdown
+                            >
+                                Profile
+                            </HeaderNavLink>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
 
                 <ul className="hidden items-center gap-x-1 sm:flex">
                     <li className="contents">
@@ -85,13 +140,21 @@ export function HeaderContent() {
                         <Line variant={'v'} />
                     </li>
                     <li className="contents">
-                        <HeaderNavLink href="#" targetRouteNames={['welcome']}>
-                            <IconShoppingCart />
+                        <HeaderNavLink
+                            icon={<IconShoppingCart />}
+                            href="#"
+                            targetRouteNames={['welcome']}
+                        >
+                            Cart
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink href="#" targetRouteNames={['welcome']}>
-                            <IconUserCircle />
+                        <HeaderNavLink
+                            icon={<IconUserCircle />}
+                            href="#"
+                            targetRouteNames={['welcome']}
+                        >
+                            Profile
                         </HeaderNavLink>
                     </li>
                 </ul>
