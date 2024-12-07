@@ -7,21 +7,24 @@ use Inertia\Inertia;
 
 // Route group for non-guest and non-auth
 Route::middleware([])->group(function () {
-    Route::get('/welcome', function () {
+    Route::get('/', function () {
         return Inertia::render('Welcome', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
+            // 'canLogin' => Route::has('login'),
+            // 'canRegister' => Route::has('register'),
+            // 'laravelVersion' => Application::VERSION,
+            // 'phpVersion' => PHP_VERSION,
+            'guest' => true,
         ]);
-    })->name('welcome');
+    })->name('index');
     Route::get('/products', function () {
         return Inertia::render('products');
     });
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', null)->name('index');
+    Route::get('/home', function () {
+        return Inertia::render('Welcome', []);
+    })->name('home');
 });
 
 
