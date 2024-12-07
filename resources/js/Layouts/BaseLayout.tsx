@@ -25,13 +25,13 @@ export default function BaseLayout({
 }: BaseLayoutProps) {
     return (
         <div className="flex flex-col items-center">
-            <Header>{headerContent}</Header>
             <div className={`min-h-screen w-full max-w-[1200px] p-3 py-20`}>
-                <main className={`pt-3 space-y-3 ${className}`}>
+                <main className={`space-y-3 pt-3 ${className}`}>
                     {children}
                 </main>
             </div>
             <Footer />
+            <Header>{headerContent}</Header>
         </div>
     );
 }
@@ -51,7 +51,10 @@ function Header({ children }: PropsWithChildren) {
                 className={`flex w-full max-w-[1200px] items-center justify-between px-3`}
             >
                 <Link href="/">
-                    <img src="/ohsheet-3.png" alt="" className="h-5" />
+                    <img
+                        src="/ohsheet-3.png"
+                        className="aspect-auto h-5 w-auto min-w-fit"
+                    />
                 </Link>
                 {children ? children : <>default header content</>}
             </div>

@@ -1,5 +1,17 @@
 import HeaderSearch from '@/Components/HeaderSearch';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/Components/ui/popover';
 import { Head } from '@inertiajs/react';
+import {
+    IconHome,
+    IconListDetails,
+    IconPackage,
+    IconShoppingCart,
+    IconUserCircle,
+} from '@tabler/icons-react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
@@ -29,33 +41,62 @@ export default function GuestLayout({ children, className }: GuestLayoutProps) {
 
 function HeaderContent() {
     return (
-        <div className="flex items-center gap-x-5">
+        <div className="flex w-full items-center justify-end gap-x-5">
             <Head title="Welcome" />
-            <div>
-                <HeaderSearch
-                    className="w-96"
-                    inputProps={{
-                        type: 'text',
-                        placeholder: 'Search',
-                    }}
-                    buttonProps={{}}
-                />
-            </div>
+            {/* <div className="flex flex-1 justify-end pl-10"> */}
+            <HeaderSearch
+                className="ml-10 w-full max-w-80"
+                inputProps={{
+                    type: 'text',
+                    placeholder: 'Search',
+                }}
+                buttonProps={{}}
+            />
+            {/* </div> */}
             <nav>
-                <ul className="flex gap-x-1">
-                    <li>
-                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                <Popover>
+                    <PopoverTrigger>Open</PopoverTrigger>
+                    <PopoverContent>
+                        Place content for the popover here.
+                    </PopoverContent>
+                </Popover>
+
+                <ul className="hidden items-center gap-x-1 sm:flex">
+                    <li className="contents">
+                        <HeaderNavLink
+                            icon={<IconHome />}
+                            href="#"
+                            targetRouteNames={['index']}
+                        >
                             Home
                         </HeaderNavLink>
                     </li>
-                    <li>
-                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                    <li className="contents">
+                        <HeaderNavLink
+                            icon={<IconListDetails />}
+                            href="#"
+                            targetRouteNames={['index']}
+                        >
                             Products
                         </HeaderNavLink>
                     </li>
-                    <li>
-                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                    <li className="contents">
+                        <HeaderNavLink
+                            icon={<IconPackage />}
+                            href="#"
+                            targetRouteNames={['index']}
+                        >
                             Orders
+                        </HeaderNavLink>
+                    </li>
+                    <li className="contents">
+                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                            <IconShoppingCart />
+                        </HeaderNavLink>
+                    </li>
+                    <li className="contents">
+                        <HeaderNavLink href="#" targetRouteNames={['index']}>
+                            <IconUserCircle />
                         </HeaderNavLink>
                     </li>
                 </ul>

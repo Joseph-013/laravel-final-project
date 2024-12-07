@@ -30,15 +30,15 @@ export default function HeaderSearch({
 }) {
     return (
         <div
-            className={`h-10 flex ${className} rounded-full overflow-clip border-2 border-primary`}
+            className={`flex h-10 ${className} overflow-clip rounded-full border-2 border-primary`}
         >
             <input
                 {...inputProps}
-                className="h-full flex-1 rounded-l-full bg-background border-none pl-5 text-sm"
+                className="h-full w-full rounded-l-full border-none bg-background pl-5 text-sm"
             />
             <button
                 {...buttonProps}
-                className="h-full w-12 flex items-center justify-center rounded-r-full bg-background border-none hover:bg-primary/10"
+                className="flex h-full w-12 min-w-12 flex-none items-center justify-center rounded-r-full border-none bg-background hover:bg-primary/10"
             >
                 <Search size={21} />
             </button>

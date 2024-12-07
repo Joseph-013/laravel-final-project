@@ -2,7 +2,9 @@ import { InertiaLinkProps, Link } from '@inertiajs/react';
 
 interface HeaderNavLinkProps extends InertiaLinkProps {
     children: React.ReactNode;
+    icon?: React.ReactNode;
     targetRouteNames: string[] | string;
+    popover?: boolean;
 }
 
 /**
@@ -20,32 +22,35 @@ interface HeaderNavLinkProps extends InertiaLinkProps {
  */
 export function HeaderNavLink({
     children,
+    icon = null,
     targetRouteNames,
+    popover,
     ...props
 }: HeaderNavLinkProps) {
-    const isActive = () => {
+    function isActive() {
         const currentRoute = route().current();
         if (Array.isArray(targetRouteNames)) {
             // If targetRouteNames is an array, check if it includes the current route
             if (currentRoute === undefined) {
-                console.error('route().current() is undefined.');
-            } else
-                return targetRouteNames.includes(currentRoute)
-                    ? 'underline'
-                    : '';
-        } else if (targetRouteNames === currentRoute) {
+                console.error('route().current() returned undefined.');
+            } else if (targetRouteNames.includes(currentRoute)) return true;
+        } else if (
+            typeof targetRouteNames === 'string' &&
+            targetRouteNames === currentRoute
+        ) {
             // If targetRouteNames is a string, check if it matches the current route
-            return 'underline';
+            return true;
         }
 
-        return '';
-    };
+        return false;
+    }
     return (
         <Link
             {...props}
-            className={`${isActive()} p-3 ${props.className ?? ''}`}
+            className={`${isActive() && 'bg-white/50'} p-3 ${props.className ?? ''} flex items-center justify-center rounded-lg ${popover ? 'flex-row' : `flex-col ${icon ? 'text-xs' : 'text-base'}`}`}
         >
-            {children}
+            {icon && <div>{icon}</div>}
+            <div>{children}</div>
         </Link>
     );
 }
