@@ -28,6 +28,8 @@ export default function Login({
         });
     };
 
+    status = 'Successfully logged out.';
+
     return (
         <GuestLayout>
             <Head title="Log in" />
