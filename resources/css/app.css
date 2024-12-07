@@ -31,7 +31,7 @@
 /* As much as possible, DO NOT DIRECTLY MODIFY INDIVIDUAL COMPONENT COLORS. Instead, modify them globally here. */
 @layer base {
     :root {
-        --background: 64 25.4% 88.4%;
+        --background: 0 0% 100%;
         --foreground: 240 10% 3.9%;
         --card: 0 0% 100%;
         --card-foreground: 240 10% 3.9%;

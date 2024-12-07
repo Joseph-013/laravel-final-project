@@ -17,7 +17,7 @@
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/image')->name('image.')->controller(ImageController::class)->group(function () {
-    // Returns an array of images
-    Route::get('/carousel', 'carousel')->name('carousel');
-});
+// Route::prefix('/image')->name('image.')->controller(ImageController::class)->group(function () {
+//     // Returns an array of images
+//     Route::get('/carousel', 'carousel')->name('carousel');
+// });

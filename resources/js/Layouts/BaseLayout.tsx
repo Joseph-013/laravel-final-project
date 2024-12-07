@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react';
 interface BaseLayoutProps {
     children: React.ReactNode;
     headerContent?: React.ReactNode;
+    className?: string;
 }
 
 /**
@@ -20,12 +21,15 @@ interface BaseLayoutProps {
 export default function BaseLayout({
     children,
     headerContent,
+    className,
 }: BaseLayoutProps) {
     return (
         <div className="flex flex-col items-center">
             <Header>{headerContent}</Header>
             <div className={`min-h-screen w-full max-w-[1200px] p-3 py-20`}>
-                <main className="pt-3">{children}</main>
+                <main className={`pt-3 space-y-3 ${className}`}>
+                    {children}
+                </main>
             </div>
             <Footer />
         </div>
@@ -41,7 +45,7 @@ export default function BaseLayout({
 function Header({ children }: PropsWithChildren) {
     return (
         <header
-            className={`fixed inset-x-0 top-0 flex h-20 w-full justify-center bg-[#ECECEC]`}
+            className={`fixed inset-x-0 top-0 flex h-20 w-full justify-center bg-[#b8cce5]`}
         >
             <div
                 className={`flex w-full max-w-[1200px] items-center justify-between px-3`}

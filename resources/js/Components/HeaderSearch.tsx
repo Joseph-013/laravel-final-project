@@ -1,4 +1,4 @@
-import { IconSearch } from '@tabler/icons-react';
+import { Search } from 'lucide-react';
 
 /**
  * HeaderSearch Component
@@ -34,13 +34,13 @@ export default function HeaderSearch({
         >
             <input
                 {...inputProps}
-                className="h-full flex-1 rounded-l-full bg-secondary border-none pl-5 text-sm"
+                className="h-full flex-1 rounded-l-full bg-background border-none pl-5 text-sm"
             />
             <button
                 {...buttonProps}
-                className="h-full w-12 flex items-center justify-center rounded-r-full bg-secondary border-none hover:bg-primary/10"
+                className="h-full w-12 flex items-center justify-center rounded-r-full bg-background border-none hover:bg-primary/10"
             >
-                <IconSearch size={21} />
+                <Search size={21} />
             </button>
         </div>
     );

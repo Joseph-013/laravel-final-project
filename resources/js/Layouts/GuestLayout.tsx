@@ -1,10 +1,14 @@
 import HeaderSearch from '@/Components/HeaderSearch';
 import { Head } from '@inertiajs/react';
-import { PropsWithChildren } from 'react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
-export default function GuestLayout({ children }: PropsWithChildren) {
+interface GuestLayoutProps {
+    children: React.ReactNode;
+    className?: string;
+}
+
+export default function GuestLayout({ children, className }: GuestLayoutProps) {
     return (
         // <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
         //     <div>
@@ -17,7 +21,9 @@ export default function GuestLayout({ children }: PropsWithChildren) {
         //         {children}
         //     </div>
         // </div>
-        <BaseLayout headerContent={<HeaderContent />}>{children}</BaseLayout>
+        <BaseLayout headerContent={<HeaderContent />} className={className}>
+            {children}
+        </BaseLayout>
     );
 }
 
