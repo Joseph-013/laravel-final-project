@@ -1,4 +1,5 @@
 import HeaderSearch from '@/Components/HeaderSearch';
+import Line from '@/Components/Line';
 import {
     Popover,
     PopoverContent,
@@ -22,17 +23,6 @@ interface GuestLayoutProps {
 
 export default function GuestLayout({ children, className }: GuestLayoutProps) {
     return (
-        // <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
-        //     <div>
-        //         <Link href="/">
-        //             <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
-        //         </Link>
-        //     </div>
-
-        //     <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
-        //         {children}
-        //     </div>
-        // </div>
         <BaseLayout headerContent={<HeaderContent />} className={className}>
             {children}
         </BaseLayout>
@@ -90,6 +80,9 @@ export function HeaderContent() {
                         >
                             Orders
                         </HeaderNavLink>
+                    </li>
+                    <li className="mx-1 h-10">
+                        <Line variant={'v'} />
                     </li>
                     <li className="contents">
                         <HeaderNavLink href="#" targetRouteNames={['index']}>

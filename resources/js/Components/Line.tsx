@@ -1,7 +1,7 @@
 /**
  * Generates a simple horizontal or vertical line.
  * @param className - Specify any other className. Can override other classNames.
- * @param flags - Array. "v" for vertical, "h" for horizontal.
+ * @param variant - Array of/or single string. "v" for vertical, "h" for horizontal.
  */
 
 export default function Line({
