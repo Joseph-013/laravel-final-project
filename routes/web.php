@@ -19,7 +19,7 @@ Route::get('/', function () {
 // Any
 Route::middleware([])->group(function () {
     Route::get('/products', function () {
-        return Inertia::render('products');
+        return Inertia::render('Products');
     });
 });
 
