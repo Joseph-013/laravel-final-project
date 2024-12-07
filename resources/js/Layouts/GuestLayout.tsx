@@ -39,23 +39,25 @@ export default function GuestLayout({ children, className }: GuestLayoutProps) {
     );
 }
 
-function HeaderContent() {
+export function HeaderContent() {
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
             <Head title="Welcome" />
-            {/* <div className="flex flex-1 justify-end pl-10"> */}
             <HeaderSearch
                 className="ml-10 w-full max-w-80"
                 inputProps={{
                     type: 'text',
                     placeholder: 'Search',
                 }}
-                buttonProps={{}}
+                handleSearch={(text) => {
+                    console.log(text);
+                }}
             />
-            {/* </div> */}
             <nav>
                 <Popover>
-                    <PopoverTrigger>Open</PopoverTrigger>
+                    <PopoverTrigger className="block sm:hidden">
+                        Open
+                    </PopoverTrigger>
                     <PopoverContent>
                         Place content for the popover here.
                     </PopoverContent>
