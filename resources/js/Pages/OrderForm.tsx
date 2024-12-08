@@ -11,6 +11,7 @@ import {
 import { Textarea } from '@/Components/ui/textarea';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 interface FormData {
     specifications: string;
@@ -21,10 +22,27 @@ interface FormData {
     authorized: boolean;
 }
 
-export default function OrderForm({ keyword, product }) {
+export default function OrderForm({
+    keyword,
+    product,
+    formData,
+}: {
+    formData: FormData;
+}) {
     product = {
         keyword: keyword,
     };
+
+    // if need fill agad ng data
+    formData = {
+        specifications: 'asduh yfsiukd fshjk',
+        files: [], // fixed di na nakikita?
+        order_deadline_date: '',
+        order_deadline_time: '',
+        pickup_type: '',
+        authorized: false,
+    };
+
     const { data, setData, post, processing, errors, reset } =
         useForm<FormData>({
             specifications: '',
@@ -34,6 +52,10 @@ export default function OrderForm({ keyword, product }) {
             pickup_type: '',
             authorized: false,
         });
+
+    useEffect(() => {
+        if (formData) setData(formData);
+    }, []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -242,6 +264,9 @@ export default function OrderForm({ keyword, product }) {
                             onClick={() => reset()}
                         >
                             Clear
+                        </Button>
+                        <Button variant={'outline'} type="button">
+                            Add to Cart
                         </Button>
                         <Button type="submit">Submit</Button>
                     </div>
