@@ -23,5 +23,15 @@ class UsersSeeder extends Seeder
             'primary_address' => '1621 Piy Margal St, 478 Z-47, Manila, 1008 Metro Manila',
             'password' => Hash::make('password'),
         ]);
+
+        DB::table('users')->insert([
+            'username' => 'laur',
+            'fullname' => 'Laurence Arvin Arcilla',
+            'email' => 'laurence.arcilla@gmail.com',
+            'social_username' => 'lrncrcll',
+            'contact_number' => '09600982833',
+            'primary_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
+            'password' => Hash::make('password'),
+        ]);
     }
 }

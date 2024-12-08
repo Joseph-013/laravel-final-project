@@ -8,8 +8,12 @@ import { FormEventHandler } from 'react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        username: '',
+        fullname: '',
         email: '',
+        social_username: '',
+        contact_number: '',
+        primary_address: '',
         password: '',
         password_confirmation: '',
     });
@@ -28,42 +32,113 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
+                    <InputLabel htmlFor="username" value="Username" />
                     <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
+                        id="username"
+                        name="username"
+                        value={data.username}
                         className="mt-1 block w-full"
-                        autoComplete="name"
+                        autoComplete="username"
                         isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData('username', e.target.value)}
                         required
                     />
+                    <InputError message={errors.username} className="mt-2" />
+                </div>
 
-                    <InputError message={errors.name} className="mt-2" />
+                <div className="mt-4">
+                    <InputLabel htmlFor="fullname" value="Full Name" />
+                    <TextInput
+                        id="fullname"
+                        name="fullname"
+                        value={data.fullname}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('fullname', e.target.value)}
+                        required
+                    />
+                    <InputError message={errors.fullname} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
-
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="email"
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
-
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel
+                        htmlFor="social_username"
+                        value="Social Username"
+                    />
+                    <TextInput
+                        id="social_username"
+                        name="social_username"
+                        value={data.social_username}
+                        className="mt-1 block w-full"
+                        onChange={(e) =>
+                            setData('social_username', e.target.value)
+                        }
+                        required
+                    />
+                    <InputError
+                        message={errors.social_username}
+                        className="mt-2"
+                    />
+                </div>
 
+                <div className="mt-4">
+                    <InputLabel
+                        htmlFor="contact_number"
+                        value="Contact Number"
+                    />
+                    <TextInput
+                        id="contact_number"
+                        name="contact_number"
+                        value={data.contact_number}
+                        className="mt-1 block w-full"
+                        placeholder="09XXXXXXXXX"
+                        onChange={(e) =>
+                            setData('contact_number', e.target.value)
+                        }
+                        required
+                    />
+                    <InputError
+                        message={errors.contact_number}
+                        className="mt-2"
+                    />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel
+                        htmlFor="primary_address"
+                        value="Primary Address (Optional)"
+                    />
+                    <TextInput
+                        id="primary_address"
+                        name="primary_address"
+                        value={data.primary_address}
+                        className="mt-1 block w-full"
+                        onChange={(e) =>
+                            setData('primary_address', e.target.value)
+                        }
+                    />
+                    <InputError
+                        message={errors.primary_address}
+                        className="mt-2"
+                    />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
                     <TextInput
                         id="password"
                         type="password"
@@ -74,7 +149,6 @@ export default function Register() {
                         onChange={(e) => setData('password', e.target.value)}
                         required
                     />
-
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
@@ -83,7 +157,6 @@ export default function Register() {
                         htmlFor="password_confirmation"
                         value="Confirm Password"
                     />
-
                     <TextInput
                         id="password_confirmation"
                         type="password"
@@ -96,7 +169,6 @@ export default function Register() {
                         }
                         required
                     />
-
                     <InputError
                         message={errors.password_confirmation}
                         className="mt-2"

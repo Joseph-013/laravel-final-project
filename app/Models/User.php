@@ -10,17 +10,17 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $primaryKey = 'username';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    // protected $primaryKey = 'username';
+    // public $incrementing = false;
+    // protected $keyType = 'string';
 
     protected $fillable = [
         'username', 
+        'fullname', 
         'email', 
-        'firstname', 
-        'lastname', 
-        'middlename', 
-        'address', 
+        'social_username',
+        'contact_number',
+        'primary_address', 
         'password'
     ];
 

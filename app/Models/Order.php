@@ -9,13 +9,13 @@ class Order extends Model
     protected $primaryKey = 'orderID';
 
     protected $fillable = [
-        'username', 'total_amount', 'status'
+        'user_id', 'total_amount', 'status'
     ];
 
     // Relationships
     public function user()
     {
-        return $this->belongsTo(User::class, 'username', 'username');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function orderItems()
