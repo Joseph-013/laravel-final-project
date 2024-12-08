@@ -66,7 +66,7 @@ export function HeaderContent() {
                             <HeaderNavLink
                                 icon={<IconListDetails />}
                                 href={route('products')}
-                                targetRouteNames={['products']}
+                                targetRouteNames={['products', 'product.form']}
                                 dropdown
                             >
                                 Products

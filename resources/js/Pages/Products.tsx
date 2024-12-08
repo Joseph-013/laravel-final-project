@@ -24,6 +24,7 @@ export default function Products({ products }: { products: Product[] }) {
                         <ProductGridItem
                             key={product.keyword + index}
                             product={product}
+                            href={route('product.form', product.keyword)}
                         />
                     ))}
                 </div>
