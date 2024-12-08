@@ -66,8 +66,12 @@ export function HeaderContent() {
                         <DropdownMenuItem>
                             <HeaderNavLink
                                 icon={<IconHome />}
-                                href={route('index')}
-                                targetRouteNames={['index']}
+                                href={
+                                    authenticated
+                                        ? route('home')
+                                        : route('index')
+                                }
+                                targetRouteNames={['index', 'home']}
                                 dropdown
                             >
                                 Home
