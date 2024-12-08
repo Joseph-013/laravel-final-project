@@ -93,7 +93,7 @@ export default function OrderForm({
                     <InputContainer className="text-xl font-bold">
                         Ordering: {product.keyword}
                     </InputContainer>
-                    <InputContainer>
+                    <InputContainer title="Customer Notes">
                         <span className="w-full">
                             ‼️ Please note of our rules for turnover times:
                             <ul className="ml-5">
@@ -155,7 +155,7 @@ export default function OrderForm({
                             }
                         />
                     </InputContainer>
-                    <InputContainer>
+                    <InputContainer title="File Upload">
                         <span className="inline">
                             For your file/s, please upload them here (accepts
                             multiple file uploads):
@@ -179,7 +179,7 @@ export default function OrderForm({
                             multiple
                         />
                     </InputContainer>
-                    <InputContainer>
+                    <InputContainer title="Pickup date and time">
                         At what date and time would you like to receive your
                         order?
                         <div className="flex flex-wrap gap-3">
@@ -213,7 +213,7 @@ export default function OrderForm({
                             </div>
                         </div>
                     </InputContainer>
-                    <InputContainer>
+                    <InputContainer title="Pickup Method">
                         <span className="inline">
                             How would you like to receive your order?
                             <span className="ml-2 text-lg font-bold text-red-500">
@@ -281,7 +281,7 @@ export default function OrderForm({
     );
 }
 
-function InputContainer({
+export function InputContainer({
     children,
     title,
     className,
@@ -291,11 +291,11 @@ function InputContainer({
     className?: string;
 }) {
     return (
-        <div
+        <section
             className={`flex flex-col gap-y-5 rounded-md border-[1px] border-slate-300 p-4 shadow-md ${className}`}
         >
             {title && <div className="-mb-3 font-bold">{title}:</div>}
             {children}
-        </div>
+        </section>
     );
 }
