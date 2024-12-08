@@ -20,7 +20,7 @@ class UsersSeeder extends Seeder
             'email' => 'sephpaduga@gmail.com',
             'social_username' => 'JVpaduga',
             'contact_number' => '09150054673',
-            'primary_address' => '1621 Piy Margal St, 478 Z-47, Manila, 1008 Metro Manila',
+            'default_address' => '1621 Piy Margal St, 478 Z-47, Manila, 1008 Metro Manila',
             'password' => Hash::make('password'),
         ]);
 
@@ -30,7 +30,7 @@ class UsersSeeder extends Seeder
             'email' => 'laurence.arcilla@gmail.com',
             'social_username' => 'lrncrcll',
             'contact_number' => '09600982833',
-            'primary_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
+            'default_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
             'password' => Hash::make('password'),
         ]);
 
@@ -40,7 +40,7 @@ class UsersSeeder extends Seeder
             'email' => 'arvinalkuino123@gmail.com',
             'social_username' => 'qweqwe',
             'contact_number' => '0958447434',
-            'primary_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
+            'default_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
             'password' => Hash::make('password'),
         ]);
     }
