@@ -18,7 +18,7 @@ import {
     IconUserCircle,
 } from '@tabler/icons-react';
 
-import { Link } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
@@ -42,7 +42,7 @@ export default function UserLayout({
 export function HeaderContent() {
     const cartCount: number = 10;
 
-    const authenticated: boolean = true;
+    const authenticated: boolean = usePage().props.authenticated;
 
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
@@ -57,7 +57,8 @@ export function HeaderContent() {
                 }}
             />
             <nav>
-                <DropdownMenu open={true}>
+                {/* Mobile View */}
+                <DropdownMenu>
                     <DropdownMenuTrigger className="block rounded-lg p-2 hover:bg-white/50 sm:hidden">
                         <IconMenu2 />
                     </DropdownMenuTrigger>
@@ -108,8 +109,8 @@ export function HeaderContent() {
                                 <DropdownMenuItem>
                                     <HeaderNavLink
                                         icon={<IconUserCircle />}
-                                        href="#"
-                                        targetRouteNames={['welcome']}
+                                        href={route('profile.edit')}
+                                        targetRouteNames={['profile.edit']}
                                         dropdown
                                     >
                                         View Profile
@@ -119,7 +120,6 @@ export function HeaderContent() {
                                     <HeaderNavLink
                                         icon={<IconLogout />}
                                         href="#"
-                                        targetRouteNames={['welcome']}
                                         dropdown
                                     >
                                         Logout
@@ -127,17 +127,28 @@ export function HeaderContent() {
                                 </DropdownMenuItem>
                             </>
                         ) : (
-                            <></>
+                            <DropdownMenuItem>
+                                <HeaderNavLink
+                                    icon={<IconLogin2 />}
+                                    href={route('login')}
+                                    dropdown
+                                >
+                                    Login
+                                </HeaderNavLink>
+                            </DropdownMenuItem>
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>
 
+                {/* Desktop View */}
                 <ul className="hidden items-center gap-x-1 sm:flex">
                     <li className="contents">
                         <HeaderNavLink
                             icon={<IconHome />}
-                            href={route('index')}
-                            targetRouteNames={['index']}
+                            href={
+                                authenticated ? route('home') : route('index')
+                            }
+                            targetRouteNames={['index', 'home']}
                         >
                             Home
                         </HeaderNavLink>
@@ -183,24 +194,27 @@ export function HeaderContent() {
                                 <DropdownMenuTrigger className="rounded-lg p-3 hover:bg-white/50">
                                     <IconUserCircle />
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="oc space-y-1">
-                                    <DropdownMenuItem asChild>
-                                        <Link
-                                            href="profile"
-                                            className="cursor-pointer"
+                                <DropdownMenuContent className="space-y-1">
+                                    <DropdownMenuItem>
+                                        <HeaderNavLink
+                                            icon={<IconUserCircle />}
+                                            href={route('profile.edit')}
+                                            targetRouteNames={['profile.edit']}
+                                            dropdown
                                         >
                                             View Profile
-                                        </Link>
+                                        </HeaderNavLink>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
-                                        <Link
+                                    <DropdownMenuItem>
+                                        <HeaderNavLink
+                                            icon={<IconLogout />}
                                             href={route('logout')}
-                                            className="w-full cursor-pointer"
+                                            dropdown
                                             method="post"
                                             as="button"
                                         >
                                             Logout
-                                        </Link>
+                                        </HeaderNavLink>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
