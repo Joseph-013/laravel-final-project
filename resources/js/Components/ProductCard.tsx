@@ -36,6 +36,24 @@ export const sampleProducts: Product[] = [
         imageSrc:
             'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
     },
+    {
+        id: 4,
+        name: 'Photo Editing',
+        keyword: 'photo-editing',
+        description:
+            'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd',
+        imageSrc:
+            'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
+    },
+    {
+        id: 5,
+        name: 'Photo Editing',
+        keyword: 'photo-editing',
+        description:
+            'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd',
+        imageSrc:
+            'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
+    },
 ];
 
 type ProductCardProps = {
