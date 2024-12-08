@@ -2,8 +2,9 @@ import Line from '@/Components/Line';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link } from '@inertiajs/react';
 import { IconCircleMinus } from '@tabler/icons-react';
+import React from 'react';
 
-const dummyData = [
+export const dummyData = [
     {
         id: 1,
         product_type: 'Photo ID',
@@ -78,16 +79,18 @@ export default function Cart({ cart }) {
             <div className="w-full overflow-x-scroll">
                 <table className="w-full min-w-[30rem] text-left">
                     <thead>
-                        <th>Product/Service</th>
-                        <th>Specifications</th>
-                        <th>Deadline Date</th>
-                        <th>Deadline Time</th>
-                        <th>Pickup Type</th>
-                        <th>&nbsp;</th>
+                        <tr>
+                            <th>Product/Service</th>
+                            <th>Specifications</th>
+                            <th>Deadline Date</th>
+                            <th>Deadline Time</th>
+                            <th>Pickup Type</th>
+                            <th>&nbsp;</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {cart.map((item) => (
-                            <>
+                            <React.Fragment key={item.id}>
                                 <tr>
                                     <td colSpan={6}>
                                         <Line
@@ -96,7 +99,7 @@ export default function Cart({ cart }) {
                                         />
                                     </td>
                                 </tr>
-                                <tr key={item.id}>
+                                <tr>
                                     <td>{item.product_type}</td>
                                     <td className="text-sm">
                                         {item.specifications}
@@ -115,7 +118,7 @@ export default function Cart({ cart }) {
                                         </button>
                                     </td>
                                 </tr>
-                            </>
+                            </React.Fragment>
                         ))}
                     </tbody>
                 </table>

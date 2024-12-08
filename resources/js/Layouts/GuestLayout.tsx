@@ -16,6 +16,7 @@ import {
     IconUserCircle,
 } from '@tabler/icons-react';
 
+import { Link } from '@inertiajs/react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
@@ -132,8 +133,8 @@ export function HeaderContent() {
                     <li className="contents">
                         <HeaderNavLink
                             icon={<IconPackage />}
-                            href="#"
-                            targetRouteNames={['welcome']}
+                            href={route('orders')}
+                            targetRouteNames={['orders']}
                         >
                             Orders
                         </HeaderNavLink>
@@ -151,13 +152,39 @@ export function HeaderContent() {
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="rounded-lg p-3 hover:bg-white/50">
+                                <IconUserCircle />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="oc space-y-1">
+                                <DropdownMenuItem asChild>
+                                    <Link
+                                        href="profile"
+                                        className="cursor-pointer"
+                                    >
+                                        View Profile
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link
+                                        href={route('logout')}
+                                        className="w-full cursor-pointer"
+                                        method="post"
+                                        as="button"
+                                    >
+                                        Logout
+                                    </Link>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        {/* <HeaderNavLink
                             icon={<IconUserCircle />}
                             href="#"
                             targetRouteNames={['welcome']}
                         >
                             Profile
-                        </HeaderNavLink>
+                        </HeaderNavLink> */}
                     </li>
                 </ul>
             </nav>
