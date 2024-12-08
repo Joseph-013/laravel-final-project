@@ -75,11 +75,14 @@ export default function OrderForm({
         <GuestLayout>
             {/* replace with product name */}
             <Head title={`Order: ${product.keyword}`} />
-            <Link href={route('products')} className="block w-full">
-                <div className="w-fit rounded-md bg-primary px-5 py-2 text-primary-foreground">
+            <div className="w-full p-3">
+                <Link
+                    href={route('products')}
+                    className="w-fit rounded-md bg-primary px-5 py-2 text-primary-foreground"
+                >
                     &lt; Return
-                </div>
-            </Link>
+                </Link>
+            </div>
             <div className="flex w-full justify-center">
                 <form
                     className="flex w-full max-w-[720px] flex-col gap-y-4"
@@ -257,7 +260,7 @@ export default function OrderForm({
                             </label>
                         </div>
                     </InputContainer>
-                    <div className="flex justify-end gap-x-3">
+                    <div className="flex flex-col justify-end gap-x-3 gap-y-4 sm:flex-row">
                         <Button
                             variant="outline"
                             type="button"

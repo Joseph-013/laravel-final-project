@@ -86,8 +86,8 @@ export function HeaderContent() {
                         <DropdownMenuItem>
                             <HeaderNavLink
                                 icon={<IconShoppingCart />}
-                                href="#"
-                                targetRouteNames={['welcome']}
+                                href={route('cart')}
+                                targetRouteNames={['cart']}
                                 dropdown
                             >
                                 Cart
@@ -140,8 +140,8 @@ export function HeaderContent() {
                     <li className="contents">
                         <HeaderNavLink
                             icon={<IconShoppingCart />}
-                            href="#"
-                            targetRouteNames={['welcome']}
+                            href={route('cart')}
+                            targetRouteNames={['cart']}
                         >
                             Cart
                         </HeaderNavLink>
