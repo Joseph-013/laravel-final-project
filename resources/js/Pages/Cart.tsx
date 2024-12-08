@@ -1,5 +1,5 @@
 import Line from '@/Components/Line';
-import GuestLayout from '@/Layouts/GuestLayout';
+import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link } from '@inertiajs/react';
 import { IconCircleMinus } from '@tabler/icons-react';
 import React from 'react';
@@ -66,7 +66,7 @@ export default function Cart({ cart }) {
     }
 
     return (
-        <GuestLayout>
+        <UserLayout>
             <Head title="Cart" />
             <div className="w-full p-3">
                 <Link
@@ -123,6 +123,6 @@ export default function Cart({ cart }) {
                     </tbody>
                 </table>
             </div>
-        </GuestLayout>
+        </UserLayout>
     );
 }

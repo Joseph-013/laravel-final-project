@@ -1,7 +1,8 @@
 import ImageSlider from '@/Components/ImageSlider';
 import Line from '@/Components/Line';
 import { Button } from '@/Components/ui/button';
-import GuestLayout from '@/Layouts/GuestLayout';
+import UserLayout from '@/Layouts/UserLayout';
+import { Head } from '@inertiajs/react';
 import { MapPin } from 'lucide-react';
 import { useState } from 'react';
 
@@ -27,7 +28,8 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
     };
 
     return (
-        <GuestLayout>
+        <UserLayout>
+            <Head title="Home" />
             <ImageSlider
                 containerProps={{ className: 'o' }}
                 imgSrc={carouselImages}
@@ -154,6 +156,6 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
             <br />
             <br />
             <Button>Button</Button>
-        </GuestLayout>
+        </UserLayout>
     );
 }

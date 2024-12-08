@@ -1,9 +1,9 @@
 import { InertiaLinkProps, Link } from '@inertiajs/react';
 
 interface HeaderNavLinkProps extends InertiaLinkProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     icon?: React.ReactNode;
-    targetRouteNames: string[] | string;
+    targetRouteNames?: string[] | string;
     dropdown?: boolean;
 }
 

@@ -9,7 +9,7 @@ import {
     SelectValue,
 } from '@/Components/ui/select';
 import { Textarea } from '@/Components/ui/textarea';
-import GuestLayout from '@/Layouts/GuestLayout';
+import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
@@ -74,7 +74,7 @@ export default function OrderForm({
     };
 
     return (
-        <GuestLayout>
+        <UserLayout>
             {/* replace with product name */}
             <Head title={`Order: ${product.keyword}`} />
             <div className="w-full p-3">
@@ -277,7 +277,7 @@ export default function OrderForm({
                     </div>
                 </form>
             </div>
-        </GuestLayout>
+        </UserLayout>
     );
 }
 

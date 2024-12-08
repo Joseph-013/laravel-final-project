@@ -1,5 +1,5 @@
 import { ProductGridItem, sampleProducts } from '@/Components/ProductCard';
-import GuestLayout from '@/Layouts/GuestLayout';
+import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
 
 export type Product = {
@@ -13,7 +13,7 @@ export type Product = {
 export default function Products({ products }: { products: Product[] }) {
     products = sampleProducts;
     return (
-        <GuestLayout>
+        <UserLayout>
             <Head title="Products" />
             <h1 className="mb-2 text-xl font-bold">
                 Our Products and Services:
@@ -29,6 +29,6 @@ export default function Products({ products }: { products: Product[] }) {
                     ))}
                 </div>
             </div>
-        </GuestLayout>
+        </UserLayout>
     );
 }

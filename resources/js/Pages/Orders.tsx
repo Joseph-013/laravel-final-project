@@ -1,5 +1,5 @@
 import Line from '@/Components/Line';
-import GuestLayout from '@/Layouts/GuestLayout';
+import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
 import React from 'react';
 import { dummyData } from './Cart';
@@ -7,7 +7,7 @@ import { dummyData } from './Cart';
 export default function Orders({ orders }) {
     orders = dummyData;
     return (
-        <GuestLayout>
+        <UserLayout>
             <Head title="Orders" />
             <table className="w-full min-w-[30rem] text-left">
                 <thead>
@@ -45,6 +45,6 @@ export default function Orders({ orders }) {
                     ))}
                 </tbody>
             </table>
-        </GuestLayout>
+        </UserLayout>
     );
 }

@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
+import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
@@ -31,7 +31,7 @@ export default function Login({
     status = 'Successfully logged out.';
 
     return (
-        <GuestLayout>
+        <UserLayout>
             <Head title="Log in" />
 
             {status && (
@@ -104,6 +104,6 @@ export default function Login({
                     </PrimaryButton>
                 </div>
             </form>
-        </GuestLayout>
+        </UserLayout>
     );
 }

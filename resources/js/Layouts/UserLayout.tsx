@@ -10,6 +10,8 @@ import {
 import {
     IconHome,
     IconListDetails,
+    IconLogin2,
+    IconLogout,
     IconMenu2,
     IconPackage,
     IconShoppingCart,
@@ -20,16 +22,16 @@ import { Link } from '@inertiajs/react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
-interface GuestLayoutProps {
+interface UserLayoutProps {
     children: React.ReactNode;
     className?: string;
 }
 
-export default function GuestLayout({
+export default function UserLayout({
     user,
     children,
     className,
-}: GuestLayoutProps) {
+}: UserLayoutProps) {
     return (
         <BaseLayout headerContent={<HeaderContent />} className={className}>
             {children}
@@ -39,6 +41,8 @@ export default function GuestLayout({
 
 export function HeaderContent() {
     const cartCount: number = 10;
+
+    const authenticated: boolean = true;
 
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
@@ -53,13 +57,12 @@ export function HeaderContent() {
                 }}
             />
             <nav>
-                <DropdownMenu>
+                <DropdownMenu open={true}>
                     <DropdownMenuTrigger className="block rounded-lg p-2 hover:bg-white/50 sm:hidden">
                         <IconMenu2 />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-40">
                         <DropdownMenuItem>
-                            {' '}
                             <HeaderNavLink
                                 icon={<IconHome />}
                                 href={route('index')}
@@ -73,7 +76,7 @@ export function HeaderContent() {
                             <HeaderNavLink
                                 icon={<IconListDetails />}
                                 href={route('products')}
-                                targetRouteNames={['products', 'product.form']}
+                                targetRouteNames={['products']}
                                 dropdown
                             >
                                 Products
@@ -82,8 +85,8 @@ export function HeaderContent() {
                         <DropdownMenuItem>
                             <HeaderNavLink
                                 icon={<IconPackage />}
-                                href="#"
-                                targetRouteNames={['welcome']}
+                                href={route('orders')}
+                                targetRouteNames={['orders']}
                                 dropdown
                             >
                                 Orders
@@ -100,16 +103,32 @@ export function HeaderContent() {
                                 Cart
                             </HeaderNavLink>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <HeaderNavLink
-                                icon={<IconUserCircle />}
-                                href="#"
-                                targetRouteNames={['welcome']}
-                                dropdown
-                            >
-                                Profile
-                            </HeaderNavLink>
-                        </DropdownMenuItem>
+                        {authenticated ? (
+                            <>
+                                <DropdownMenuItem>
+                                    <HeaderNavLink
+                                        icon={<IconUserCircle />}
+                                        href="#"
+                                        targetRouteNames={['welcome']}
+                                        dropdown
+                                    >
+                                        View Profile
+                                    </HeaderNavLink>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <HeaderNavLink
+                                        icon={<IconLogout />}
+                                        href="#"
+                                        targetRouteNames={['welcome']}
+                                        dropdown
+                                    >
+                                        Logout
+                                    </HeaderNavLink>
+                                </DropdownMenuItem>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
 
@@ -159,31 +178,40 @@ export function HeaderContent() {
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger className="rounded-lg p-3 hover:bg-white/50">
-                                <IconUserCircle />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="oc space-y-1">
-                                <DropdownMenuItem asChild>
-                                    <Link
-                                        href="profile"
-                                        className="cursor-pointer"
-                                    >
-                                        View Profile
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link
-                                        href={route('logout')}
-                                        className="w-full cursor-pointer"
-                                        method="post"
-                                        as="button"
-                                    >
-                                        Logout
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        {authenticated ? (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className="rounded-lg p-3 hover:bg-white/50">
+                                    <IconUserCircle />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="oc space-y-1">
+                                    <DropdownMenuItem asChild>
+                                        <Link
+                                            href="profile"
+                                            className="cursor-pointer"
+                                        >
+                                            View Profile
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link
+                                            href={route('logout')}
+                                            className="w-full cursor-pointer"
+                                            method="post"
+                                            as="button"
+                                        >
+                                            Logout
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        ) : (
+                            <HeaderNavLink
+                                icon={<IconLogin2 />}
+                                href={route('login')}
+                            >
+                                Login
+                            </HeaderNavLink>
+                        )}
                     </li>
                 </ul>
             </nav>
