@@ -1,6 +1,4 @@
 import ImageSlider from '@/Components/ImageSlider';
-import Line from '@/Components/Line';
-import { Button } from '@/Components/ui/button';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
 import { MapPin } from 'lucide-react';
@@ -37,104 +35,96 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                 startsFrom={1}
             />
             <section>
-                {/* <h2 className="my-10 justify-center text-center text-4xl font-extrabold text-[#0047AB]">
-                    Stickers!
-                </h2> */}
-                <div className="mx-auto mb-8 mt-32 flex w-full flex-row items-center space-x-8">
-                    <div className="w-1/2">
-                        <p className="text-center text-4xl font-extrabold text-primary">
-                            We charge our sticker paper for every A sheet used.
-                            We advise minimizing each sheet as much as possible.
-                        </p>
-
-                        <div className="mt-4 flex justify-center py-10">
-                            <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-2xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90">
-                                Show me!
-                            </button>
+                <div className="mt-16 flex flex-col space-y-16 lg:my-32 lg:space-y-32">
+                    <div className="flex flex-col items-center space-y-8 lg:flex-row lg:space-x-8 lg:space-y-0">
+                        <div className="w-full lg:w-1/2">
+                            <h2 className="text-center text-2xl font-extrabold text-primary sm:text-3xl lg:text-4xl">
+                                We charge our sticker paper for every A sheet
+                                used. We advise minimizing each sheet as much as
+                                possible.
+                            </h2>
+                            <div className="mt-8 flex justify-center">
+                                <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl">
+                                    Show me!
+                                </button>
+                            </div>
+                        </div>
+                        <div className="w-full overflow-hidden rounded-xl lg:w-1/2">
+                            <img
+                                src="/img/stickers.jpg"
+                                alt="Stickers preview"
+                                height={400}
+                                className="object-cover"
+                            />
                         </div>
                     </div>
 
-                    <div className="ml-auto w-1/2 overflow-hidden rounded-xl">
-                        <img
-                            src="/img/stickers.jpg"
-                            alt="Stickers preview"
-                            className="w-[100%]"
-                        />
-                    </div>
-                </div>
-                <div className="mx-auto mb-32 flex w-full flex-row items-center space-x-8">
-                    <div className="ml-auto w-1/2 overflow-hidden rounded-xl">
-                        <img
-                            src="/img/cupsleeves.jpg"
-                            alt="Stickers preview"
-                            className="w-[100%]"
-                        />
-                    </div>
-                    <div className="w-1/2">
-                        <p className="text-center text-4xl font-extrabold text-primary">
-                            Want to have your own customized cup sleeves?
-                            message us to know more.
-                        </p>
-
-                        <div className="mt-4 flex justify-center py-10">
-                            <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-2xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90">
-                                Show me!
-                            </button>
+                    <div className="flex flex-col-reverse items-center space-y-8 space-y-reverse lg:flex-row lg:space-x-8 lg:space-y-0">
+                        <div className="w-full overflow-hidden rounded-xl lg:w-1/2">
+                            <img
+                                src="/img/cupsleeves.jpg"
+                                alt="Cup sleeves preview"
+                                height={400}
+                                className="object-cover"
+                            />
+                        </div>
+                        <div className="w-full lg:w-1/2">
+                            <h2 className="text-center text-2xl font-extrabold text-primary sm:text-3xl lg:text-4xl">
+                                Want to have your own customized cup sleeves?
+                                Message us to know more.
+                            </h2>
+                            <div className="mt-8 flex justify-center">
+                                <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl">
+                                    Show me!
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
             <section>
-                <div className="mx-auto w-full rounded-lg bg-[#E6EEF9] p-8">
-                    <div className="space-y-4">
-                        <h2 className="mb-4 text-2xl font-extrabold text-primary">
+                <div className="rounded-lg bg-[#E6EEF9] p-4 sm:p-8">
+                    <div className="space-y-6">
+                        <h2 className="text-2xl font-extrabold text-primary sm:text-3xl">
                             Where are we located?
                         </h2>
 
-                        <div className="flex flex-row space-x-4">
-                            <div className="flex w-1/2 flex-col space-y-7">
-                                <div
-                                    className="group flex items-center rounded-full bg-[#FFD700] p-6 shadow-md duration-300 hover:cursor-pointer hover:p-8"
-                                    onClick={() =>
-                                        setCurrentMapUrl(mapUrls.bgc)
-                                    }
-                                >
-                                    <MapPin className="mr-2 h-10 w-10 text-red-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                                    <span className="text-lg font-semibold text-primary">
-                                        BGC, TAGUIG (UPTOWN AREA)
-                                    </span>
-                                </div>
-
-                                <div
-                                    className="group flex items-center rounded-full bg-[#FFD700] p-6 shadow-md duration-300 hover:cursor-pointer hover:p-8"
-                                    onClick={() =>
-                                        setCurrentMapUrl(mapUrls.tambo)
-                                    }
-                                >
-                                    <MapPin className="mr-2 h-10 w-10 text-red-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                                    <span className="text-lg font-semibold text-primary">
-                                        TAMBO, PARANAQUE
-                                    </span>
-                                </div>
-
-                                <div
-                                    className="group flex items-center rounded-full bg-[#FFD700] p-6 shadow-md duration-300 hover:cursor-pointer hover:p-8"
-                                    onClick={() =>
-                                        setCurrentMapUrl(mapUrls.signal)
-                                    }
-                                >
-                                    <MapPin className="mr-2 h-10 w-10 text-red-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                                    <span className="text-lg font-semibold text-primary">
-                                        CENTRAL SIGNAL, VILLAGE TAGUIG
-                                    </span>
-                                </div>
+                        <div className="grid gap-6 lg:grid-cols-2">
+                            <div className="space-y-4">
+                                {[
+                                    {
+                                        name: 'BGC, TAGUIG (UPTOWN AREA)',
+                                        url: mapUrls.bgc,
+                                    },
+                                    {
+                                        name: 'TAMBO, PARANAQUE',
+                                        url: mapUrls.tambo,
+                                    },
+                                    {
+                                        name: 'CENTRAL SIGNAL, VILLAGE TAGUIG',
+                                        url: mapUrls.signal,
+                                    },
+                                ].map((location, index) => (
+                                    <div
+                                        key={index}
+                                        className="group flex items-center rounded-full bg-[#FFD700] p-4 shadow-md transition-all duration-300 hover:cursor-pointer hover:p-5 sm:p-6 sm:hover:p-7"
+                                        onClick={() =>
+                                            setCurrentMapUrl(location.url)
+                                        }
+                                    >
+                                        <MapPin className="mr-2 h-6 w-6 text-red-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:h-8 sm:w-8" />
+                                        <span className="text-base font-semibold text-primary sm:text-lg">
+                                            {location.name}
+                                        </span>
+                                    </div>
+                                ))}
                             </div>
 
-                            <div className="w-1/2 overflow-hidden rounded-lg">
+                            <div className="h-[300px] overflow-hidden rounded-lg sm:h-[450px]">
                                 <iframe
                                     src={currentMapUrl}
                                     width="100%"
-                                    height="450"
+                                    height="100%"
                                     style={{ border: 0 }}
                                     allowFullScreen
                                     loading="lazy"
@@ -143,7 +133,7 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                             </div>
                         </div>
 
-                        <p className="mt-6 text-center font-medium text-primary">
+                        <p className="text-center text-sm font-medium text-primary sm:text-base">
                             WE DON&apos;T HAVE A PHYSICAL STORE. WE&apos;RE AN
                             ONLINE SHOP, PICKUP AND DELIVERY OF ITEMS WILL BE
                             COMING FROM THESE LOCATIONS
@@ -151,11 +141,6 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                     </div>
                 </div>
             </section>
-            <Line variant={'h'} className="my-2" />
-            Custom components:
-            <br />
-            <br />
-            <Button>Button</Button>
         </UserLayout>
     );
 }
