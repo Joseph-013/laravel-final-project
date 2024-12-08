@@ -33,5 +33,15 @@ class UsersSeeder extends Seeder
             'primary_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
             'password' => Hash::make('password'),
         ]);
+
+        DB::table('users')->insert([
+            'username' => 'arvin',
+            'fullname' => 'Arvin Alkuino',
+            'email' => 'arvinalkuino123@gmail.com',
+            'social_username' => 'qweqwe',
+            'contact_number' => '0958447434',
+            'primary_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
+            'password' => Hash::make('password'),
+        ]);
     }
 }

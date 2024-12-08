@@ -40,21 +40,21 @@ export default function Register() {
                                 <h1 className="mb-10 text-4xl font-extrabold leading-normal text-primary">
                                     Create Account
                                 </h1>{' '}
-                                <InputLabel htmlFor="name" value="Name" />
+                                <InputLabel htmlFor="name" value="Full Name" />
                                 <TextInput
                                     id="name"
                                     name="name"
-                                    value={data.name}
+                                    value={data.fullname}
                                     className="mt-1 block w-full"
                                     autoComplete="name"
                                     isFocused={true}
                                     onChange={(e) =>
-                                        setData('name', e.target.value)
+                                        setData('fullname', e.target.value)
                                     }
                                     required
                                 />
                                 <InputError
-                                    message={errors.name}
+                                    message={errors.fullname}
                                     className="mt-2"
                                 />
                                 <div className="mt-4">
