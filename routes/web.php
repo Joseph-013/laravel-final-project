@@ -22,10 +22,6 @@ Route::middleware([])->group(function () {
     Route::get('/products', function () {
         return Inertia::render('Products');
     })->name('products');
-
-    Route::get('/products/{keyword}', function ($keyword) {
-        return Inertia::render('OrderForm', ['keyword' => $keyword]);
-    });
 });
 
 // Auth
@@ -33,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
         return Inertia::render('Welcome', []);
     })->name('home');
+
+    Route::get('/products/{keyword}', function ($keyword) {
+        return Inertia::render('OrderForm', ['keyword' => $keyword]);
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
