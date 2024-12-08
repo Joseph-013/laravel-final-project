@@ -38,6 +38,8 @@ export default function GuestLayout({
 }
 
 export function HeaderContent() {
+    const cartCount: number = 10;
+
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
             <HeaderSearch
@@ -149,6 +151,11 @@ export function HeaderContent() {
                             targetRouteNames={['cart']}
                         >
                             Cart
+                            {cartCount !== 0 && (
+                                <div className="absolute right-[0.3rem] top-2 flex aspect-square size-[1.1rem] items-center justify-center rounded-full bg-primary pr-[1px] pt-[1px] text-[0.6rem] text-secondary">
+                                    {cartCount}
+                                </div>
+                            )}
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
@@ -177,14 +184,6 @@ export function HeaderContent() {
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
-
-                        {/* <HeaderNavLink
-                            icon={<IconUserCircle />}
-                            href="#"
-                            targetRouteNames={['welcome']}
-                        >
-                            Profile
-                        </HeaderNavLink> */}
                     </li>
                 </ul>
             </nav>
