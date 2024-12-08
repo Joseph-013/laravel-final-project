@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,7 +13,7 @@ Route::get('/', function () {
         // 'canRegister' => Route::has('register'),
         // 'laravelVersion' => Application::VERSION,
         // 'phpVersion' => PHP_VERSION,
-        'guest' => true,
+        'user' => Auth::check() ? Auth::user() : false,
     ]);
 })->middleware('guest')->name('index');
 
@@ -21,6 +22,10 @@ Route::middleware([])->group(function () {
     Route::get('/products', function () {
         return Inertia::render('Products');
     })->name('products');
+
+    Route::get('/products/{keyword}', function ($keyword) {
+        return Inertia::render('OrderForm', ['keyword' => $keyword]);
+    });
 });
 
 // Auth

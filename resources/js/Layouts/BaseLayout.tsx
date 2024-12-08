@@ -1,3 +1,4 @@
+import { Toaster } from '@/Components/ui/sonner';
 import { Link } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 
@@ -17,6 +18,9 @@ interface BaseLayoutProps {
  * @param children - The main content of the page. This is the body content of the layout.
  * @param headerContent - Optional content to display in the header, typically used for additional
  * navigation or information that appears in the header section.
+ * @param className - Additional styling.
+ *
+ * To know more about sonner, visit the [documentation](https://sonner.emilkowal.ski/).
  */
 export default function BaseLayout({
     children,
@@ -24,15 +28,18 @@ export default function BaseLayout({
     className,
 }: BaseLayoutProps) {
     return (
-        <div className="flex flex-col items-center">
-            <div className={`min-h-screen w-full max-w-[1200px] p-3 py-20`}>
-                <main className={`space-y-3 pt-3 ${className}`}>
-                    {children}
-                </main>
+        <>
+            <div className="flex flex-col items-center">
+                <div className={`min-h-screen w-full max-w-[1200px] p-3 py-20`}>
+                    <main className={`space-y-3 pt-3 ${className}`}>
+                        {children}
+                    </main>
+                </div>
+                <Footer />
+                <Header>{headerContent}</Header>
             </div>
-            <Footer />
-            <Header>{headerContent}</Header>
-        </div>
+            <Toaster />
+        </>
     );
 }
 
