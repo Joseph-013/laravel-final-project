@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     })->name('home');
 
     Route::get('/products/{keyword}', function ($keyword) {
-        return Inertia::render('OrderForm', ['keyword' => $keyword]);
+        return Inertia::render('OrderForm', ['keyword' => $keyword])->name('product.form');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
