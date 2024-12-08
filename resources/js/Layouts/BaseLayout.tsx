@@ -25,7 +25,7 @@ export default function BaseLayout({
 }: BaseLayoutProps) {
     return (
         <div className="flex flex-col items-center">
-            <div className={`min-h-screen w-full max-w-[1200px] p-3 py-20`}>
+            <div className={`min-h-screen w-full max-w-[1600px] p-3 py-20`}>
                 <main className={`space-y-3 pt-3 ${className}`}>
                     {children}
                 </main>
