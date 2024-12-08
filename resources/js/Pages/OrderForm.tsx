@@ -54,8 +54,10 @@ export default function OrderForm({
         });
 
     useEffect(() => {
-        if (formData) setData(formData);
-    }, []);
+        if (formData) {
+            setData(formData);
+        }
+    }, [formData, setData]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -80,7 +82,7 @@ export default function OrderForm({
                     href={route('products')}
                     className="w-fit rounded-md bg-primary px-5 py-2 text-primary-foreground"
                 >
-                    &lt; Return
+                    &lt; Products
                 </Link>
             </div>
             <div className="flex w-full justify-center">

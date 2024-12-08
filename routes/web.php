@@ -34,6 +34,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('OrderForm', ['keyword' => $keyword]);
     })->name('product.form');
 
+    Route::get('/orders', function () {
+        return Inertia::render('Orders');
+    })->name('orders');
+
     Route::get('/cart', function () {
         return Inertia::render('Cart');
     })->name('cart');

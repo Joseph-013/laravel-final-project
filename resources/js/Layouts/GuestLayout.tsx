@@ -24,7 +24,11 @@ interface GuestLayoutProps {
     className?: string;
 }
 
-export default function GuestLayout({ children, className }: GuestLayoutProps) {
+export default function GuestLayout({
+    user,
+    children,
+    className,
+}: GuestLayoutProps) {
     return (
         <BaseLayout headerContent={<HeaderContent />} className={className}>
             {children}
