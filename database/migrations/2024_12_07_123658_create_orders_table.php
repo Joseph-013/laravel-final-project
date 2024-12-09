@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('orderID');
-            $table->unsignedBigInteger('productID');
+            $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
             $table->enum('status', ['Pending', 'Completed', 'Cancelled'])->default('Pending');
-            $table->foreign('productID')->references('productID')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

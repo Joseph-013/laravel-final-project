@@ -10,7 +10,7 @@ class Cart extends Model
     protected $table = 'cart';
 
     protected $fillable = [
-        'user_id', 'productID', 'quantity'
+        'user_id', 'product_id', 'quantity'
     ];
 
     // Relationships
@@ -21,7 +21,7 @@ class Cart extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'productID');
+        return $this->belongsTo(Product::class, 'id');
     }
 
     // Calculate total price of cart items
