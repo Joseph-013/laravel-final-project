@@ -18,7 +18,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->text('specifications');
-            $table->arra('files');
+            $table->json('files');
             $table->unsignedSmallInteger('quantity');
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
