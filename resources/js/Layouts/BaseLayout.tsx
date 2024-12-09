@@ -1,14 +1,20 @@
 import { Toaster } from '@/Components/ui/sonner';
 import { Button, Input } from '@headlessui/react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
+import { toast } from 'sonner';
 
 interface BaseLayoutProps {
     children: React.ReactNode;
     headerContent?: React.ReactNode;
     className?: string;
+}
+
+interface Toast {
+    type: 'success' | 'error' | 'info' | 'warning' | 'default';
+    message: string;
 }
 
 /**
@@ -30,6 +36,36 @@ export default function BaseLayout({
     headerContent,
     className,
 }: BaseLayoutProps) {
+    const { toastContent } = usePage().props;
+
+    useEffect(() => {
+        if (toastContent as Toast) {
+            const { type, message } = toastContent as Toast;
+            switch (type) {
+                case 'success': {
+                    toast.success(message);
+                    break;
+                }
+                case 'error': {
+                    toast.success(message);
+                    break;
+                }
+                case 'info': {
+                    toast.success(message);
+                    break;
+                }
+                case 'warning': {
+                    toast.success(message);
+                    break;
+                }
+                case 'default': {
+                    toast(message);
+                    break;
+                }
+            }
+        }
+    }, []);
+
     return (
         <>
             <div className="-z-10 flex flex-col items-center">
@@ -43,7 +79,7 @@ export default function BaseLayout({
                 <Footer />
                 <Header>{headerContent}</Header>
             </div>
-            <Toaster richColors />
+            <Toaster richColors expand />
         </>
     );
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Toast;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -48,7 +49,7 @@ Route::middleware('auth', 'isUser')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Admin 
+// Admin
 Route::middleware(['auth', 'isAdmin'])
     ->prefix('/admin/')
     ->name('admin.')
@@ -57,6 +58,6 @@ Route::middleware(['auth', 'isAdmin'])
         Route::get('products', [AdminController::class, 'index'])->name('index');
         Route::post('products', [AdminController::class, 'store'])->name('store');
         Route::delete('products/{id}', [AdminController::class, 'destroy'])->name('destroy');
-});
+    });
 
 require __DIR__ . '/auth.php';

@@ -33,6 +33,7 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'authenticated' => Auth::check(),
+            'toastContent' => $request->session()->pull('toast'),
             'auth' => [
                 'user' => $request->user(),
             ],
