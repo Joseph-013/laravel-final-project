@@ -29,6 +29,7 @@ class UsersSeeder extends Seeder
             'fullname' => 'Laurence Arvin Arcilla',
             'email' => 'laurence.arcilla@gmail.com',
             'social_username' => 'lrncrcll',
+            'role' => 'admin',
             'contact_number' => '09600982833',
             'default_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
             'password' => Hash::make('password'),

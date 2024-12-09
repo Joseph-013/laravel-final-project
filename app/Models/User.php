@@ -21,6 +21,7 @@ class User extends Authenticatable
       'social_username',
       'contact_number',
       'default_address',
+      'role',
       'password'
    ];
 

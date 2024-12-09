@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ Route::middleware([])->group(function () {
 });
 
 // Auth
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'isUser')->group(function () {
     Route::get('/home', function () {
         return Inertia::render('Welcome', []);
     })->name('home');
@@ -45,6 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Admin 
+Route::middleware(['auth', 'isAdmin'])
+    ->prefix('/admin/')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('products', [AdminController::class, 'index'])->name('index');
+        Route::post('products', [AdminController::class, 'store'])->name('store');
+        Route::delete('products/{id}', [AdminController::class, 'destroy'])->name('destroy');
 });
 
 require __DIR__ . '/auth.php';
