@@ -1,0 +1,169 @@
+import { useForm, usePage } from '@inertiajs/react';
+import { FormEvent } from 'react';
+
+// Define types for product and form data
+interface Product {
+    id: number;
+    productname: string;
+    category: string;
+    price: string;
+    stock: number;
+    image_url: string | null;
+}
+
+interface ProductFormData {
+    productname: string;
+    category: string;
+    price: string;
+    stock: string;
+    description: string;
+    image: File | null;
+}
+
+interface ManageProductsProps {
+    products: Product[];
+}
+
+export default function ManageProducts({ products }: ManageProductsProps) {
+    const { flash } = usePage().props;
+    const { data, setData, post, processing, errors, reset } =
+        useForm<ProductFormData>({
+            productname: '',
+            category: '',
+            price: '',
+            stock: '',
+            description: '',
+            image: null,
+        });
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('productname', data.productname);
+        formData.append('category', data.category);
+        formData.append('price', data.price);
+        formData.append('stock', data.stock);
+        formData.append('description', data.description);
+
+        if (data.image) {
+            formData.append('image', data.image);
+        }
+
+        post(route('admin.store'), {
+            data: formData,
+            onSuccess: () => reset(),
+        });
+    };
+
+    return (
+        <div>
+            <h1>Manage Products</h1>
+
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Product Name</label>
+                    <input
+                        type="text"
+                        value={data.productname}
+                        onChange={(e) => setData('productname', e.target.value)}
+                    />
+                    {errors.productname && <div>{errors.productname}</div>}
+                </div>
+
+                <div>
+                    <label>Category</label>
+                    <input
+                        type="text"
+                        value={data.category}
+                        onChange={(e) => setData('category', e.target.value)}
+                    />
+                    {errors.category && <div>{errors.category}</div>}
+                </div>
+
+                <div>
+                    <label>Price</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        value={data.price}
+                        onChange={(e) => setData('price', e.target.value)}
+                    />
+                    {errors.price && <div>{errors.price}</div>}
+                </div>
+
+                <div>
+                    <label>Stock</label>
+                    <input
+                        type="number"
+                        value={data.stock}
+                        onChange={(e) => setData('stock', e.target.value)}
+                    />
+                    {errors.stock && <div>{errors.stock}</div>}
+                </div>
+
+                <div>
+                    <label>Description</label>
+                    <textarea
+                        value={data.description}
+                        onChange={(e) => setData('description', e.target.value)}
+                    />
+                    {errors.description && <div>{errors.description}</div>}
+                </div>
+
+                <div>
+                    <label>Image</label>
+                    <input
+                        type="file"
+                        onChange={(e) =>
+                            setData('image', e.target.files?.[0] ?? null)
+                        }
+                    />
+                    {errors.image && <div>{errors.image}</div>}
+                </div>
+
+                <button type="submit" disabled={processing}>
+                    {processing ? 'Submitting...' : 'Create Product'}
+                </button>
+            </form>
+
+            <h2>Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((product) => (
+                        <tr key={product.id}>
+                            <td>{product.id}</td>
+                            <td>{product.productname}</td>
+                            <td>{product.category}</td>
+                            <td>{product.price}</td>
+                            <td>{product.stock}</td>
+                            <td>
+                                {product.image_url && (
+                                    <img
+                                        src={product.image_url}
+                                        alt={product.productname}
+                                        style={{
+                                            width: '50px',
+                                            height: '50px',
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}

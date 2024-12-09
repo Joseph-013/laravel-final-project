@@ -27,11 +27,7 @@ interface UserLayoutProps {
     className?: string;
 }
 
-export default function UserLayout({
-    user,
-    children,
-    className,
-}: UserLayoutProps) {
+export default function UserLayout({ children, className }: UserLayoutProps) {
     return (
         <BaseLayout headerContent={<HeaderContent />} className={className}>
             {children}
