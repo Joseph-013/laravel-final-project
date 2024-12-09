@@ -3,11 +3,12 @@ import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
 
 export type Product = {
-    id: number;
+    id?: number;
     name: string;
     keyword: string;
     description: string;
-    imageSrc: string;
+    imageSrc?: string;
+    active: boolean;
 };
 
 export default function Products({ products }: { products: Product[] }) {

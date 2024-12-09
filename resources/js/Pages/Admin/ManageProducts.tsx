@@ -1,3 +1,5 @@
+import ControlContainer from '@/Components/ControlContainer';
+import CreateProductDialog from '@/Components/CreateProductDialog';
 import HeaderSearch from '@/Components/HeaderSearch';
 import {
     Table,
@@ -16,7 +18,7 @@ export default function ManageProducts({ products }) {
         <AdminLayout>
             <Head title="Manage Orders" />
             <div className="flex items-center justify-between">
-                <h1 className="text-xl font-bold">All Products</h1>
+                <h1 className="text-xl font-bold">All Products and Services</h1>
                 <HeaderSearch
                     className="max-w-96"
                     inputProps={{ placeholder: 'Search Products...' }}
@@ -44,6 +46,9 @@ export default function ManageProducts({ products }) {
                     </TableRow>
                 </TableBody>
             </Table>
+            <ControlContainer>
+                <CreateProductDialog />
+            </ControlContainer>
         </AdminLayout>
     );
 }

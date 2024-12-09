@@ -39,7 +39,6 @@ export function HeaderNavLink({
 }: HeaderNavLinkProps) {
     function isActive() {
         const currentRoute = route().current();
-        console.log(currentRoute);
         if (Array.isArray(targetRouteNames)) {
             // If targetRouteNames is an array, check if it includes the current route
             if (currentRoute === undefined) {
