@@ -28,12 +28,7 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
     return (
         <UserLayout>
             <Head title="Home" />
-            <ImageSlider
-                containerProps={{ className: 'o' }}
-                imgSrc={carouselImages}
-                autoScroll
-                startsFrom={1}
-            />
+            <ImageSlider imgSrc={carouselImages} autoScroll startsFrom={1} />
             <section>
                 <div className="mt-16 flex flex-col space-y-16 lg:my-32 lg:space-y-32">
                     <div className="flex flex-col items-center space-y-8 lg:flex-row lg:space-x-8 lg:space-y-0">
