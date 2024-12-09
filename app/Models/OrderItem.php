@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     protected $fillable = [
-        'orderID', 'productID', 'quantity', 'price'
+        'orderID', 'product_id', 'quantity', 'price'
     ];
 
     // Relationships
@@ -18,7 +18,7 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'productID');
+        return $this->belongsTo(Product::class, 'id');
     }
 
     // Accessor for total price of this order item

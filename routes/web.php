@@ -57,7 +57,13 @@ Route::middleware(['auth', 'isAdmin'])
 
         Route::get('products', [AdminController::class, 'index'])->name('index');
         Route::post('products', [AdminController::class, 'store'])->name('store');
+        Route::patch('products/{id}', [AdminController::class, 'update'])->name('update');
         Route::delete('products/{id}', [AdminController::class, 'destroy'])->name('destroy');
-    });
+
+
+        Route::get('users', [AdminController::class, 'users'])->name('users');
+        Route::delete('{id}/banUser', [AdminController::class, 'banUser'])->name('banUser');
+        Route::patch('{id}/unbanUser', [AdminController::class, 'unbanUser'])->name('unbanUser');
+});
 
 require __DIR__ . '/auth.php';
