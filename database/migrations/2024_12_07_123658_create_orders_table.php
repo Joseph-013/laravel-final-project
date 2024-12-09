@@ -19,7 +19,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->text('specifications');
             $table->arra('files');
-            $table->smallInteger('quantity');
+            $table->unsignedSmallInteger('quantity');
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
             $table->enum('pickup_type', ['pickup', 'delivery']);
