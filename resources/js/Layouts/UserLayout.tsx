@@ -98,7 +98,7 @@ export function HeaderContent() {
                                 targetRouteNames={['cart']}
                                 dropdown
                             >
-                                {/* Cart */}
+                                Cart
                             </HeaderNavLink>
                         </DropdownMenuItem>
                         {authenticated ? (
@@ -188,8 +188,8 @@ export function HeaderContent() {
                     <li className="contents">
                         {authenticated ? (
                             <DropdownMenu>
-                                <DropdownMenuTrigger className="rounded-lg p-3 hover:bg-white/50">
-                                    <IconUserCircle />
+                                <DropdownMenuTrigger className="rounded-lg p-3">
+                                    <IconUserCircle className="text-primary duration-300 hover:text-primary/70" />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="space-y-1">
                                     <DropdownMenuItem>

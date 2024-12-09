@@ -65,22 +65,24 @@ export default function ProductCard({ product, href }: ProductCardProps) {
     return (
         <Link
             href={href}
-            className="group flex h-[22rem] w-52 flex-col rounded-sm border-[1px] border-slate-300 p-2 shadow-md"
+            className="group flex h-[30rem] w-full flex-col rounded-2xl border-[1px] border-slate-300 shadow-md"
         >
-            <div className="mb-2 flex-1">
+            <div className="relative h-[23rem] w-full overflow-hidden rounded-b-none rounded-t-2xl">
                 <img
                     src={product.imageSrc}
                     alt={product.name}
-                    className="mb-3 aspect-[12/10] w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                <h3 className="mb-2 line-clamp-2 text-lg font-bold leading-5">
-                    {product.name}
-                </h3>
-                <p className="line-clamp-3 text-sm">{product.description}</p>
+                <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-40"></div>
             </div>
-            <div className="w-full px-2 pb-2">
-                <div className="flex items-center justify-center rounded-md border bg-primary-foreground px-1 py-2 group-hover:bg-primary group-hover:text-white">
-                    Customize
+            <div className="flex flex-1 flex-col justify-between p-4">
+                <div>
+                    <h2 className="mb-2 text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                        {product.name}
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                        {product.description}
+                    </p>
                 </div>
             </div>
         </Link>

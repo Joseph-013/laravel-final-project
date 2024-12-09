@@ -106,34 +106,26 @@ function Footer() {
                         <ul className="space-y-2">
                             <li>
                                 <Link
-                                    href="/features"
+                                    href="/home"
                                     className="text-sm text-slate-600 hover:text-slate-900"
                                 >
-                                    Features
+                                    Home
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/pricing"
+                                    href="/products"
                                     className="text-sm text-slate-600 hover:text-slate-900"
                                 >
-                                    Pricing
+                                    Products
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/blog"
+                                    href="/orders"
                                     className="text-sm text-slate-600 hover:text-slate-900"
                                 >
-                                    Blog
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/support"
-                                    className="text-sm text-slate-600 hover:text-slate-900"
-                                >
-                                    Support
+                                    Orders
                                 </Link>
                             </li>
                         </ul>
