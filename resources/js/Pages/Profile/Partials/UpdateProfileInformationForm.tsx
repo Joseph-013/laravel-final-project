@@ -18,6 +18,18 @@ export function UpdateProfileInformationForm({
         default_address: profile.default_address,
     });
 
+    // const { id, role, created_at, deleted_at, updated_at, ...def } = profile;
+    const profileDefaultJSONString = JSON.stringify({
+        username: profile.username,
+        fullname: profile.fullname,
+        email: profile.email,
+        social_username: profile.social_username,
+        contact_number: profile.contact_number,
+        default_address: profile.default_address,
+    });
+
+    const profileCurrentJSONString = JSON.stringify(data);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData(e.target.name as keyof ProfileType, e.target.value);
     };
@@ -97,7 +109,7 @@ export function UpdateProfileInformationForm({
                 }}
                 error={errors.default_address}
             />
-            {JSON.stringify(data) !== JSON.stringify(profile) && (
+            {profileCurrentJSONString !== profileDefaultJSONString && (
                 <div className="flex justify-end gap-3">
                     <Button
                         type="button"
