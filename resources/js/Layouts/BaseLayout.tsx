@@ -60,7 +60,7 @@ function Header({ children }: PropsWithChildren) {
             className={`fixed inset-x-0 top-0 flex h-20 w-full justify-center bg-[#b8cce5]`}
         >
             <div
-                className={`flex w-full max-w-[1200px] items-center justify-between px-3`}
+                className={`flex w-full max-w-[1500px] items-center justify-between px-3`}
             >
                 <Link href="/">
                     <img
@@ -86,7 +86,7 @@ function Footer() {
             <div className="-mt-16 bg-background px-2">
                 <img src="/ohsheet-2.png" className="size-32" />
             </div>
-            <div className="mx-auto max-w-[1200px] px-4 py-12">
+            <div className="mx-auto max-w-[1500px] px-4 py-12">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
                     <div className="space-y-4">
                         <img
