@@ -19,7 +19,6 @@ class UsersSeeder extends Seeder
             'fullname' => 'Joseph Victor Paduga',
             'email' => 'sephpaduga@gmail.com',
             'social_username' => 'JVpaduga',
-            'role' => 'admin',
             'contact_number' => '09150054673',
             'default_address' => '1621 Piy Margal St, 478 Z-47, Manila, 1008 Metro Manila',
             'password' => Hash::make('password'),

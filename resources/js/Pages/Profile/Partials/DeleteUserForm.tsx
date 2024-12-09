@@ -9,11 +9,16 @@ interface DeleteUserFormProps {
 }
 
 export default function DeleteUserForm() {
-    const { data, setData, post, processing, errors, reset } =
-        useForm<DeleteUserFormProps>({
-            authorized: false,
-            password: '',
-        });
+    const {
+        data,
+        setData,
+        delete: _delete,
+        errors,
+        reset,
+    } = useForm<DeleteUserFormProps>({
+        authorized: false,
+        password: '',
+    });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData(e.target.name as keyof DeleteUserFormProps, e.target.value);
@@ -21,6 +26,7 @@ export default function DeleteUserForm() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        _delete(route('profile.destroy'), { preserveScroll: true });
     };
 
     return (
@@ -59,6 +65,7 @@ export default function DeleteUserForm() {
                     value: data.password,
                     onChange: handleChange,
                 }}
+                error={errors.password}
             />
             <div
                 className={`justify-end gap-3 ${data.authorized ? 'flex' : 'hidden'}`}
@@ -70,7 +77,6 @@ export default function DeleteUserForm() {
                     disabled={!data.authorized || data.password === ''}
                     type="submit"
                     variant="destructive"
-                    onClick={() => null}
                 >
                     Delete Account
                 </Button>
