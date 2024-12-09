@@ -33,6 +33,13 @@ export function HeaderContent() {
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
+                        <HeaderNavLink icon={<IconPackage />} 
+                            href={route('admin.users')}
+                            targetRouteNames={['admin.users']}>
+                            Users
+                        </HeaderNavLink>
+                    </li>
+                    <li className="contents">
                         <HeaderNavLink icon={<IconPackage />} href="#">
                             Orders
                         </HeaderNavLink>

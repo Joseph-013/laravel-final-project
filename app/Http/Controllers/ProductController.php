@@ -9,7 +9,7 @@ use Inertia\Inertia;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the product.
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -19,7 +19,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new product.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
@@ -27,7 +27,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created product in storage.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
@@ -35,7 +35,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified product.
+     * Display the specified resource.
      */
     public function show(string $id)
     {
@@ -43,16 +43,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified product by keyword attribute.
-     */
-    public function showByKeyword(string $keyword)
-    {
-        $product = Product::where('keyword', $keyword)->firstOrFail();
-        return Inertia::render('OrderForm', ['product' => $product]);
-    }
-
-    /**
-     * Show the form for editing the specified product.
+     * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
@@ -60,7 +51,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified product in storage.
+     * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
@@ -68,7 +59,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified product from storage.
+     * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {

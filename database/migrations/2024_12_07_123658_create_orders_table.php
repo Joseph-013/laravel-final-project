@@ -12,11 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id('orderID');
-            $table->unsignedBigInteger('productID');
-            $table->integer('quantity');
+            $table->id('id');
+            $table->foreignId('product_id')
+                ->constrained('products')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->text('specifications');
+            $table->json('files');
+            $table->unsignedSmallInteger('quantity');
+            $table->date('order_deadline_date')->nullable();
+            $table->time('order_deadline_time');
+            $table->enum('pickup_type', ['pickup', 'delivery']);
             $table->enum('status', ['Pending', 'Completed', 'Cancelled'])->default('Pending');
-            $table->foreign('productID')->references('productID')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

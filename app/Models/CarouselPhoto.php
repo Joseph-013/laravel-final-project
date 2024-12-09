@@ -11,13 +11,21 @@ class CarouselPhoto extends Model
     protected $table = 'carousel_photos';
 
     protected $fillable = [
-        'photoLink', 'title', 'description', 'is_active'
+        'photo',
+        'title',
+        'description',
+        'is_active'
     ];
 
     // Scope for active photos
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function imageSrc()
+    {
+        return "storage/carousel" . $this->photo;
     }
 
     // File handling methods
@@ -30,7 +38,7 @@ class CarouselPhoto extends Model
 
         // Store new photo
         $newPhotoPath = $newPhoto->store('carousel', 'public');
-        
+
         // Update model with new photo path
         $this->photoLink = $newPhotoPath;
         $this->save();
