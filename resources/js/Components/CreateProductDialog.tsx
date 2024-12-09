@@ -56,24 +56,35 @@ export default function CreateProductDialog() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null; // Get the first file
         if (file) {
+            console.log(file);
             setData('image_file', file);
-            // You can now handle the file (e.g., display it, upload it, etc.)
-            // console.log('First image file:', file);
-
-            // // Optionally, preview the image
-            // const reader = new FileReader();
-            // reader.onloadend = () => {
-            //     // You can set the image preview URL in the state
-            //     const imageUrl = reader.result as string;
-            //     console.log('Image Preview URL:', imageUrl);
-            //     // You can set this imageUrl in the state if needed for display
-            // };
-            // reader.readAsDataURL(file);
+          
         }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('keyword', data.keyword); // Using keyword as category
+        formData.append('description', data.description);
+        
+        if (data.image_file) {
+            formData.append('image_file', data.image_file);
+        }
+
+        post(route('admin.store'), {
+            data: formData,
+            onSuccess: () => {
+                reset();
+                setDialogOpen(false);
+            },
+            // Optional: handle validation errors
+            onError: () => {
+                // Handle any errors if needed
+            }
+        });
     };
 
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
@@ -92,6 +103,7 @@ export default function CreateProductDialog() {
                     <DialogDescription />
                     <form
                         onSubmit={handleSubmit}
+                        encType="multipart/form-data"
                         className="flex flex-col gap-y-3 text-start"
                     >
                         <LabeledInput
@@ -156,6 +168,7 @@ export default function CreateProductDialog() {
                             inputProps={{
                                 required: true,
                                 onChange: handleFileChange,
+                                accept: 'image/jpeg,image/png,image/gif,image/jpg', // Restrict file selection in file dialog
                             }}
                         />
 
@@ -165,7 +178,6 @@ export default function CreateProductDialog() {
                             </span>
                             <div className="flex h-10 items-center rounded-md border-[1px] px-3">
                                 <Checkbox
-                                    required
                                     id="active"
                                     checked={data.active}
                                     onChange={(e) => {
