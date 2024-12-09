@@ -14,8 +14,10 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface FormData {
+    product_id: number;
     specifications: string;
     files: File[]; // Explicitly define `files` as an array of File objects
+    quantity: number;
     order_deadline_date: string;
     order_deadline_time: string;
     pickup_type: string;
@@ -30,23 +32,16 @@ export default function OrderForm({
     formData: FormData;
 }) {
     product = {
+        id: 1,
         keyword: keyword,
-    };
-
-    // if need fill agad ng data
-    formData = {
-        specifications: 'asduh yfsiukd fshjk',
-        files: [], // fixed di na nakikita?
-        order_deadline_date: '',
-        order_deadline_time: '',
-        pickup_type: '',
-        authorized: false,
     };
 
     const { data, setData, post, processing, errors, reset } =
         useForm<FormData>({
+            product_id: product.id,
             specifications: '',
             files: [],
+            quantity: 1,
             order_deadline_date: '',
             order_deadline_time: '',
             pickup_type: '',
@@ -150,6 +145,7 @@ export default function OrderForm({
                         <Textarea
                             className="min-h-52"
                             value={data.specifications}
+                            required
                             onChange={(e) =>
                                 setData('specifications', e.target.value)
                             }
@@ -179,6 +175,18 @@ export default function OrderForm({
                             multiple
                         />
                     </InputContainer>
+                    <InputContainer title="Quantity/Copies">
+                        How many times should we produce this request?
+                        <Input
+                            type="number"
+                            min={1}
+                            value={data.quantity}
+                            onChange={(e) =>
+                                setData('quantity', e.target.value)
+                            }
+                        />
+                    </InputContainer>
+
                     <InputContainer title="Pickup date and time">
                         At what date and time would you like to receive your
                         order?
