@@ -1,6 +1,7 @@
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
 import { InputContainer } from '../OrderForm';
+import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import { UpdateProfileInformationForm } from './Partials/UpdateProfileInformationForm';
 
@@ -35,6 +36,9 @@ export default function Edit({ profile }: { profile: ProfileType }) {
                     </InputContainer>
                     <InputContainer title="Update Password">
                         <UpdatePasswordForm />
+                    </InputContainer>
+                    <InputContainer title="Delete Account">
+                        <DeleteUserForm />
                     </InputContainer>
                 </div>
             </div>

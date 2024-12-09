@@ -9,6 +9,7 @@ export default function LabeledInput({
     type,
     id = undefined,
     name = undefined,
+    className = undefined,
 }: {
     label?: string;
     labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
@@ -18,10 +19,11 @@ export default function LabeledInput({
     type: React.HTMLInputTypeAttribute | 'textarea';
     id?: string | undefined;
     name?: string | undefined;
+    className?: string | undefined;
 }) {
     id = name || undefined;
     return (
-        <div>
+        <div className={className}>
             {label && (
                 <Label {...labelProps} htmlFor={id}>
                     {label}
