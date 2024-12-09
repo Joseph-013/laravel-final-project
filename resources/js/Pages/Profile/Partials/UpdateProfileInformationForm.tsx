@@ -1,6 +1,7 @@
 import LabeledInput from '@/Components/LabeledInput';
 import { Button } from '@/Components/ui/button';
 import { useForm } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { ProfileType } from '../Edit';
 
 export function UpdateProfileInformationForm({
@@ -8,7 +9,7 @@ export function UpdateProfileInformationForm({
 }: {
     profile: ProfileType;
 }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, patch, errors, reset, clearErrors } = useForm({
         username: profile.username,
         fullname: profile.fullname,
         email: profile.email,
@@ -23,6 +24,9 @@ export function UpdateProfileInformationForm({
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        patch(route('profile.update'), {
+            onSuccess: () => toast.success('Profile updated successfully.'),
+        });
     };
 
     return (
@@ -36,6 +40,7 @@ export function UpdateProfileInformationForm({
                     value: data.username,
                     onChange: handleChange,
                 }}
+                error={errors.username}
             />
             <LabeledInput
                 label="Fullname:"
@@ -46,6 +51,7 @@ export function UpdateProfileInformationForm({
                     value: data.fullname,
                     onChange: handleChange,
                 }}
+                error={errors.fullname}
             />
             <LabeledInput
                 label="Email:"
@@ -56,6 +62,7 @@ export function UpdateProfileInformationForm({
                     value: data.email,
                     onChange: handleChange,
                 }}
+                error={errors.email}
             />
             <LabeledInput
                 label="Social Username (Facebook/Instagram):"
@@ -66,6 +73,7 @@ export function UpdateProfileInformationForm({
                     value: data.social_username,
                     onChange: handleChange,
                 }}
+                error={errors.social_username}
             />
             <LabeledInput
                 label="Contact Number:"
@@ -76,6 +84,7 @@ export function UpdateProfileInformationForm({
                     value: data.contact_number,
                     onChange: handleChange,
                 }}
+                error={errors.contact_number}
             />
             <LabeledInput
                 label="Default Address (you can change this in your orders):"
@@ -86,19 +95,21 @@ export function UpdateProfileInformationForm({
                     value: data.default_address,
                     onChange: handleChange,
                 }}
+                error={errors.default_address}
             />
             {JSON.stringify(data) !== JSON.stringify(profile) && (
                 <div className="flex justify-end gap-3">
                     <Button
                         type="button"
-                        onClick={() => reset()}
+                        onClick={() => {
+                            reset();
+                            clearErrors();
+                        }}
                         variant="outline"
                     >
                         Reset
                     </Button>
-                    <Button type="submit" onClick={() => null}>
-                        Submit
-                    </Button>
+                    <Button type="submit">Submit</Button>
                 </div>
             )}
         </form>

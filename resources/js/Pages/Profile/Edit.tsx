@@ -24,7 +24,7 @@ export interface ProfileType {
 }
 
 export default function Edit({ profile }: { profile: ProfileType }) {
-    profile = dummyProfile;
+    // profile = dummyProfile;
     return (
         <UserLayout>
             <Head title="Profile" />

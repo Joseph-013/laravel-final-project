@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('social_username')->unique();
             $table->string('contact_number');
-            $table->text('default_address')->nullable();
+            $table->text('default_address');
             $table->enum('role', ['user', 'admin'])->default('user');
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

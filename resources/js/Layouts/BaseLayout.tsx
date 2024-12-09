@@ -43,7 +43,7 @@ export default function BaseLayout({
                 <Footer />
                 <Header>{headerContent}</Header>
             </div>
-            <Toaster />
+            <Toaster richColors />
         </>
     );
 }

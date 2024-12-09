@@ -10,6 +10,7 @@ export default function LabeledInput({
     id = undefined,
     name = undefined,
     className = undefined,
+    error = undefined,
 }: {
     label?: string;
     labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
@@ -20,6 +21,7 @@ export default function LabeledInput({
     id?: string | undefined;
     name?: string | undefined;
     className?: string | undefined;
+    error?: string | undefined;
 }) {
     id = name || undefined;
     return (
@@ -42,6 +44,11 @@ export default function LabeledInput({
                     id={id}
                     name={name}
                 />
+            )}
+            {error && (
+                <div className="mt-1 w-fit rounded-md bg-red-100 px-2 py-1 text-sm font-bold text-red-500">
+                    {error}
+                </div>
             )}
         </div>
     );
