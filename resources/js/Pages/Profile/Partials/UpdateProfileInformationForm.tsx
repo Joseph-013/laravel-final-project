@@ -1,118 +1,106 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
-import { Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import LabeledInput from '@/Components/LabeledInput';
+import { Button } from '@/Components/ui/button';
+import { useForm } from '@inertiajs/react';
+import { ProfileType } from '../Edit';
 
-export default function UpdateProfileInformation({
-    mustVerifyEmail,
-    status,
-    className = '',
+export function UpdateProfileInformationForm({
+    profile,
 }: {
-    mustVerifyEmail: boolean;
-    status?: string;
-    className?: string;
+    profile: ProfileType;
 }) {
-    const user = usePage().props.auth.user;
+    const { data, setData, post, processing, errors, reset } = useForm({
+        username: profile.username,
+        fullname: profile.fullname,
+        email: profile.email,
+        social_username: profile.social_username,
+        contact_number: profile.contact_number,
+        default_address: profile.default_address,
+    });
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
-        useForm({
-            name: user.name,
-            email: user.email,
-        });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setData(e.target.name as keyof ProfileType, e.target.value);
+    };
 
-    const submit: FormEventHandler = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        patch(route('profile.update'));
     };
 
     return (
-        <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
-                </h2>
-
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
-                </p>
-            </header>
-
-            <form onSubmit={submit} className="mt-6 space-y-6">
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
-                    />
-
-                    <InputError className="mt-2" message={errors.name} />
-                </div>
-
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        className="mt-1 block w-full"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                        autoComplete="username"
-                    />
-
-                    <InputError className="mt-2" message={errors.email} />
-                </div>
-
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="mt-2 text-sm text-gray-800">
-                            Your email address is unverified.
-                            <Link
-                                href={route('verification.send')}
-                                method="post"
-                                as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
-
-                        {status === 'verification-link-sent' && (
-                            <div className="mt-2 text-sm font-medium text-green-600">
-                                A new verification link has been sent to your
-                                email address.
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
-                    <Transition
-                        show={recentlySuccessful}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
-                        leaveTo="opacity-0"
+        <form onSubmit={handleSubmit} className="flex flex-col gap-y-3">
+            <LabeledInput
+                label="Username:"
+                type="text"
+                name="username"
+                inputProps={{
+                    required: true,
+                    value: data.username,
+                    onChange: handleChange,
+                }}
+            />
+            <LabeledInput
+                label="Fullname:"
+                type="text"
+                name="fullname"
+                inputProps={{
+                    required: true,
+                    value: data.fullname,
+                    onChange: handleChange,
+                }}
+            />
+            <LabeledInput
+                label="Email:"
+                type="text"
+                name="email"
+                inputProps={{
+                    required: true,
+                    value: data.email,
+                    onChange: handleChange,
+                }}
+            />
+            <LabeledInput
+                label="Social Username (Facebook/Instagram):"
+                type="text"
+                name="social_username"
+                inputProps={{
+                    required: true,
+                    value: data.social_username,
+                    onChange: handleChange,
+                }}
+            />
+            <LabeledInput
+                label="Contact Number:"
+                type="text"
+                name="contact_number"
+                inputProps={{
+                    required: true,
+                    value: data.contact_number,
+                    onChange: handleChange,
+                }}
+            />
+            <LabeledInput
+                label="Default Address (you can change this in your orders):"
+                type="text"
+                name="default_address"
+                inputProps={{
+                    required: true,
+                    value: data.default_address,
+                    onChange: handleChange,
+                }}
+            />
+            {JSON.stringify(data) !== JSON.stringify(profile) && (
+                <div className="flex justify-end gap-3">
+                    <Button
+                        type="button"
+                        onClick={() => reset()}
+                        variant="outline"
                     >
-                        <p className="text-sm text-gray-600">
-                            Saved.
-                        </p>
-                    </Transition>
+                        Reset
+                    </Button>
+                    <Button type="submit" onClick={() => null}>
+                        Submit
+                    </Button>
                 </div>
-            </form>
-        </section>
+            )}
+        </form>
     );
 }
