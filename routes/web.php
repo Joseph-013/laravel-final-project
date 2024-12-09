@@ -32,9 +32,7 @@ Route::middleware('auth', 'isUser')->group(function () {
         return Inertia::render('Welcome', []);
     })->name('home');
 
-    Route::get('/products/{keyword}', function ($keyword) {
-        return Inertia::render('OrderForm', ['keyword' => $keyword]);
-    })->name('product.form');
+    Route::get('/products/{keyword}', [ProductController::class, 'showByKeyword'])->name('product.form');
 
     Route::get('/orders', function () {
         return Inertia::render('Orders');

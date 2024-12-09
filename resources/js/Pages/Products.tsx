@@ -5,8 +5,8 @@ import { Head } from '@inertiajs/react';
 export type Product = {
     id?: number;
     name: string;
-    keyword: string;
     description: string;
+    keyword: string;
     imageSrc?: string;
     active: boolean;
 };

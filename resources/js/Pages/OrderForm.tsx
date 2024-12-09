@@ -12,8 +12,10 @@ import { Textarea } from '@/Components/ui/textarea';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import { Product } from './Products';
 
 interface FormData {
+    product_id: number;
     specifications: string;
     files: File[]; // Explicitly define `files` as an array of File objects
     order_deadline_date: string;
@@ -23,28 +25,15 @@ interface FormData {
 }
 
 export default function OrderForm({
-    keyword,
     product,
     formData,
 }: {
     formData: FormData;
+    product: Product;
 }) {
-    product = {
-        keyword: keyword,
-    };
-
-    // if need fill agad ng data
-    formData = {
-        specifications: 'asduh yfsiukd fshjk',
-        files: [], // fixed di na nakikita?
-        order_deadline_date: '',
-        order_deadline_time: '',
-        pickup_type: '',
-        authorized: false,
-    };
-
     const { data, setData, post, processing, errors, reset } =
         useForm<FormData>({
+            product_id: product.id!,
             specifications: '',
             files: [],
             order_deadline_date: '',
@@ -52,6 +41,9 @@ export default function OrderForm({
             pickup_type: '',
             authorized: false,
         });
+
+    console.log('data', data);
+    console.log('product', product);
 
     useEffect(() => {
         if (formData) {
@@ -76,7 +68,7 @@ export default function OrderForm({
     return (
         <UserLayout>
             {/* replace with product name */}
-            <Head title={`Order: ${product.keyword}`} />
+            <Head title={`Order: ${product.name}`} />
             <div className="w-full p-3">
                 <Link
                     href={route('products')}
@@ -91,7 +83,7 @@ export default function OrderForm({
                     onSubmit={handleSubmit}
                 >
                     <InputContainer className="text-xl font-bold">
-                        Ordering: {product.keyword}
+                        Ordering: {product.name}
                     </InputContainer>
                     <InputContainer title="Customer Notes">
                         <span className="w-full">
