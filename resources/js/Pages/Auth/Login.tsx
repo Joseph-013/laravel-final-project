@@ -46,7 +46,7 @@ export default function Login({
                             </div>
                         )}
                         <div className="relative -mt-20 flex h-screen flex-col items-center justify-center">
-                            <div className="w-[600px] max-w-[90%] rounded bg-white p-8 shadow-none md:shadow-lg">
+                            <div className="w-[600px] max-w-[90%] rounded bg-white p-8 shadow-none outline outline-[1px] outline-gray-200 md:shadow-lg">
                                 <h1 className="mb-10 text-4xl font-extrabold leading-normal text-primary">
                                     Sign in
                                 </h1>
