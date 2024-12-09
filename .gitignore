@@ -6,10 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
-!/vendor/laravel/
-!/vendor/laravel/framework/
-!/vendor/laravel/framework/src/
-!/vendor/laravel/framework/src/Illuminate/Auth/Middleware/RedirectIfAuthenticated.php
+!vendor/laravel/framework/src/Illuminate/Auth/Middleware/RedirectIfAuthenticated.php
 .env
 .env.backup
 .env.production
