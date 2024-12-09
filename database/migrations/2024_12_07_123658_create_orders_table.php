@@ -18,11 +18,12 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->text('specifications');
-            $table->json('files');
+            $table->arra('files');
             $table->smallInteger('quantity');
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
             $table->enum('pickup_type', ['pickup', 'delivery']);
+            $table->enum('status', ['Pending', 'Completed', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });
     }
