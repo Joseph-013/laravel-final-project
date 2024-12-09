@@ -135,6 +135,7 @@ export function HeaderContent() {
                                 <HeaderNavLink
                                     icon={<IconLogin2 />}
                                     href={route('login')}
+                                    targetRouteNames={['login']}
                                     dropdown
                                 >
                                     Login
@@ -226,6 +227,7 @@ export function HeaderContent() {
                             <HeaderNavLink
                                 icon={<IconLogin2 />}
                                 href={route('login')}
+                                targetRouteNames={['login']}
                             >
                                 Login
                             </HeaderNavLink>
