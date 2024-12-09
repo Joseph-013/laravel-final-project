@@ -1,4 +1,4 @@
-import { ProductGridItem, sampleProducts } from '@/Components/ProductCard';
+import { ProductGridItem } from '@/Components/ProductCard';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
 
@@ -12,7 +12,10 @@ export type Product = {
 };
 
 export default function Products({ products }: { products: Product[] }) {
-    products = sampleProducts;
+    console.log('products', products);
+
+    // products = sampleProducts;
+
     return (
         <UserLayout>
             <Head title="Products" />

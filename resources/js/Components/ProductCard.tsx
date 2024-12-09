@@ -1,61 +1,6 @@
 import { Product } from '@/Pages/Products';
 import { Link } from '@inertiajs/react';
 
-export const sampleProducts: Product[] = [
-    {
-        id: 0,
-        name: 'Documents',
-        keyword: 'documents',
-        description: 'Lorem lajhsd kjash dkjashd',
-        imageSrc:
-            'https://th.bing.com/th/id/OIP.WGwRpXGxJetkp5l5n01J4AHaDb?rs=1&pid=ImgDetMain',
-    },
-    {
-        id: 1,
-        name: 'ID Photos',
-        keyword: 'id-photos',
-        description: 'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash',
-        imageSrc:
-            'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
-    },
-    {
-        id: 2,
-        name: 'Legal Documents',
-        keyword: 'legal-documents',
-        description:
-            'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd',
-        imageSrc:
-            'https://th.bing.com/th/id/OIP.WGwRpXGxJetkp5l5n01J4AHaDb?rs=1&pid=ImgDetMain',
-    },
-    {
-        id: 3,
-        name: 'Photo Editing',
-        keyword: 'photo-editing',
-        description:
-            'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd',
-        imageSrc:
-            'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
-    },
-    {
-        id: 4,
-        name: 'Photo Editing',
-        keyword: 'photo-editing',
-        description:
-            'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd',
-        imageSrc:
-            'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
-    },
-    {
-        id: 5,
-        name: 'Photo Editing',
-        keyword: 'photo-editing',
-        description:
-            'Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd Lorem lajhsd kjash dkjashd',
-        imageSrc:
-            'https://greatimage.com.ph/wp-content/uploads/2019/08/ID-3.jpg',
-    },
-];
-
 type ProductCardProps = {
     product: Product;
     href: string;

@@ -19,6 +19,9 @@ class Product extends Model
         'active' => 'boolean'
     ];
 
+    protected $appends = ['imageSrc'];
+
+
     // Relationships
     public function orderItems()
     {
@@ -31,11 +34,19 @@ class Product extends Model
     }
 
 
-
-
     // Mutators and Accessors
     public function getPriceFormattedAttribute()
     {
         return number_format($this->price, 2);
+    }
+
+    public function getImageSrcAttribute()
+    {
+        $filename = $this->keyword . '.jpg';
+
+        // Check if the file exists in the products directory
+        if (Storage::disk('products')->exists($filename)) {
+            return Storage::disk('products')->url($filename);
+        }
     }
 }
