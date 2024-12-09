@@ -9,11 +9,14 @@ class Product extends Model
 {
 
     protected $fillable = [
-        'image_file',
-        'name', 
+        'name',
         'description',
-        'keyword', 
-        'active', 
+        'keyword',
+        'active',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean'
     ];
 
     // Relationships
@@ -23,18 +26,16 @@ class Product extends Model
     }
 
     public function carts()
-{
-    return $this->hasMany(Cart::class);
-}
+    {
+        return $this->hasMany(Cart::class);
+    }
 
 
-   
+
 
     // Mutators and Accessors
     public function getPriceFormattedAttribute()
     {
         return number_format($this->price, 2);
     }
-
-
 }
