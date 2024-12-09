@@ -43,6 +43,17 @@ class ProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function showByKeyword(string $keyword)
+
+    {
+        $product = Product::where('keyword', $keyword)->firstOrFail();
+        return Inertia::render('OrderForm', ['product' => $product]);
+        //
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)

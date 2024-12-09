@@ -12,6 +12,7 @@ import { Textarea } from '@/Components/ui/textarea';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import { Product } from './Products';
 
 interface FormData {
     product_id: number;
@@ -25,20 +26,15 @@ interface FormData {
 }
 
 export default function OrderForm({
-    keyword,
     product,
     formData,
 }: {
     formData: FormData;
+    product: Product;
 }) {
-    product = {
-        id: 1,
-        keyword: keyword,
-    };
-
     const { data, setData, post, processing, errors, reset } =
         useForm<FormData>({
-            product_id: product.id,
+            product_id: product.id!,
             specifications: '',
             files: [],
             quantity: 1,
@@ -71,7 +67,7 @@ export default function OrderForm({
     return (
         <UserLayout>
             {/* replace with product name */}
-            <Head title={`Order: ${product.keyword}`} />
+            <Head title={`Order: ${product.name}`} />
             <div className="w-full p-3">
                 <Link
                     href={route('products')}
@@ -86,7 +82,7 @@ export default function OrderForm({
                     onSubmit={handleSubmit}
                 >
                     <InputContainer className="text-xl font-bold">
-                        Ordering: {product.keyword}
+                        Ordering: {product.name}
                     </InputContainer>
                     <InputContainer title="Customer Notes">
                         <span className="w-full">
