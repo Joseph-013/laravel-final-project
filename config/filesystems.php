@@ -43,6 +43,14 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
+
+            // customs
+            'products' => [
+                'driver' => 'local',
+                'root' => storage_path('app/public/products'),
+                'url' => env('APP_URL') . '/storage/products',
+                'visibility' => 'public',
+            ],
         ],
 
         's3' => [
