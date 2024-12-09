@@ -95,8 +95,7 @@ function Footer() {
                             className="h-12 w-auto"
                         />
                         <p className="text-sm text-slate-600">
-                            Simplifying your spreadsheet experience with
-                            powerful features and intuitive design.
+                            Paper, prints, and many more. 🖨️
                         </p>
                     </div>
                     <div>
