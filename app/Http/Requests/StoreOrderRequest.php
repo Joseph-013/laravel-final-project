@@ -37,7 +37,6 @@ class StoreOrderRequest extends FormRequest
                 }
             }],
             'pickup_type' => 'required|in:Pickup,Delivery',
-            'status' => 'nullable|in:Cart,Pending,Completed,Cancelled',
         ];
     }
 }

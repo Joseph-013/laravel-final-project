@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Toast;
-use App\Http\Requests\OrderRequest;
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
+use App\Models\OrderFiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -34,17 +35,24 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(OrderRequest $request)
+    public function store(StoreOrderRequest $request)
     {
 
         // $dataFiles = $request->input('files');
         $data = $request->validated();
 
-        // dd($request->all());
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'product_id' => $data['product_id'],
+            'specifications' => $data['specifications'],
+            'quantity' => $data['quantity'],
+            'order_deadline_date' => $data['order_deadline_date'],
+            'order_deadline_time' => $data['order_deadline_time'],
+            'pickup_type' => $data['pickup_type'],
+            'status' => 'Pending',
+        ]);
 
-        // dd($data['files']);
-
-
+        OrderFiles::createAndStore($data['files'], $order->id);
 
         return back();
     }

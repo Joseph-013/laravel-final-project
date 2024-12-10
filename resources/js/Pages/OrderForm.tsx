@@ -19,7 +19,7 @@ import { Product } from './Products';
 interface FormData {
     product_id: number;
     specifications: string;
-    files: File[]; // Explicitly define `files` as an array of File objects
+    files: File[];
     quantity: number;
     order_deadline_date: string;
     order_deadline_time: string;
@@ -55,6 +55,8 @@ export default function OrderForm({
             // authorized: false,
         });
 
+    console.log('errors', errors);
+
     useEffect(() => {
         if (formData) {
             setData(formData);
@@ -83,6 +85,13 @@ export default function OrderForm({
         console.log(data);
     };
 
+    const getErrorMessage = (error: string | undefined, index: number) => {
+        if (error) {
+            return error.replace(`The files.${index} field`, 'This file');
+        }
+        return null;
+    };
+
     return (
         <UserLayout>
             {/* replace with product name */}
@@ -103,6 +112,7 @@ export default function OrderForm({
                     <InputContainer className="text-xl font-bold">
                         Ordering: {product.name}
                     </InputContainer>
+
                     <InputContainer title="Customer Notes">
                         <span className="w-full">
                             ‼️ Please note of our rules for turnover times:
@@ -143,6 +153,7 @@ export default function OrderForm({
                             </ul>
                         </span>
                     </InputContainer>
+
                     <InputContainer title="Specifications" required>
                         Please provide detailed specifications of your print job
                         here by following this format:
@@ -171,6 +182,7 @@ export default function OrderForm({
                             </ColorBadge>
                         )}
                     </InputContainer>
+
                     <InputContainer title="File Upload" required>
                         <span className="inline">
                             For your file/s, please upload them here (accepts
@@ -178,12 +190,27 @@ export default function OrderForm({
                         </span>
 
                         {data.files.length !== 0 && (
-                            <ul className="mb-1 text-sm opacity-70">
-                                {data.files.map((file) => (
-                                    <li key={file.name}>• {file.name}</li>
+                            <ul className="mb-1 space-y-3 text-sm">
+                                {data.files.map((file, index) => (
+                                    <li key={file.name}>
+                                        <div className="line-clamp-1 opacity-70">
+                                            • {file.name}
+                                        </div>
+                                        {/* @ts-expect-error: Ignoring the type error because `files.${index}` is dynamically generated and TypeScript cannot infer it correctly. */}
+                                        {errors[`files.${index}`] && (
+                                            <ColorBadge color="red">
+                                                {getErrorMessage(
+                                                    // @ts-expect-error: Ignoring the type error because `files.${index}` is dynamically generated and TypeScript cannot infer it correctly.
+                                                    errors[`files.${index}`],
+                                                    index,
+                                                )}
+                                            </ColorBadge>
+                                        )}
+                                    </li>
                                 ))}
                             </ul>
                         )}
+
                         <Input
                             required
                             type="file"
@@ -191,10 +218,11 @@ export default function OrderForm({
                             onChange={handleFileChange}
                             multiple
                         />
-                        {errors.files && (
+                        {errors.files && errors.files.length === 0 && (
                             <ColorBadge color="red">{errors.files}</ColorBadge>
                         )}
                     </InputContainer>
+
                     <InputContainer title="Quantity/Copies" required>
                         How many times should we produce this order?
                         <Input
@@ -265,6 +293,7 @@ export default function OrderForm({
                             </ColorBadge>
                         )}
                     </InputContainer>
+
                     <InputContainer title="Pickup Method" required>
                         <span className="inline">
                             How would you like to receive your order?
@@ -296,6 +325,7 @@ export default function OrderForm({
                             </ColorBadge>
                         )}
                     </InputContainer>
+
                     <InputContainer title="Confirmation" required>
                         <div className="flex items-center">
                             <Checkbox
@@ -316,6 +346,7 @@ export default function OrderForm({
                             </label>
                         </div>
                     </InputContainer>
+
                     <div className="flex flex-col justify-end gap-x-3 gap-y-4 sm:flex-row">
                         <Button
                             variant="outline"
@@ -340,12 +371,12 @@ export default function OrderForm({
 
 export function InputContainer({
     children,
-    title = null,
+    title = undefined,
     className,
     required = false,
 }: {
     children: React.ReactNode;
-    title?: string | null;
+    title?: string | undefined;
     className?: string;
     required?: boolean;
 }) {
