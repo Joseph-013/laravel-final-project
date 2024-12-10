@@ -2,6 +2,7 @@
 
 use App\Helpers\Toast;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -33,9 +34,7 @@ Route::middleware('auth', 'isUser')->group(function () {
 
     Route::get('/products/{keyword}', [ProductController::class, 'showByKeyword'])->name('product.form');
 
-    Route::get('/orders', function () {
-        return Inertia::render('Orders');
-    })->name('orders');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
     Route::get('/cart', function () {
         return Inertia::render('Cart');

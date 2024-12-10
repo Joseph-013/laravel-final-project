@@ -9,22 +9,23 @@ import {
 } from '@/Components/ui/table';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
-import { dummyData } from './Cart';
+import { Product } from './Products';
 
 export interface OrderType {
-    id?: number;
-    product_type: string;
+    id: number;
+    user_id: number;
+    product_id: number;
+    product?: Product;
     specifications: string;
     //
-    order_deadline_date: string;
+    quantity: number;
+    order_deadline_date?: string;
     order_deadline_time: string;
-    pickup_type: string;
+    pickup_type: 'Pickup' | 'Delivery';
     status: 'Pending' | 'Completed' | 'Cancelled';
 }
 
 export default function Orders({ orders }: { orders: OrderType[] }) {
-    orders = dummyData;
-
     const colorMap: Record<
         'Pending' | 'Completed' | 'Cancelled',
         'orange' | 'green' | 'red'
@@ -55,10 +56,10 @@ export default function Orders({ orders }: { orders: OrderType[] }) {
                             <TableCell className="font-medium">
                                 {item.id}
                             </TableCell>
-                            <TableCell>{item.product_type}</TableCell>
+                            <TableCell>{item.product?.name}</TableCell>
                             <TableCell>{item.specifications}</TableCell>
                             <TableCell className="min-w-24">
-                                {item.order_deadline_date}
+                                {item.order_deadline_date || '--'}
                             </TableCell>
                             <TableCell>{item.order_deadline_time}</TableCell>
                             <TableCell>{item.pickup_type}</TableCell>

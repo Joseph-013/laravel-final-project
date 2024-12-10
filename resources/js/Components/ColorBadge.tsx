@@ -13,7 +13,7 @@ export default function ColorBadge({
     children,
     color = 'neutral', // Default color fallback
 }: {
-    children: string;
+    children: React.ReactNode;
     color?: keyof typeof colorClasses;
 }) {
     const className = colorClasses[color];
