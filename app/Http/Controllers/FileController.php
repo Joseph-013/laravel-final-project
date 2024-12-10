@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    public function show($filename)
+    public function showOrder($filename)
     {
         if (!Storage::disk('orders')->exists($filename)) abort(404);
 

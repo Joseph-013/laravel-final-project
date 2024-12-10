@@ -24,5 +24,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::prefix('/files')->middleware('auth')->name('files.')->group(function () {
-    Route::get('/orders/{filename}', [FileController::class, 'show'])->name('order');
+    Route::get('/orders/{filename}', [FileController::class, 'showOrder'])->name('order');
 });
