@@ -15,7 +15,7 @@ interface Product {
     keyword: string;
     description: string;
     active: boolean;
-    image_file: string | null;
+    imageSrc?: string;
 }
 
 interface EditProductDialogProps {

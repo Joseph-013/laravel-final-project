@@ -23,7 +23,7 @@ interface Product {
   description:string;
   keyword: string;
   active: boolean;
-  image_file: string | null;
+  imageSrc?: string;
 }
 
 interface ManageProductsProps {
@@ -74,9 +74,9 @@ export default function ManageProducts({ products }: ManageProductsProps) {
               <TableCell className="font-medium">{product.name}</TableCell>
               <TableCell>{product.active ? 'Active' : 'Inactive'}</TableCell>
               <TableCell>
-                {product.image_file ? (
+                {product.imageSrc ? (
                   <img
-                    src={product.image_file}
+                    src={product.imageSrc}
                     alt={product.name}
                     className="h-10 w-10 object-cover rounded"
                   />

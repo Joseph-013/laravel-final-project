@@ -9,23 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Intervention\Image\Laravel\Facades\Image;
 
 class AdminController extends Controller
 {
     public function index()
 {
-    $products = Product::all()->map(function ($product) {
-        return [
-            'id' => $product->id,
-            'name' => $product->name,
-            'description' => $product->description,
-            'keyword' => $product->keyword,
-            'active' => $product->active,
-            'image_file' => $product->image_file 
-                ? Storage::url($product->image_file) 
-                : null
-        ];
-    });
+    $products = Product::all();
 
     return Inertia::render('Admin/ManageProducts', [
         'products' => $products
@@ -57,8 +47,17 @@ public function store(Request $request)
 
     // Handle image upload
     if ($request->hasFile('image_file')) {
-        $imagePath = $request->file('image_file')->store('products', 'public');
-        $product->image_file = $imagePath;
+        $file = $request->file('image_file');
+        $filename = $request->input('keyword'). '.' . $file->getClientOriginalExtension();;
+
+        $file->storeAs('products', $filename, 'public');
+
+        $urlPath = 'storage/products/' . $filename;
+        
+        $image = Image::read($urlPath)->cover(500, 500, 'center');
+        $image->save();
+
+
     } else {
         $product->image_file = 'products/default.jpg';
     }
@@ -91,12 +90,26 @@ public function update(Request $request, $id)
     $product->description = $request->input('description');
     $product->active = $request->input('active');
 
+    // Handle image upload
     if ($request->hasFile('image_file')) {
-        // Delete old image
-        if ($product->image_file && Storage::exists($product->image_file)) {
-            Storage::delete($product->image_file);
+        $filename = str_replace('/storage/products/', '', $product->imageSrc);
+
+        if (Storage::disk('products')->exists($filename)) {
+            Storage::disk('products')->delete($filename);
         }
-        $product->image_file = $request->file('image_file')->store('products', 'public');
+        $file = $request->file('image_file');
+        $filename = $request->input('keyword'). '.' . $file->getClientOriginalExtension();;
+
+        $file->storeAs('products', $filename, 'public');
+
+        $urlPath = 'storage/products/' . $filename;
+        
+        $image = Image::read($urlPath)->cover(500, 500, 'center');
+        $image->save();
+
+
+    } else {
+        $product->image_file = 'products/default.jpg';
     }
 
     $product->save();
@@ -107,7 +120,14 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
-    $product = Product::find($id);
+    $product = Product::findOrFail($id);
+
+    $filename = str_replace('/storage/products/', '', $product->imageSrc);
+
+    if (Storage::disk('public')->exists('products/' . $filename)) {
+        Storage::disk('public')->delete('products/' . $filename);
+    }
+
     $product->delete();
 
     return redirect()->route('admin.index')->with('success', 'Product deleted successfully');

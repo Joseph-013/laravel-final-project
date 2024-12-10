@@ -14,7 +14,7 @@ export default function ProductCard({ product, href }: ProductCardProps) {
         >
             <div className="relative h-[23rem] w-full overflow-hidden rounded-b-none rounded-t-2xl">
                 <img
-                    src={product.image_file}
+                    src={product.imageSrc}
                     alt={product.name}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />

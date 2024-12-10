@@ -42,7 +42,13 @@ class Product extends Model
 
     public function getImageSrcAttribute()
     {
-        $filename = $this->keyword . '.jpg';
+        $extensions = ['jpg', 'png', 'webp', 'jpeg', 'jfif'];
+    foreach ($extensions as $extension) {
+        $filename = $this->keyword . '.' . $extension;
+        if (Storage::disk('products')->exists($filename)) {
+            return Storage::disk('products')->url($filename);
+        }
+    }
 
         // Check if the file exists in the products directory
         if (Storage::disk('products')->exists($filename)) {
