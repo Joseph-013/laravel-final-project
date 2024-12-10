@@ -22,7 +22,7 @@ interface CartType extends OrderType {
 export default function Cart({ carts }: { carts: CartType[] }) {
     console.log('carts', carts);
     function handleDeleteCartItem(id: number) {
-        router.delete(route('cart.delete', id), {
+        router.delete(route('cart.destroy', id), {
             onSuccess: () => toast.info('Cart item successfully removed.'),
             onError: () =>
                 toast.warning('Cannot delete cart item at this time.'),

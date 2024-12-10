@@ -1,4 +1,5 @@
 import Checkbox from '@/Components/Checkbox';
+import ColorBadge from '@/Components/ColorBadge';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import {
@@ -12,6 +13,7 @@ import { Textarea } from '@/Components/ui/textarea';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import { toast } from 'sonner';
 import { Product } from './Products';
 
 interface FormData {
@@ -32,16 +34,25 @@ export default function OrderForm({
     formData: FormData;
     product: Product;
 }) {
-    const { data, setData, post, processing, errors, reset } =
+    const { data, setData, post, errors, reset, clearErrors } =
         useForm<FormData>({
             product_id: product.id!,
-            specifications: '',
+            specifications: 'asdasdasda sda sdasda dsasd asd fgh',
             files: [],
             quantity: 1,
-            order_deadline_date: '',
-            order_deadline_time: '',
-            pickup_type: '',
-            authorized: false,
+            order_deadline_date: '2024-12-18',
+            order_deadline_time: '18:48',
+            pickup_type: 'Delivery',
+            authorized: true,
+
+            // product_id: product.id!,
+            // specifications: '',
+            // files: [],
+            // quantity: 1,
+            // order_deadline_date: '',
+            // order_deadline_time: '',
+            // pickup_type: '',
+            // authorized: false,
         });
 
     useEffect(() => {
@@ -60,6 +71,14 @@ export default function OrderForm({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // post
+        post(route('orders.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                toast.success('Order successfully submitted.');
+                clearErrors();
+            },
+        });
         console.log('submit');
         console.log(data);
     };
@@ -124,7 +143,7 @@ export default function OrderForm({
                             </ul>
                         </span>
                     </InputContainer>
-                    <InputContainer title="Specifications">
+                    <InputContainer title="Specifications" required>
                         Please provide detailed specifications of your print job
                         here by following this format:
                         <ul>
@@ -146,14 +165,16 @@ export default function OrderForm({
                                 setData('specifications', e.target.value)
                             }
                         />
+                        {errors.specifications && (
+                            <ColorBadge color="red">
+                                {errors.specifications}
+                            </ColorBadge>
+                        )}
                     </InputContainer>
-                    <InputContainer title="File Upload">
+                    <InputContainer title="File Upload" required>
                         <span className="inline">
                             For your file/s, please upload them here (accepts
                             multiple file uploads):
-                            <span className="ml-2 text-lg font-bold text-red-500">
-                                *
-                            </span>
                         </span>
 
                         {data.files.length !== 0 && (
@@ -170,59 +191,83 @@ export default function OrderForm({
                             onChange={handleFileChange}
                             multiple
                         />
+                        {errors.files && (
+                            <ColorBadge color="red">{errors.files}</ColorBadge>
+                        )}
                     </InputContainer>
-                    <InputContainer title="Quantity/Copies">
-                        How many times should we produce this request?
+                    <InputContainer title="Quantity/Copies" required>
+                        How many times should we produce this order?
                         <Input
                             type="number"
                             min={1}
                             value={data.quantity}
                             onChange={(e) =>
-                                setData('quantity', e.target.value)
+                                setData(
+                                    'quantity',
+                                    parseInt(e.target.value, 10),
+                                )
                             }
                         />
+                        {errors.quantity && (
+                            <ColorBadge color="red">
+                                {errors.quantity}
+                            </ColorBadge>
+                        )}
                     </InputContainer>
 
                     <InputContainer title="Pickup date and time">
                         At what date and time would you like to receive your
                         order?
                         <div className="flex flex-wrap gap-3">
-                            <Input
-                                type="date"
-                                className="w-fit"
-                                value={data.order_deadline_date}
-                                onChange={(e) =>
-                                    setData(
-                                        'order_deadline_date',
-                                        e.target.value,
-                                    )
-                                }
-                            />
-                            <div className="flex">
+                            <div className="flex items-center gap-x-1">
+                                Date:
                                 <Input
-                                    required
-                                    type="time"
+                                    type="date"
                                     className="w-fit"
-                                    value={data.order_deadline_time}
+                                    value={data.order_deadline_date}
                                     onChange={(e) =>
                                         setData(
-                                            'order_deadline_time',
+                                            'order_deadline_date',
                                             e.target.value,
                                         )
                                     }
                                 />
-                                <span className="ml-1 text-lg font-bold text-red-500">
-                                    *
-                                </span>
+                            </div>
+                            <div className="flex items-center gap-x-1">
+                                Time:
+                                <div className="flex">
+                                    <Input
+                                        required
+                                        type="time"
+                                        className="w-fit"
+                                        value={data.order_deadline_time}
+                                        onChange={(e) =>
+                                            setData(
+                                                'order_deadline_time',
+                                                e.target.value,
+                                            )
+                                        }
+                                    />
+                                    <span className="ml-1 text-lg font-bold text-red-500">
+                                        *
+                                    </span>
+                                </div>
                             </div>
                         </div>
+                        {errors.order_deadline_date && (
+                            <ColorBadge color="red">
+                                {errors.order_deadline_date}
+                            </ColorBadge>
+                        )}
+                        {errors.order_deadline_time && (
+                            <ColorBadge color="red">
+                                {errors.order_deadline_time}
+                            </ColorBadge>
+                        )}
                     </InputContainer>
-                    <InputContainer title="Pickup Method">
+                    <InputContainer title="Pickup Method" required>
                         <span className="inline">
                             How would you like to receive your order?
-                            <span className="ml-2 text-lg font-bold text-red-500">
-                                *
-                            </span>
                         </span>
                         <Select
                             required
@@ -235,18 +280,23 @@ export default function OrderForm({
                                 <SelectValue placeholder="- required -" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="pickup">
+                                <SelectItem value="Pickup">
                                     Pickup (in-person or via courier booked by
                                     me)
                                 </SelectItem>
-                                <SelectItem value="delivery">
+                                <SelectItem value="Delivery">
                                     Delivery (via courier booked by Oh Sheet;
                                     fee c/o me)
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        {errors.pickup_type && (
+                            <ColorBadge color="red">
+                                {errors.pickup_type}
+                            </ColorBadge>
+                        )}
                     </InputContainer>
-                    <InputContainer>
+                    <InputContainer title="Confirmation" required>
                         <div className="flex items-center">
                             <Checkbox
                                 required
@@ -270,7 +320,10 @@ export default function OrderForm({
                         <Button
                             variant="outline"
                             type="button"
-                            onClick={() => reset()}
+                            onClick={() => {
+                                reset();
+                                clearErrors();
+                            }}
                         >
                             Clear
                         </Button>
@@ -289,16 +342,27 @@ export function InputContainer({
     children,
     title,
     className,
+    required = false,
 }: {
     children: React.ReactNode;
     title?: string;
     className?: string;
+    required?: boolean;
 }) {
     return (
         <section
             className={`flex flex-col gap-y-5 rounded-md border-[1px] border-slate-300 p-4 shadow-md ${className}`}
         >
-            {title && <div className="-mb-3 font-bold">{title}:</div>}
+            <div className="flex h-fit items-center justify-between">
+                <div className="-mb-3 h-fit font-bold">
+                    {title ? `${title}:` : null}
+                </div>
+                {required && (
+                    <div className="ml-2 flex h-[1ch] items-center text-[1.5rem] font-bold text-red-500">
+                        *
+                    </div>
+                )}
+            </div>
             {children}
         </section>
     );

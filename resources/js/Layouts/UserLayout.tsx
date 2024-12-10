@@ -83,8 +83,8 @@ export function HeaderContent() {
                         <DropdownMenuItem>
                             <HeaderNavLink
                                 // icon={<IconPackage />}
-                                href={route('orders')}
-                                targetRouteNames={['orders']}
+                                href={route('orders.index')}
+                                targetRouteNames={['orders.index']}
                                 dropdown
                             >
                                 Orders
@@ -163,8 +163,8 @@ export function HeaderContent() {
                     <li className="contents">
                         <HeaderNavLink
                             // icon={<IconPackage />}
-                            href={route('orders')}
-                            targetRouteNames={['orders']}
+                            href={route('orders.index')}
+                            targetRouteNames={['orders.index']}
                         >
                             Orders
                         </HeaderNavLink>

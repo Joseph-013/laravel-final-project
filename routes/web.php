@@ -35,11 +35,22 @@ Route::middleware('auth', 'isUser')->group(function () {
 
     Route::get('/products/{keyword}', [ProductController::class, 'showByKeyword'])->name('product.form');
 
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    // Orders
+    // Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    // Route::post('/orders', [OrderController::class, 'create'])->name('orders.create');
+    Route::resource('orders', OrderController::class)->names([
+        'index' => 'orders.index',
+        'create' => 'orders.create',
+        'store' => 'orders.store',
+        'show' => 'orders.show',
+        'edit' => 'orders.edit',
+        'update' => 'orders.update',
+        'destroy' => 'orders.destroy',
+    ]);
 
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
-    Route::delete('/cart/{id}', [OrderController::class, 'destroy'])->name('cart.delete');
+    Route::delete('/cart/{id}', [OrderController::class, 'destroy'])->name('cart.destroy');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

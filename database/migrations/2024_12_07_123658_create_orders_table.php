@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained('products')
                 ->onDelete('cascade');
             $table->text('specifications');
-            $table->unsignedSmallInteger('quantity');
+            $table->unsignedSmallInteger('quantity')->default(1);
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
             $table->enum('pickup_type', ['Pickup', 'Delivery']);
