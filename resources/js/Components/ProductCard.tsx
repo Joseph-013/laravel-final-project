@@ -18,7 +18,7 @@ export default function ProductCard({ product, href }: ProductCardProps) {
                     alt={product.name}
                     className="mb-3 aspect-square w-full object-cover"
                 />
-                <h3 className="mb-2 line-clamp-2 text-lg font-bold leading-5">
+                <h3 className="mb-2 line-clamp-2 text-lg font-bold leading-5 group-hover:underline">
                     {product.name}
                 </h3>
                 <p className="line-clamp-3 text-sm">{product.description}</p>
