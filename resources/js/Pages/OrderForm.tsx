@@ -12,7 +12,7 @@ import {
 import { Textarea } from '@/Components/ui/textarea';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { Product } from './Products';
 
@@ -34,6 +34,8 @@ export default function OrderForm({
     formData: FormData;
     product: Product;
 }) {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const { data, setData, post, errors, reset, clearErrors } =
         useForm<FormData>({
             // product_id: product.id!,
@@ -54,8 +56,6 @@ export default function OrderForm({
             pickup_type: '',
             authorized: false,
         });
-
-    console.log('errors', errors);
 
     useEffect(() => {
         if (formData) {
@@ -81,9 +81,25 @@ export default function OrderForm({
                 clearErrors();
             },
         });
-        console.log('submit');
-        console.log(data);
     };
+
+    function clearFileInput() {
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // Clears the file input
+        }
+    }
+
+    function handleAddToCart() {
+        post(route('cart.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                clearFileInput();
+                toast.success('Order successfully added to cart.');
+                clearErrors();
+            },
+        });
+    }
 
     const getErrorMessage = (error: string | undefined, index: number) => {
         if (error) {
@@ -214,6 +230,8 @@ export default function OrderForm({
                         <Input
                             required
                             type="file"
+                            ref={fileInputRef}
+                            value={undefined}
                             className="flex h-10"
                             onChange={handleFileChange}
                             multiple
@@ -230,11 +248,13 @@ export default function OrderForm({
                             min={1}
                             value={data.quantity}
                             onChange={(e) =>
-                                setData(
-                                    'quantity',
-                                    parseInt(e.target.value, 10),
-                                )
+                                setData('quantity', parseInt(e.target.value))
                             }
+                            onBlur={(e) => {
+                                if (isNaN(parseInt(e.target.value))) {
+                                    setData('quantity', 1);
+                                }
+                            }}
                         />
                         {errors.quantity && (
                             <ColorBadge color="red">
@@ -358,7 +378,11 @@ export default function OrderForm({
                         >
                             Clear
                         </Button>
-                        <Button variant={'outline'} type="button">
+                        <Button
+                            variant={'outline'}
+                            onClick={() => handleAddToCart()}
+                            type="button"
+                        >
                             Add to Cart
                         </Button>
                         <Button type="submit">Submit</Button>
