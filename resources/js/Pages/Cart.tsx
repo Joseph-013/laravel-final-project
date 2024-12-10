@@ -3,8 +3,14 @@ import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link } from '@inertiajs/react';
 import { IconCircleMinus } from '@tabler/icons-react';
 import React from 'react';
+import { OrderType } from './Orders';
 
-export const dummyData = [
+interface DummyDataType extends OrderType {
+    files: string[];
+    authorized: boolean;
+}
+
+export const dummyData: DummyDataType[] = [
     {
         id: 1,
         product_type: 'Photo ID',
@@ -13,6 +19,7 @@ export const dummyData = [
         order_deadline_date: '2024-12-15',
         order_deadline_time: '14:00',
         pickup_type: 'Pickup',
+        status: 'Pending',
         authorized: true,
     },
     {
@@ -23,6 +30,7 @@ export const dummyData = [
         order_deadline_date: '2024-12-16',
         order_deadline_time: '16:30',
         pickup_type: 'Pickup',
+        status: 'Pending',
         authorized: false,
     },
     {
@@ -34,6 +42,7 @@ export const dummyData = [
         order_deadline_date: '2024-12-18',
         order_deadline_time: '10:00',
         pickup_type: 'Delivery',
+        status: 'Pending',
         authorized: true,
     },
     {
@@ -44,6 +53,7 @@ export const dummyData = [
         order_deadline_date: '2024-12-20',
         order_deadline_time: '12:30',
         pickup_type: 'Delivery',
+        status: 'Pending',
         authorized: false,
     },
     {
@@ -54,6 +64,7 @@ export const dummyData = [
         order_deadline_date: '2024-12-22',
         order_deadline_time: '09:00',
         pickup_type: 'Pickup',
+        status: 'Pending',
         authorized: true,
     },
 ];

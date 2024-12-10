@@ -9,18 +9,30 @@ class Order extends Model
     protected $primaryKey = 'orderID';
 
     protected $fillable = [
-        'user_id', 'total_amount', 'status'
+        'user_id',
+        'product_id',
+        'specifications',
+        'files',
+        'quantity',
+        'order_deadline_date',
+        'order_deadline_time',
+        'pickup_type',
+        'status'
+    ];
+
+    protected $casts = [
+        'files' => 'json',
     ];
 
     // Relationships
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function orderItems()
+    public function orders()
     {
-        return $this->hasMany(OrderItem::class, 'orderID');
+        return $this->hasMany(OrderItem::class);
     }
 
     // Scopes
@@ -32,13 +44,5 @@ class Order extends Model
     public function scopeCompleted($query)
     {
         return $query->where('status', 'Completed');
-    }
-
-    // Helper method to calculate total
-    public function calculateTotal()
-    {
-        return $this->orderItems->sum(function ($item) {
-            return $item->quantity * $item->price;
-        });
     }
 }

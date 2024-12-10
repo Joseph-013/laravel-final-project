@@ -1,3 +1,4 @@
+import ColorBadge from './ColorBadge';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
@@ -45,11 +46,7 @@ export default function LabeledInput({
                     name={name}
                 />
             )}
-            {error && (
-                <div className="mt-1 w-fit rounded-md bg-red-100 px-2 py-1 text-sm font-bold text-red-500">
-                    {error}
-                </div>
-            )}
+            {error && <ColorBadge color="red">{error}</ColorBadge>}
         </div>
     );
 }

@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('id');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->foreignId('product_id')
                 ->constrained('products')
-                ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->text('specifications');
             $table->json('files');
             $table->unsignedSmallInteger('quantity');
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
-            $table->enum('pickup_type', ['pickup', 'delivery']);
+            $table->enum('pickup_type', ['Pickup', 'Delivery']);
             $table->enum('status', ['Pending', 'Completed', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });

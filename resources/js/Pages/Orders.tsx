@@ -1,50 +1,76 @@
-import Line from '@/Components/Line';
+import ColorBadge from '@/Components/ColorBadge';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/Components/ui/table';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
-import React from 'react';
 import { dummyData } from './Cart';
 
-export default function Orders({ orders }) {
+export interface OrderType {
+    id?: number;
+    product_type: string;
+    specifications: string;
+    //
+    order_deadline_date: string;
+    order_deadline_time: string;
+    pickup_type: string;
+    status: 'Pending' | 'Completed' | 'Cancelled';
+}
+
+export default function Orders({ orders }: { orders: OrderType[] }) {
     orders = dummyData;
+
+    const colorMap: Record<
+        'Pending' | 'Completed' | 'Cancelled',
+        'orange' | 'green' | 'red'
+    > = {
+        Pending: 'orange',
+        Completed: 'green',
+        Cancelled: 'red',
+    };
+
     return (
         <UserLayout>
             <Head title="Orders" />
-            <table className="w-full min-w-[30rem] text-left">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Product/Service</th>
-                        <th>Specifications</th>
-                        <th>Deadline Date</th>
-                        <th>Deadline Time</th>
-                        <th>Pickup Type</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>ID</TableHead>
+                        <TableHead>Product/Service</TableHead>
+                        <TableHead>Specifications</TableHead>
+                        <TableHead>Deadline Date</TableHead>
+                        <TableHead>Deadline Time</TableHead>
+                        <TableHead>Pickup Type</TableHead>
+                        <TableHead>Status</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody className="textsm">
                     {orders.map((item) => (
-                        <React.Fragment key={item.id}>
-                            <tr>
-                                <td colSpan={6}>
-                                    <Line
-                                        variant={'h'}
-                                        className="my-1 border-t-[1px] border-black/20"
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{item.id}</td>
-                                <td>{item.product_type}</td>
-                                <td className="text-sm">
-                                    {item.specifications}
-                                </td>
-                                <td>{item.order_deadline_date}</td>
-                                <td>{item.order_deadline_time}</td>
-                                <td>{item.pickup_type}</td>
-                            </tr>
-                        </React.Fragment>
+                        <TableRow key={item.id}>
+                            <TableCell className="font-medium">
+                                {item.id}
+                            </TableCell>
+                            <TableCell>{item.product_type}</TableCell>
+                            <TableCell>{item.specifications}</TableCell>
+                            <TableCell className="min-w-24">
+                                {item.order_deadline_date}
+                            </TableCell>
+                            <TableCell>{item.order_deadline_time}</TableCell>
+                            <TableCell>{item.pickup_type}</TableCell>
+                            <TableCell>
+                                <ColorBadge color={colorMap[item.status]}>
+                                    {item.status}
+                                </ColorBadge>
+                            </TableCell>
+                        </TableRow>
                     ))}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
         </UserLayout>
     );
 }
