@@ -51,7 +51,7 @@ Route::middleware('auth', 'isUser')->group(function () {
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-    Route::patch('/cart/batch', [CartController::class, 'batchSend'])->name('cart.send');
+    Route::post('/cart/batch', [CartController::class, 'batchSend'])->name('cart.send');
     Route::delete('/cart/{id}', [OrderController::class, 'destroy'])->name('cart.destroy');
 
     // Profile

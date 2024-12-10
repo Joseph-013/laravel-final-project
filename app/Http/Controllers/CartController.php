@@ -95,8 +95,8 @@ class CartController extends Controller
 
         if ($carts->isNotEmpty()) {
             Order::where('user_id', Auth::id())->update(['status' => 'Pending']);
-            Toast::success('All cart items successfully submitted.');
-            return redirect()->back();
+            // Toast::success('All cart items successfully submitted.');
+            return back();
         } else {
             abort(404);
         }
