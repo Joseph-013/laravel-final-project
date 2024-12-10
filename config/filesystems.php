@@ -52,12 +52,12 @@ return [
             'visibility' => 'public',
         ],
 
-        // 'orders' => [
-        //     'driver' => 'local',
-        //     'root' => storage_path('app/private/products'),
-        //     'url' => '/storage/products',
-        //     'visibility' => 'private',
-        // ],
+        'orders' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/orders'),
+            'url' => '/files/orders/',
+            'visibility' => 'private',
+        ],
 
         's3' => [
             'driver' => 's3',
