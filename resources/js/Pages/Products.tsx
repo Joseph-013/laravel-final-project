@@ -19,11 +19,11 @@ export default function Products({ products }: { products: Product[] }) {
     return (
         <UserLayout>
             <Head title="Products" />
-            <h1 className="mb-2 text-xl font-bold">
+            <h1 className="mb-2 p-2 text-2xl font-extrabold text-primary">
                 Our Products and Services:
             </h1>
             <div className="flex justify-center">
-                <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                <div className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {products.map((product, index) => (
                         <ProductGridItem
                             key={product.keyword + index}

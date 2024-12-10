@@ -96,7 +96,7 @@ function Header({ children }: PropsWithChildren) {
             className={`fixed inset-x-0 top-0 flex h-20 w-full justify-center bg-[#b8cce5]`}
         >
             <div
-                className={`flex w-full max-w-[1200px] items-center justify-between px-3`}
+                className={`flex w-full max-w-[1500px] items-center justify-between px-3`}
             >
                 <Link href="/">
                     <img
@@ -122,7 +122,7 @@ function Footer() {
             <div className="-mt-16 bg-background px-2">
                 <img src="/ohsheet-2.png" className="size-32" />
             </div>
-            <div className="mx-auto max-w-[1200px] px-4 py-12">
+            <div className="mx-auto max-w-[1500px] px-4 py-12">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
                     <div className="space-y-4">
                         <img
@@ -141,34 +141,26 @@ function Footer() {
                         <ul className="space-y-2">
                             <li>
                                 <Link
-                                    href="/features"
+                                    href="/home"
                                     className="text-sm text-slate-600 hover:text-slate-900"
                                 >
-                                    Features
+                                    Home
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/pricing"
+                                    href="/products"
                                     className="text-sm text-slate-600 hover:text-slate-900"
                                 >
-                                    Pricing
+                                    Products
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/blog"
+                                    href="/orders"
                                     className="text-sm text-slate-600 hover:text-slate-900"
                                 >
-                                    Blog
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/support"
-                                    className="text-sm text-slate-600 hover:text-slate-900"
-                                >
-                                    Support
+                                    Orders
                                 </Link>
                             </li>
                         </ul>
