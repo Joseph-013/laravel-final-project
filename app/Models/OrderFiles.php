@@ -37,4 +37,18 @@ class OrderFiles extends Model
         $path = "/files/orders/";
         return $path . $this->filename;
     }
+
+    public static function createAndStore(array $files, int $orderId)
+    {
+        foreach ($files as $file) {
+            $filename = uniqid() . "." . $file->getClientOriginalExtension();
+
+            $file->storeAs('orders', $filename);
+
+            self::create([
+                'order_id' => $orderId,
+                'filename' => $filename,
+            ]);
+        }
+    }
 }

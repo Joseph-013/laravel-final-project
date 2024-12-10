@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class StoreOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,7 +37,6 @@ class OrderRequest extends FormRequest
                 }
             }],
             'pickup_type' => 'required|in:Pickup,Delivery',
-            'status' => 'nullable|in:Cart,Pending,Completed,Cancelled',
         ];
     }
 }
