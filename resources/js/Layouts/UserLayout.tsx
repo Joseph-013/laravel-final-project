@@ -8,12 +8,9 @@ import {
     DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import {
-    IconHome,
-    IconListDetails,
     IconLogin2,
     IconLogout,
     IconMenu2,
-    IconPackage,
     IconShoppingCart,
     IconUserCircle,
 } from '@tabler/icons-react';
@@ -38,7 +35,7 @@ export default function UserLayout({ children, className }: UserLayoutProps) {
 export function HeaderContent() {
     const cartCount: number = 10;
 
-    const authenticated: boolean = usePage().props.authenticated;
+    const authenticated: boolean = usePage().props.authenticated as boolean;
 
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
@@ -61,7 +58,7 @@ export function HeaderContent() {
                     <DropdownMenuContent className="w-40">
                         <DropdownMenuItem>
                             <HeaderNavLink
-                                icon={<IconHome />}
+                                // icon={<IconHome />}
                                 href={
                                     authenticated
                                         ? route('home')
@@ -75,7 +72,7 @@ export function HeaderContent() {
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <HeaderNavLink
-                                icon={<IconListDetails />}
+                                // icon={<IconListDetails />}
                                 href={route('products')}
                                 targetRouteNames={['products']}
                                 dropdown
@@ -85,7 +82,7 @@ export function HeaderContent() {
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <HeaderNavLink
-                                icon={<IconPackage />}
+                                // icon={<IconPackage />}
                                 href={route('orders')}
                                 targetRouteNames={['orders']}
                                 dropdown
@@ -145,7 +142,7 @@ export function HeaderContent() {
                 <ul className="hidden items-center gap-x-1 sm:flex">
                     <li className="contents">
                         <HeaderNavLink
-                            icon={<IconHome />}
+                            // icon={<IconHome />}
                             href={
                                 authenticated ? route('home') : route('index')
                             }
@@ -156,7 +153,7 @@ export function HeaderContent() {
                     </li>
                     <li className="contents">
                         <HeaderNavLink
-                            icon={<IconListDetails />}
+                            // icon={<IconListDetails />}
                             href={route('products')}
                             targetRouteNames={['products']}
                         >
@@ -165,7 +162,7 @@ export function HeaderContent() {
                     </li>
                     <li className="contents">
                         <HeaderNavLink
-                            icon={<IconPackage />}
+                            // icon={<IconPackage />}
                             href={route('orders')}
                             targetRouteNames={['orders']}
                         >
@@ -181,7 +178,7 @@ export function HeaderContent() {
                             href={route('cart')}
                             targetRouteNames={['cart']}
                         >
-                            Cart
+                            {/* Cart */}
                             {cartCount !== 0 && (
                                 <div className="absolute right-[0.3rem] top-2 flex aspect-square size-[1.1rem] items-center justify-center rounded-full bg-primary pr-[1px] pt-[1px] text-[0.6rem] text-secondary">
                                     {cartCount}
@@ -192,8 +189,8 @@ export function HeaderContent() {
                     <li className="contents">
                         {authenticated ? (
                             <DropdownMenu>
-                                <DropdownMenuTrigger className="rounded-lg p-3 hover:bg-white/50">
-                                    <IconUserCircle />
+                                <DropdownMenuTrigger className="rounded-lg p-3">
+                                    <IconUserCircle className="text-primary duration-300 hover:text-primary/70" />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="space-y-1">
                                     <DropdownMenuItem>

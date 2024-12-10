@@ -57,7 +57,7 @@ export function HeaderNavLink({
     return (
         <Link
             {...props}
-            className={`${isActive() && (dropdown ? 'bg-primary/20' : 'bg-white/50')} p-3 ${props.className ?? ''} relative flex items-center justify-center rounded-lg ${dropdown ? `w-full flex-row gap-x-2` : `flex-col ${icon ? 'text-xs' : 'text-base'}`}`}
+            className={`${isActive() && (dropdown ? 'bg-primary/20' : 'bg-white/50')} px-4 py-2 ${props.className ?? ''} relative flex items-center justify-center rounded-xl font-bold text-primary duration-300 hover:text-primary/70 ${dropdown ? `w-full flex-row gap-x-2` : `flex-col ${icon ? 'text-xs' : 'text-base'}`}`}
         >
             {icon && <div>{icon}</div>}
             <div>{children}</div>
