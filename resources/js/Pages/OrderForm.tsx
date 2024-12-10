@@ -36,23 +36,23 @@ export default function OrderForm({
 }) {
     const { data, setData, post, errors, reset, clearErrors } =
         useForm<FormData>({
-            product_id: product.id!,
-            specifications: 'asdasdasda sda sdasda dsasd asd fgh',
-            files: [],
-            quantity: 1,
-            order_deadline_date: '2024-12-18',
-            order_deadline_time: '18:48',
-            pickup_type: 'Delivery',
-            authorized: true,
-
             // product_id: product.id!,
-            // specifications: '',
+            // specifications: 'asdasdasda sda sdasda dsasd asd fgh',
             // files: [],
             // quantity: 1,
-            // order_deadline_date: '',
-            // order_deadline_time: '',
-            // pickup_type: '',
-            // authorized: false,
+            // order_deadline_date: '2024-12-18',
+            // order_deadline_time: '18:48',
+            // pickup_type: 'Delivery',
+            // authorized: true,
+
+            product_id: product.id!,
+            specifications: '',
+            files: [],
+            quantity: 1,
+            order_deadline_date: '',
+            order_deadline_time: '',
+            pickup_type: '',
+            authorized: false,
         });
 
     console.log('errors', errors);
