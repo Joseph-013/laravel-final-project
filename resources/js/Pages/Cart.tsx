@@ -1,8 +1,24 @@
+import ColorBadge from '@/Components/ColorBadge';
+import ControlContainer from '@/Components/ControlContainer';
 import Line from '@/Components/Line';
 import { Button } from '@/Components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/Components/ui/dialog';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, router } from '@inertiajs/react';
-import { IconCircleMinus, IconExternalLink } from '@tabler/icons-react';
+import { DialogClose } from '@radix-ui/react-dialog';
+import {
+    IconCircleMinus,
+    IconExternalLink,
+    IconSend,
+} from '@tabler/icons-react';
 import React from 'react';
 import { toast } from 'sonner';
 import { OrderType } from './Orders';
@@ -48,6 +64,14 @@ export default function Cart({ carts }: { carts: CartType[] }) {
             );
         }
     }
+
+    const handleSubmitBatchOrder = () => {
+        router.patch(route('cart.send'), {
+            // @ts-expect-error onSuccess callback does not strictly match expected type
+            onSuccess: () =>
+                toast.success('All cart items successfully submitted.'),
+        });
+    };
 
     return (
         <UserLayout>
@@ -121,6 +145,46 @@ export default function Cart({ carts }: { carts: CartType[] }) {
                     </tbody>
                 </table>
             </div>
+            <ControlContainer>
+                {carts.length !== 0 && <ConfirmSubmitBatchOrder />}
+            </ControlContainer>
         </UserLayout>
     );
+
+    function ConfirmSubmitBatchOrder() {
+        return (
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline">
+                        <IconSend /> Send Batch Order
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Confirm Send Batch Order?</DialogTitle>
+                        <DialogDescription />
+                        <ColorBadge color="red">
+                            By clicking Send, you confirm to have verified that
+                            all the contents of your order/s are correct.
+                        </ColorBadge>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button type="button" variant="outline">
+                                Cancel
+                            </Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                            <Button
+                                onClick={handleSubmitBatchOrder}
+                                type="button"
+                            >
+                                <IconSend /> Send
+                            </Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        );
+    }
 }

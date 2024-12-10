@@ -27,15 +27,9 @@ class StoreOrderRequest extends FormRequest
             'specifications' => 'required|string|max:65535',
             'files' => 'required|array',
             'files.*' => 'required|file|max:10240',
-            'quantity' => 'required|integer|min:1',
+            'quantity' => 'required|integer|min:1|max:65535',
             'order_deadline_date' => 'nullable|date|after_or_equal:today',
-            'order_deadline_time' => ['required', 'date_format:H:i', function ($_, $value, $fail) {
-                // Compare the provided time with the current time
-                $currentTime = Carbon::now()->format('H:i');
-                if ($value < $currentTime) {
-                    $fail("The order deadline \"time\" must be after or equal to the current time.");
-                }
-            }],
+            'order_deadline_time' => 'required|date_format:H:i',
             'pickup_type' => 'required|in:Pickup,Delivery',
         ];
     }

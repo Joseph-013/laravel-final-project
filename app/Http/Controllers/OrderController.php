@@ -37,8 +37,6 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-
-        // $dataFiles = $request->input('files');
         $data = $request->validated();
 
         $order = Order::create([
