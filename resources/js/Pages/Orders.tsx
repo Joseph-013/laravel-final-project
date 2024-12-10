@@ -22,7 +22,7 @@ export interface OrderType {
     order_deadline_date?: string;
     order_deadline_time: string;
     pickup_type: 'Pickup' | 'Delivery';
-    status: 'Pending' | 'Completed' | 'Cancelled';
+    status: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
 }
 
 export default function Orders({ orders }: { orders: OrderType[] }) {

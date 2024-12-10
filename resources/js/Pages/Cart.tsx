@@ -1,80 +1,23 @@
 import Line from '@/Components/Line';
+import { Button } from '@/Components/ui/button';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link } from '@inertiajs/react';
 import { IconCircleMinus } from '@tabler/icons-react';
 import React from 'react';
 import { OrderType } from './Orders';
 
-interface DummyDataType extends OrderType {
+interface CartType extends OrderType {
     files: string[];
+    status: 'Cart';
     authorized: boolean;
 }
 
-export const dummyData: DummyDataType[] = [
-    {
-        id: 1,
-        product_type: 'Photo ID',
-        specifications: 'Specification 1 for Order 1',
-        files: ['file1.pdf', 'file2.jpg'],
-        order_deadline_date: '2024-12-15',
-        order_deadline_time: '14:00',
-        pickup_type: 'Pickup',
-        status: 'Pending',
-        authorized: true,
-    },
-    {
-        id: 2,
-        product_type: 'Photo ID',
-        specifications: 'Specification 2 for Order 2',
-        files: ['file3.png', 'file4.docx'],
-        order_deadline_date: '2024-12-16',
-        order_deadline_time: '16:30',
-        pickup_type: 'Pickup',
-        status: 'Pending',
-        authorized: false,
-    },
-    {
-        id: 3,
-        product_type: 'Photo ID',
-        specifications:
-            ' asda sdasd as dasd asd asd asd as dahjsd hjkas da sdkhas dkhjga sjhdgashjdg ahjsd gjhasg djhasgdhjasdhj as jhdajhsdas djha sdjha sdjh ashjd jhasdg asjhd ajhd s',
-        files: ['file5.mp4', 'file6.zip'],
-        order_deadline_date: '2024-12-18',
-        order_deadline_time: '10:00',
-        pickup_type: 'Delivery',
-        status: 'Pending',
-        authorized: true,
-    },
-    {
-        id: 4,
-        product_type: 'Photo ID',
-        specifications: 'Specification 4 for Order 4',
-        files: ['file7.pdf', 'file8.jpg'],
-        order_deadline_date: '2024-12-20',
-        order_deadline_time: '12:30',
-        pickup_type: 'Delivery',
-        status: 'Pending',
-        authorized: false,
-    },
-    {
-        id: 5,
-        product_type: 'Photo ID',
-        specifications: 'Specification 5 for Order 5',
-        files: ['file9.png', 'file10.docx'],
-        order_deadline_date: '2024-12-22',
-        order_deadline_time: '09:00',
-        pickup_type: 'Pickup',
-        status: 'Pending',
-        authorized: true,
-    },
-];
-
-export default function Cart({ cart }) {
-    cart = dummyData;
-
+export default function Cart({ carts }: { carts: CartType[] }) {
     function handleDeleteCartItem(id) {
         // router.delete with id
     }
+
+    console.log('carts', carts);
 
     return (
         <UserLayout>
@@ -93,6 +36,7 @@ export default function Cart({ cart }) {
                         <tr>
                             <th>Product/Service</th>
                             <th>Specifications</th>
+                            <th>Files</th>
                             <th>Deadline Date</th>
                             <th>Deadline Time</th>
                             <th>Pickup Type</th>
@@ -100,8 +44,8 @@ export default function Cart({ cart }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {cart.map((item) => (
-                            <React.Fragment key={item.id}>
+                        {carts.map((cart) => (
+                            <React.Fragment key={cart.id}>
                                 <tr>
                                     <td colSpan={6}>
                                         <Line
@@ -111,17 +55,22 @@ export default function Cart({ cart }) {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>{item.product_type}</td>
+                                    <td>{cart.product?.name}</td>
                                     <td className="text-sm">
-                                        {item.specifications}
+                                        {cart.specifications}
                                     </td>
-                                    <td>{item.order_deadline_date}</td>
-                                    <td>{item.order_deadline_time}</td>
-                                    <td>{item.pickup_type}</td>
+                                    <td>
+                                        <Button variant="outline">
+                                            File/s
+                                        </Button>
+                                    </td>
+                                    <td>{cart.order_deadline_date}</td>
+                                    <td>{cart.order_deadline_time}</td>
+                                    <td>{cart.pickup_type}</td>
                                     <td>
                                         <button
                                             onClick={() =>
-                                                handleDeleteCartItem(item.id)
+                                                handleDeleteCartItem(cart.id)
                                             }
                                             className="rounded-md p-2 outline-1 hover:outline"
                                         >

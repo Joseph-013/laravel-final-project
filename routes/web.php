@@ -2,6 +2,7 @@
 
 use App\Helpers\Toast;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -36,9 +37,7 @@ Route::middleware('auth', 'isUser')->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
-    Route::get('/cart', function () {
-        return Inertia::render('Cart');
-    })->name('cart');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

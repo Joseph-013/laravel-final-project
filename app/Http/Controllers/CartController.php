@@ -7,23 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class OrderController extends Controller
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($status)
+    public function index()
     {
-        $orders = Order::where(
+        $carts = Order::where(
             'user_id',
             Auth::id()
-        )->where('status', '!=', 'Cart')
-            ->when($status, function ($query) use ($status) {
-                return $query->where('status', $status);
-            })->with('product')->get();
+        )->where('status', 'Cart')->with('product')->get();
 
-        return Inertia::render('Orders', ['orders' => $orders]);
+        return Inertia::render('Cart', ['carts' => $carts]);
     }
+
 
     /**
      * Show the form for creating a new resource.
