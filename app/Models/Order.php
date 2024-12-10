@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\JsonDecoder;
@@ -49,5 +50,18 @@ class Order extends Model
     public function scopeCart($query)
     {
         return $query->where('status', 'Cart');
+    }
+
+    // Accessors
+    // Accessor for formatted order_deadline_date
+    public function getOrderDeadlineDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('M j, Y'); // Example: "Sep 5, 2000"
+    }
+
+    // Accessor for formatted order_deadline_time
+    public function getOrderDeadlineTimeAttribute($value)
+    {
+        return Carbon::parse($value)->format('g:i A'); // Example: "4:50 PM"
     }
 }
