@@ -44,6 +44,13 @@ export function HeaderContent() {
                             Orders
                         </HeaderNavLink>
                     </li>
+                    <li className="contents">
+                        <HeaderNavLink icon={<IconPackage />} 
+                            href={route('admin.showcase')}
+                            targetRouteNames={['admin.showcase']}>
+                            Showcase
+                        </HeaderNavLink>
+                    </li>
                     <li className="h-full py-3">
                         <Line variant={'v'} />
                     </li>

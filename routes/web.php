@@ -55,15 +55,22 @@ Route::middleware(['auth', 'isAdmin'])
     ->name('admin.')
     ->group(function () {
 
+        //manage products routes
         Route::get('products', [AdminController::class, 'index'])->name('index');
         Route::post('products', [AdminController::class, 'store'])->name('store');
         Route::patch('products/{id}', [AdminController::class, 'update'])->name('update');
         Route::delete('products/{id}', [AdminController::class, 'destroy'])->name('destroy');
 
-
+        //manage user routes
         Route::get('users', [AdminController::class, 'users'])->name('users');
         Route::delete('{id}/banUser', [AdminController::class, 'banUser'])->name('banUser');
         Route::patch('{id}/unbanUser', [AdminController::class, 'unbanUser'])->name('unbanUser');
+
+        //manage showcase routes
+        Route::get('showcase', [AdminController::class, 'showcase'])->name('showcase');
+        Route::post('storeShowcase', [AdminController::class, 'storeShowcase'])->name('storeShowcase');
+        Route::patch('showcase/{id}', [AdminController::class, 'updateShowcase'])->name('updateShowcase');
+        Route::delete('showcase/{id}', [AdminController::class, 'destroyShowcase'])->name('destroyShowcase');
 });
 
 require __DIR__ . '/auth.php';

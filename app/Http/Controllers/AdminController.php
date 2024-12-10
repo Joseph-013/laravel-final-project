@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CarouselPhoto;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -143,6 +144,107 @@ public function banUser($id)
     
         return redirect()->back()->with('success', 'Post restored successfully');
     }
+
+
+    //showcase photo
+
+    public function showcase()
+{
+
+    $carousels = CarouselPhoto::all()->map(function ($carousel) {
+        return [
+            'carouselID' => $carousel->carouselID,
+            'title' => $carousel->title,
+            'photoLink' => $carousel->photoLink 
+                ? Storage::url($carousel->photoLink) 
+                : null
+        ];
+    });
+
+    return Inertia::render('Admin/ManageShowcase', [
+        'carousels' => $carousels
+    ]);
+
+
+    $carousels = CarouselPhoto::all();
+
+    return Inertia::render('Admin/ManageShowcase', [
+        'carousels' => $carousels,
+    ]);
+}
+
+public function storeShowcase(Request $request)
+{
+    // dd($request->hasFile('photoLink'));
+    // Validation rules
+    $validator = Validator::make($request->all(), [
+        'title' => 'required|unique:carousel_photos|string|max:255',
+        'photoLink' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    // Check validation
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
+
+    // Create product
+    $showcase = new CarouselPhoto();
+
+    $showcase->title = $request->input('title');
+    
+    // Handle image upload
+    if ($request->hasFile('photoLink')) {
+        $imagePath = $request->file('photoLink')->store('showcase', 'public');
+        $showcase->photoLink = $imagePath;
+    } else {
+        $showcase->photoLink = 'showcase/default.jpg';
+    }
+
+    $showcase->save();
+
+    // Redirect back with a success message
+    return redirect()->route('admin.showcase')->with('success', 'Showcase created successfully');
+}
+
+
+public function updateShowcase(Request $request, $id)
+{
+
+    $showcase = CarouselPhoto::findOrFail($id);
+
+    $validator = Validator::make($request->all(), [
+        'title' => 'required|string|max:255',
+        'photoLink' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    if ($validator->fails()) {
+        
+        return back()->withErrors($validator)->withInput();
+    }
+
+    $showcase->title = $request->input('title');
+
+    if ($request->hasFile('photoLink')) {
+        // Delete old image
+        if ($showcase->photoLink && Storage::exists($showcase->photoLink)) {
+            Storage::delete($showcase->photoLink);
+        }
+        $showcase->photoLink = $request->file('photoLink')->store('showcase', 'public');
+    }
+
+
+    $showcase->save();
+
+    return redirect()->route('admin.showcase')->with('success', 'Showcase updated successfully');
+}
+
+public function destroyShowcase($id)
+{
+    $showcase = CarouselPhoto::find($id);
+    $showcase->delete();
+
+    return redirect()->route('admin.showcase')->with('success', 'Showcase deleted successfully');
+}
 
 }
 
