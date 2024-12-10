@@ -12,15 +12,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($status)
+    public function index()
     {
-        $orders = Order::where(
-            'user_id',
-            Auth::id()
-        )->where('status', '!=', 'Cart')
-            ->when($status, function ($query) use ($status) {
-                return $query->where('status', $status);
-            })->with('product')->get();
+        $orders = Order::where('user_id', Auth::id())
+            ->where('status', '!=', 'Cart')
+            ->with('product')->with('files')->get();
 
         return Inertia::render('Orders', ['orders' => $orders]);
     }

@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Order;
+use App\Models\OrderFiles;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class OrdersSeeder extends Seeder
 {
@@ -18,24 +20,30 @@ class OrdersSeeder extends Seeder
         $statuses = ['Cart', 'Pending', 'Completed', 'Cancelled'];
 
         $products = Product::all();
-        $users = User::all();
 
-        foreach ($users as $user) {
-            for ($i = 0; $i < 10; $i++) {
-                $randomProduct = $products->random();
+        // for debugging: user id=1
 
-                Order::create([
-                    'user_id' => $user->id,
-                    'product_id' => $randomProduct->id,
-                    'specifications' => fake()->sentence(),
-                    'files' => json_encode([fake()->word() . '.jpg', fake()->word() . '.pdf']),
-                    'quantity' => random_int(1, 10),
-                    'order_deadline_date' => fake()->date(),
-                    'order_deadline_time' => fake()->time(),
-                    'pickup_type' => fake()->randomElement(['Pickup', 'Delivery']),
-                    'status' => fake()->randomElement($statuses),
-                ]);
-            }
-        }
+
+        // $users = User::all()->reject(function ($user) {
+        //     return $user->id === 1; // Exclude user with id 1
+        // });
+
+
+        // foreach ($users as $user) {
+        //     for ($i = 0; $i < 10; $i++) {
+        //         $randomProduct = $products->random();
+
+        //         Order::create([
+        //             'user_id' => $user->id,
+        //             'product_id' => $randomProduct->id,
+        //             'specifications' => fake()->sentence(),
+        //             'quantity' => random_int(1, 10),
+        //             'order_deadline_date' => fake()->date(),
+        //             'order_deadline_time' => fake()->time(),
+        //             'pickup_type' => fake()->randomElement(['Pickup', 'Delivery']),
+        //             'status' => fake()->randomElement($statuses),
+        //         ]);
+        //     }
+        // }
     }
 }

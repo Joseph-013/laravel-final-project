@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\JsonDecoder;
 
 class Order extends Model
 {
@@ -11,20 +12,12 @@ class Order extends Model
         'user_id',
         'product_id',
         'specifications',
-        'files',
         'quantity',
         'order_deadline_date',
         'order_deadline_time',
         'pickup_type',
         'status'
     ];
-
-    protected $casts = [
-        'files' => 'json',
-    ];
-
-    // Append custom attributes to the model's array form
-    protected $appends = ['fileUrls'];
 
     // Relationships
     public function user()
@@ -37,9 +30,9 @@ class Order extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function orders()
+    public function files()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderFiles::class);
     }
 
     // Scopes
@@ -53,22 +46,8 @@ class Order extends Model
         return $query->where('status', 'Completed');
     }
 
-    public function getFileUrlsAttribute()
+    public function scopeCart($query)
     {
-        // Assuming 'files' is a JSON array with URLs of files
-        $urlPath = "files/orders/";
-        $fileUrls = [];
-
-        // If there are files, process them
-        if (!empty($this->files)) {
-            foreach ($this->files as $file) {
-                // Assuming 'file' contains a path like 'products/somefile.pdf'
-                // You can modify this logic to prepend the correct URL base
-                // Here we assume the file is stored on the 'public' disk
-                $fileUrls[] = $urlPath . $file; // Adjust based on your storage setup
-            }
-        }
-
-        return $fileUrls;
+        return $query->where('status', 'Cart');
     }
 }

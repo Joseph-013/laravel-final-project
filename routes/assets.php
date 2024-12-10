@@ -14,6 +14,7 @@
  * Directory: routes/assets.php
  */
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,7 @@ use Illuminate\Support\Facades\Route;
 //     // Returns an array of images
 //     Route::get('/carousel', 'carousel')->name('carousel');
 // });
+
+Route::prefix('/files')->middleware('auth')->name('files.')->group(function () {
+    Route::get('/orders/{filename}', [FileController::class, 'order'])->name('order');
+});

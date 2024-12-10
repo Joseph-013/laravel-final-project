@@ -62,3 +62,4 @@ Route::middleware(['auth', 'isAdmin'])
     });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/assets.php';

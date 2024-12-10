@@ -17,7 +17,7 @@ class CartController extends Controller
         $carts = Order::where(
             'user_id',
             Auth::id()
-        )->where('status', 'Cart')->with('product')->get();
+        )->cart()->with('product')->with('files')->get();
 
         return Inertia::render('Cart', ['carts' => $carts]);
     }

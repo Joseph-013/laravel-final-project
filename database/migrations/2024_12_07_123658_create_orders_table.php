@@ -20,7 +20,6 @@ return new class extends Migration
                 ->constrained('products')
                 ->onDelete('cascade');
             $table->text('specifications');
-            $table->json('files');
             $table->unsignedSmallInteger('quantity');
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
