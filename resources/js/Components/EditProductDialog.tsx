@@ -7,6 +7,7 @@ import {
 import { useForm, router } from '@inertiajs/react';
 import { Button } from './ui/button';
 import LabeledInput from './LabeledInput';
+import { toast } from 'sonner';
 
 interface Product {
     id: number;
@@ -49,7 +50,7 @@ export default function EditProductDialog({
         if (data.image_file) {
             formData.append('image_file', data.image_file);
         }
-        formData.append('active', String(data.active));
+        formData.append('active', data.active ? '1' : '0'); 
 
         router.post(route('admin.update', product.id), {
             ...Object.fromEntries(formData),
@@ -58,9 +59,10 @@ export default function EditProductDialog({
             forceFormData: true,
             onSuccess: () => {
                 onClose();
-                // You can add a toast or alert here if needed
+                toast.success('Product Updated Successfully!')
             },
             onError: (errors) => {
+                toast.error('Error Updating Product.')
                 console.error('Error updating product:', errors);
             }
         });

@@ -16,6 +16,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from './ui/dialog';
+import { toast } from 'sonner';
 
 interface CreateProduct extends Product {
     image_file: File | undefined;
@@ -79,9 +80,11 @@ export default function CreateProductDialog() {
             onSuccess: () => {
                 reset();
                 setDialogOpen(false);
+                toast.success('Product Added Successfully!')
             },
             // Optional: handle validation errors
             onError: () => {
+                toast.error('Error Adding Product.')
                 // Handle any errors if needed
             }
         });

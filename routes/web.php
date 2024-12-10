@@ -2,6 +2,7 @@
 
 use App\Helpers\Toast;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -12,15 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Guest
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        // 'canLogin' => Route::has('login'),
-        // 'canRegister' => Route::has('register'),
-        // 'laravelVersion' => Application::VERSION,
-        // 'phpVersion' => PHP_VERSION,
-        'user' => Auth::check() ? Auth::user() : false,
-    ]);
-})->middleware('guest')->name('index');
+Route::get('/', [CarouselController::class, 'index'])->middleware('guest')->name('index');
 
 // Any
 Route::middleware([])->group(function () {
@@ -29,9 +22,7 @@ Route::middleware([])->group(function () {
 
 // Auth
 Route::middleware('auth', 'isUser')->group(function () {
-    Route::get('/home', function () {
-        return Inertia::render('Welcome', []);
-    })->name('home');
+    Route::get('/home', [CarouselController::class, 'index'])->name('home');
 
     Route::get('/products/{keyword}', [ProductController::class, 'showByKeyword'])->name('product.form');
 
