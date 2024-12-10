@@ -11,17 +11,10 @@ class CarouselPhoto extends Model
     protected $table = 'carousel_photos';
 
     protected $fillable = [
-        'photo',
-        'title',
-        'description',
-        'is_active'
+        'photoLink', 'title', 
     ];
+    
 
-    // Scope for active photos
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
 
     public function imageSrc()
     {
