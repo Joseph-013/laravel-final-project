@@ -64,8 +64,17 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        // check if order belongs to user
+        $order = Order::where([
+            'user_id' => $request->user()->id,
+            'id' => $id
+        ])->firstOrFail();
+
+        // delete order
+        $order->delete();
+
+        return back()->with('success');
     }
 }

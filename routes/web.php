@@ -37,8 +37,11 @@ Route::middleware('auth', 'isUser')->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
+    // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::delete('/cart/{id}', [OrderController::class, 'destroy'])->name('cart.delete');
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

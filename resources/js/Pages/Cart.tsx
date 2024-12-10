@@ -1,7 +1,7 @@
 import Line from '@/Components/Line';
 import { Button } from '@/Components/ui/button';
 import UserLayout from '@/Layouts/UserLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { IconCircleMinus, IconExternalLink } from '@tabler/icons-react';
 import React from 'react';
 import { toast } from 'sonner';
@@ -21,8 +21,12 @@ interface CartType extends OrderType {
 
 export default function Cart({ carts }: { carts: CartType[] }) {
     console.log('carts', carts);
-    function handleDeleteCartItem(id) {
-        // router.delete with id
+    function handleDeleteCartItem(id: number) {
+        router.delete(route('cart.delete', id), {
+            onSuccess: () => toast.info('Cart item successfully removed.'),
+            onError: () =>
+                toast.warning('Cannot delete cart item at this time.'),
+        });
     }
 
     function handleOpenFiles(files: OrderFile[]) {

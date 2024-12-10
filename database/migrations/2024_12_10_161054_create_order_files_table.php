@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('order_files', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')
-                ->constrained('order_files')
-                ->onDelete('cascade');
+                ->constrained('orders');
             $table->string('filename');
             $table->timestamps();
         });

@@ -20,6 +20,17 @@ class Order extends Model
         'status'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($order) {
+            foreach ($order->files as $file) {
+                $file->delete();
+            }
+        });
+    }
+
     // Relationships
     public function user()
     {
@@ -33,7 +44,7 @@ class Order extends Model
 
     public function files()
     {
-        return $this->hasMany(OrderFiles::class);
+        return $this->hasMany(OrderFiles::class, 'order_id');
     }
 
     // Scopes
