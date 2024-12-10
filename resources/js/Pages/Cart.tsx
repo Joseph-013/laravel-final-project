@@ -66,8 +66,10 @@ export default function Cart({ carts }: { carts: CartType[] }) {
     }
 
     const handleSubmitBatchOrder = () => {
-        router.patch(route('cart.send'), {
-            // @ts-expect-error onSuccess callback does not strictly match expected type
+        router.visit(route('cart.send'), {
+            method: 'post',
+            preserveState: true,
+            preserveScroll: true,
             onSuccess: () =>
                 toast.success('All cart items successfully submitted.'),
         });
@@ -145,9 +147,11 @@ export default function Cart({ carts }: { carts: CartType[] }) {
                     </tbody>
                 </table>
             </div>
-            <ControlContainer>
-                {carts.length !== 0 && <ConfirmSubmitBatchOrder />}
-            </ControlContainer>
+            {carts.length !== 0 && (
+                <ControlContainer>
+                    <ConfirmSubmitBatchOrder />
+                </ControlContainer>
+            )}
         </UserLayout>
     );
 
