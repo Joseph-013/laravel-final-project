@@ -340,12 +340,12 @@ export default function OrderForm({
 
 export function InputContainer({
     children,
-    title,
+    title = null,
     className,
     required = false,
 }: {
     children: React.ReactNode;
-    title?: string;
+    title?: string | null;
     className?: string;
     required?: boolean;
 }) {
@@ -353,16 +353,18 @@ export function InputContainer({
         <section
             className={`flex flex-col gap-y-5 rounded-md border-[1px] border-slate-300 p-4 shadow-md ${className}`}
         >
-            <div className="flex h-fit items-center justify-between">
-                <div className="-mb-3 h-fit font-bold">
-                    {title ? `${title}:` : null}
-                </div>
-                {required && (
-                    <div className="ml-2 flex h-[1ch] items-center text-[1.5rem] font-bold text-red-500">
-                        *
+            {title && (
+                <div className="flex h-fit items-center justify-between">
+                    <div className="-mb-3 h-fit font-bold">
+                        {title ? `${title}:` : null}
                     </div>
-                )}
-            </div>
+                    {required && (
+                        <div className="ml-2 flex h-[1ch] items-center text-[1.5rem] font-bold text-red-500">
+                            *
+                        </div>
+                    )}
+                </div>
+            )}
             {children}
         </section>
     );
