@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
             $table->enum('pickup_type', ['Pickup', 'Delivery']);
-            $table->enum('status', ['Pending', 'Completed', 'Cancelled'])->default('Pending');
+            $table->enum('status', ['Cart', 'Pending', 'Completed', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });
     }

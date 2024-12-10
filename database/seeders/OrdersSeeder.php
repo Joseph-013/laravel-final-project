@@ -15,7 +15,7 @@ class OrdersSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['Pending', 'Completed', 'Cancelled'];
+        $statuses = ['Cart', 'Pending', 'Completed', 'Cancelled'];
 
         $products = Product::all();
         $users = User::all();
