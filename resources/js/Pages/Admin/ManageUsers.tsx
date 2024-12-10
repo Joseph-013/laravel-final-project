@@ -16,6 +16,7 @@ import {
   import ControlContainer from '@/Components/ControlContainer';
   import CreateProductDialog from '@/Components/CreateProductDialog';
 import HeaderSearch from '@/Components/HeaderSearch';
+import { toast } from 'sonner';
   
 //   interface Product {
 //     id: number;
@@ -34,13 +35,13 @@ import HeaderSearch from '@/Components/HeaderSearch';
 //     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
     const handleDelete = (id: number) => {
-      if (confirm('Are you sure you want to delete this user?')) {
+      if (confirm('Are you sure you want to ban this user?')) {
           router.delete(route('admin.banUser', id), {
               onSuccess: () => {
-                  //put alert here
+                toast.success('User Banned Successfully!')
               },
               onError: () => {
-                  alert('Failed to delete user.');
+                toast.error('Error Banning User.')
               },
               preserveScroll: true, // Ensures the scroll position is maintained
           });
@@ -48,18 +49,23 @@ import HeaderSearch from '@/Components/HeaderSearch';
   };
 
   const handleRetrieve = (id: number) => {
-    if (confirm('Are you sure you want to retrieve this user?')) {
-        router.patch(route('admin.unbanUser', id), {
-            onSuccess: () => {
-                //put alert here
-            },
-            onError: () => {
-                alert('Failed to retrieve user.');
-            },
-            preserveScroll: true, // Ensures the scroll position is maintained
-        });
+    if (confirm('Are you sure you want to unban this user?')) {
+        router.patch(
+            route('admin.unbanUser', id), 
+            {}, 
+            {
+                onSuccess: () => {
+                    toast.success('User Unbanned Successfully!');
+                },
+                onError: () => {
+                    toast.error('Error Unbanning User.');
+                },
+                preserveScroll: true,
+            }
+        );
     }
 };
+
   
   
 //     const handleEdit = (product: Product) => {

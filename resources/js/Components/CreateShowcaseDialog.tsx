@@ -16,6 +16,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from './ui/dialog';
+import { toast } from 'sonner';
 
 interface CreateProduct extends Product {
     photoLink: File | undefined;
@@ -57,9 +58,11 @@ export default function CreateShowcaseDialog() {
             onSuccess: () => {
                 reset();
                 setDialogOpen(false);
+                toast.success('Showcase Photo Added Successfully!')
             },
             // Optional: handle validation errors
             onError: () => {
+                toast.error('Error Adding Showcase Photo.')
                 // Handle any errors if needed
             }
         });

@@ -15,6 +15,7 @@ import EditProductDialog from '@/Components/EditProductDialog';
 import axios from 'axios';
 import ControlContainer from '@/Components/ControlContainer';
 import CreateProductDialog from '@/Components/CreateProductDialog';
+import { toast } from 'sonner';
 
 interface Product {
   id: number;
@@ -36,10 +37,10 @@ export default function ManageProducts({ products }: ManageProductsProps) {
     if (confirm('Are you sure you want to delete this product?')) {
         router.delete(route('admin.destroy', id), {
             onSuccess: () => {
-                //put alert here
+                toast.info('Product Delete Successfully!')
             },
             onError: () => {
-                alert('Failed to delete product.');
+                toast.error('Error Adding Product.')
             },
             preserveScroll: true, // Ensures the scroll position is maintained
         });

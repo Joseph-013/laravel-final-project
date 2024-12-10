@@ -9,6 +9,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from './ui/dialog';
+import { toast } from 'sonner';
 
 interface CarouselPhoto {
     carouselID: number;
@@ -50,8 +51,13 @@ export default function EditShowcaseDialog({
             _method: 'PATCH'
         }, {
             forceFormData: true,
-            onSuccess: () => onClose(),
+            onSuccess: () => {
+                onClose();
+                toast.success('Showcase Photo Updated Successfully!')
+
+            },
             onError: (errors) => {
+                toast.error('Error Updating Showcase Photo.')
                 console.error('Error updating showcase:', errors);
             }
         });
