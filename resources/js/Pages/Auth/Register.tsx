@@ -35,7 +35,7 @@ export default function Register() {
                     <Head title="Register" />
 
                     <form onSubmit={submit}>
-                        <div className="relative -mt-20 flex h-screen flex-col items-center justify-center">
+                        <div className="relative flex flex-col items-center justify-center">
                             <div className="w-[600px] max-w-[90%] rounded bg-white p-8 shadow-none md:shadow-lg">
                                 <h1 className="mb-10 text-4xl font-extrabold leading-normal text-primary">
                                     Create Account
