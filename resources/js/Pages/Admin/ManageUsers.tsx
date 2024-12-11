@@ -1,6 +1,13 @@
 import HeaderSearch from '@/Components/HeaderSearch';
 import { Button } from '@/Components/ui/button';
 import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination';
+import {
     Table,
     TableBody,
     TableCaption,
@@ -14,35 +21,35 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, router } from '@inertiajs/react';
 import { toast } from 'sonner';
 
-//   interface Product {
-//     id: number;
-//     name: string;
-//     description:string;
-//     keyword: string;
-//     active: boolean;
-//     image_file: string | null;
-//   }
-
-interface ManageProductsProps {
-    products: Product[];
+interface User {
+    id: number;
+    username: string;
+    fullname: string;
+    email: string;
 }
 
-export default function ManageUsers({
-    users,
-    bannedUsers,
-}: ManageProductsProps) {
-    //     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+interface PaginatedData<T> {
+    data: T[];
+    links: {
+        first: string | null;
+        last: string | null;
+        next: string | null;
+        prev: string | null;
+    };
+}
 
+interface ManageUsersProps {
+    users: PaginatedData<User>;
+    bannedUsers: PaginatedData<User>;
+}
+
+export default function ManageUsers({ users, bannedUsers }: ManageUsersProps) {
     const handleDelete = (id: number) => {
         if (confirm('Are you sure you want to ban this user?')) {
             router.delete(route('admin.banUser', id), {
-                onSuccess: () => {
-                    toast.success('User Banned Successfully!');
-                },
-                onError: () => {
-                    toast.error('Error Banning User.');
-                },
-                preserveScroll: true, // Ensures the scroll position is maintained
+                onSuccess: () => toast.success('User Banned Successfully!'),
+                onError: () => toast.error('Error Banning User.'),
+                preserveScroll: true,
             });
         }
     };
@@ -53,25 +60,50 @@ export default function ManageUsers({
                 route('admin.unbanUser', id),
                 {},
                 {
-                    onSuccess: () => {
-                        toast.success('User Unbanned Successfully!');
-                    },
-                    onError: () => {
-                        toast.error('Error Unbanning User.');
-                    },
+                    onSuccess: () =>
+                        toast.success('User Unbanned Successfully!'),
+                    onError: () => toast.error('Error Unbanning User.'),
                     preserveScroll: true,
                 },
             );
         }
     };
 
-    //     const handleEdit = (product: Product) => {
-    //       setSelectedProduct(product);
-    //     };
+    const renderPagination = (links: {
+        prev_page_url: string | null;
+        next_page_url: string | null;
+    }) => (
+        <Pagination>
+            <PaginationContent>
+                {links.prev_page_url && (
+                    <PaginationItem>
+                        <PaginationPrevious
+                            href={links.prev_page_url}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                router.get(links.prev_page_url);
+                            }}
+                        />
+                    </PaginationItem>
+                )}
+                {links.next_page_url && (
+                    <PaginationItem>
+                        <PaginationNext
+                            href={links.next_page_url}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                router.get(links.next_page_url);
+                            }}
+                        />
+                    </PaginationItem>
+                )}
+            </PaginationContent>
+        </Pagination>
+    );
 
     return (
         <AdminLayout>
-            <Head title="Manage Products" />
+            <Head title="Manage Users" />
             <div className="flex items-center justify-between">
                 <Tabs defaultValue="Users" className="w-full">
                     <TabsList>
@@ -86,11 +118,27 @@ export default function ManageUsers({
                             <HeaderSearch
                                 handleSearch={(text) => {}}
                                 className="ml-auto w-96"
-                            />{' '}
+                            />
                         </div>
                         <Table>
                             <TableCaption>
-                                List of all offered products and services.
+                                {/* <Pagination>
+                                    <PaginationContent>
+                                        <PaginationItem>
+                                            <PaginationPrevious />{' '}
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationLink href="#"></PaginationLink>
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationEllipsis />
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationNext href="#" />
+                                        </PaginationItem>
+                                    </PaginationContent>
+                                </Pagination> */}
+                                {renderPagination(users)}
                             </TableCaption>
                             <TableHeader>
                                 <TableRow>
@@ -103,14 +151,10 @@ export default function ManageUsers({
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {users.map((user) => (
+                                {users.data.map((user) => (
                                     <TableRow key={user.id}>
-                                        <TableCell className="font-medium">
-                                            {user.username}
-                                        </TableCell>
-                                        <TableCell className="font-medium">
-                                            {user.fullname}
-                                        </TableCell>
+                                        <TableCell>{user.username}</TableCell>
+                                        <TableCell>{user.fullname}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             <div className="flex justify-end gap-2">
@@ -119,7 +163,6 @@ export default function ManageUsers({
                                                     onClick={() =>
                                                         handleDelete(user.id)
                                                     }
-                                                    className="bg-red-500 text-white hover:bg-red-600"
                                                 >
                                                     Ban User
                                                 </Button>
@@ -138,11 +181,11 @@ export default function ManageUsers({
                             <HeaderSearch
                                 handleSearch={(text) => {}}
                                 className="ml-auto w-96"
-                            />{' '}
+                            />
                         </div>
                         <Table>
                             <TableCaption>
-                                List of all offered products and services.
+                                {renderPagination(bannedUsers)}
                             </TableCaption>
                             <TableHeader>
                                 <TableRow>
@@ -155,14 +198,10 @@ export default function ManageUsers({
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {bannedUsers.map((user) => (
+                                {bannedUsers.data.map((user) => (
                                     <TableRow key={user.id}>
-                                        <TableCell className="font-medium">
-                                            {user.username}
-                                        </TableCell>
-                                        <TableCell className="font-medium">
-                                            {user.fullname}
-                                        </TableCell>
+                                        <TableCell>{user.username}</TableCell>
+                                        <TableCell>{user.fullname}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             <div className="flex justify-end gap-2">
@@ -171,7 +210,6 @@ export default function ManageUsers({
                                                     onClick={() =>
                                                         handleRetrieve(user.id)
                                                     }
-                                                    className="bg-emerald-500 text-white hover:bg-emerald-600"
                                                 >
                                                     Unban User
                                                 </Button>
@@ -184,17 +222,6 @@ export default function ManageUsers({
                     </TabsContent>
                 </Tabs>
             </div>
-
-            {/* <ControlContainer>
-                <CreateProductDialog />
-            </ControlContainer> */}
-
-            {/* {selectedProduct && (
-          <EditProductDialog
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-          />
-        )} */}
         </AdminLayout>
     );
 }

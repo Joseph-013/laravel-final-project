@@ -138,9 +138,10 @@ public function destroy($id)
 //user route
 public function users()
 {
-    $users = User::all();
 
-    $bannedUsers = User::onlyTrashed()->get();
+    $users = User::latest()->paginate(5);
+
+    $bannedUsers = User::onlyTrashed()->paginate(5);
         
 
     return Inertia::render('Admin/ManageUsers', [
