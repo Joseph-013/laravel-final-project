@@ -60,7 +60,7 @@ export default function ManageProducts({ products }: ManageProductsProps) {
                                 <div className="relative p-0">
                                     {product.imageSrc ? (
                                         <div
-                                            className="relative h-48 w-full cursor-pointer"
+                                            className="relative h-44 w-full cursor-pointer"
                                             onClick={() => {
                                                 setSelectedProduct(product);
                                             }}
