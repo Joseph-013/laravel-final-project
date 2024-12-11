@@ -19,6 +19,7 @@ import HeaderSearch from '@/Components/HeaderSearch';
 import CreateShowcaseDialog from '@/Components/CreateShowcaseDialog';
 import EditShowcaseDialog from '@/Components/EditShowcaseDialog';
 import { toast } from 'sonner';
+import ConfirmDialog from '@/Components/ConfirmDialog';
   
 //   interface Product {
 //     id: number;
@@ -37,7 +38,6 @@ import { toast } from 'sonner';
     const [selectedShowcase, setselectedShowcase] = useState<Product | null>(null);
   
 const handleDelete = (id: number) => {
-    if (confirm('Are you sure you want to delete this showcase photo?')) {
         router.delete(route('admin.destroyShowcase', id), {
             onSuccess: () => {
                 toast.success('Showcase Photo Deleted Successfully!')
@@ -47,7 +47,6 @@ const handleDelete = (id: number) => {
             },
             preserveScroll: true, // Ensures the scroll position is maintained
         });
-    }
 };
 
 
@@ -100,13 +99,21 @@ const handleDelete = (id: number) => {
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => handleDelete(carousel.carouselID)}
-                    className="text-red-500"
-                  >
-                    Delete
-                  </Button>
+                  <ConfirmDialog
+                                                trigger={
+                                                    <Button
+                                                    variant="destructive"
+                                                    className="text-red-500"
+                                                >
+                                                    Delete
+                                                </Button>
+                                                }
+                                                title={`Confirm Deletion?`}
+                                                description="The showcase photo will be deleted from welcome page."
+                                                accept="Confirm"
+                                                onclick={() => handleDelete(carousel.carouselID)}
+                                            ></ConfirmDialog> 
+                  
                 </div>
               </TableCell>
               </TableRow>

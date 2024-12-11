@@ -1,3 +1,4 @@
+import ConfirmDialog from '@/Components/ConfirmDialog';
 import CreateProductDialog from '@/Components/CreateProductDialog';
 import EditProductDialog from '@/Components/EditProductDialog';
 import AdminLayout from '@/Layouts/AdminLayout';
@@ -23,7 +24,6 @@ export default function ManageProducts({ products }: ManageProductsProps) {
         null,
     );
     const handleDelete = (id: number) => {
-        if (confirm('Are you sure you want to delete this product?')) {
             router.delete(route('admin.destroy', id), {
                 onSuccess: () => {
                     toast.info('Product Delete Successfully!');
@@ -33,7 +33,6 @@ export default function ManageProducts({ products }: ManageProductsProps) {
                 },
                 preserveScroll: true, // Ensures the scroll position is maintained
             });
-        }
     };
 
     const handleEdit = (product: Product) => {
@@ -104,12 +103,21 @@ export default function ManageProducts({ products }: ManageProductsProps) {
                                 >
                                     Edit
                                 </button>
-                                <button
-                                    className="rounded bg-red-500 px-3 py-1 text-white transition-colors hover:bg-red-600"
-                                    onClick={() => handleDelete(product.id)}
-                                >
-                                    Delete
-                                </button>
+                                <ConfirmDialog
+                                                trigger={
+                                                  <button
+                                                  className="rounded bg-red-500 px-3 py-1 text-white transition-colors hover:bg-red-600"
+                                              >
+                                                  Delete
+                                              </button>
+                                                }
+                                                title={`Confirm Deletion?`}
+                                                description="The product will be deleted from the list."
+                                                accept="Confirm"
+                                                onclick={() => handleDelete(product.id)}
+                                            ></ConfirmDialog> 
+                                
+                                
                             </div>
                         </div>
                     ))}
