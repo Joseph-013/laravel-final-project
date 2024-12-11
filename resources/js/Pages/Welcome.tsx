@@ -1,7 +1,7 @@
 import HeaderSearch from '@/Components/HeaderSearch';
 import ImageSlider from '@/Components/ImageSlider';
 import UserLayout from '@/Layouts/UserLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { MapPin } from 'lucide-react';
 import { useState } from 'react';
 
@@ -53,9 +53,12 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                                 possible.
                             </h2>
                             <div className="mt-8 flex justify-center">
-                                <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl">
+                                <Link
+                                    href={`${route('products')}#stickers`}
+                                    className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl"
+                                >
                                     Show me!
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div className="w-full overflow-hidden rounded-xl lg:w-1/2">
@@ -83,9 +86,12 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                                 Message us to know more.
                             </h2>
                             <div className="mt-8 flex justify-center">
-                                <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl">
+                                <Link
+                                    href={`${route('products')}#cup-sleeves`}
+                                    className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl"
+                                >
                                     Show me!
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
