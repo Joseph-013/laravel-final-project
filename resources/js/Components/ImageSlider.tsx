@@ -32,7 +32,7 @@ export default function ImageSlider({
         };
     }
 
-    const imgLength = imgSrc.length;
+    const imgLength = imgSrc?.length;
 
     const [imageIndex, setImageIndex] = useState(startsFrom);
 
@@ -63,28 +63,31 @@ export default function ImageSlider({
 
         return () => clearInterval(interval);
     });
-    return (
-        <div
-            {...containerProps}
-            className={`w-full aspect-[2/1] overflow-clip flex relative ${containerProps?.className}`}
-        >
-            {imgSrc.map((img) => (
-                <img
-                    key={img}
-                    src={img}
-                    className="size-full object-cover flex-grow-0 flex-shrink-0 img-slider-img"
-                    style={{ translate: `${-100 * imageIndex}%` }}
+
+    if (!imgLength) return <></>;
+    else
+        return (
+            <div
+                {...containerProps}
+                className={`relative flex aspect-[2/1] w-full overflow-clip ${containerProps?.className}`}
+            >
+                {imgSrc.map((img) => (
+                    <img
+                        key={img}
+                        src={img}
+                        className="img-slider-img size-full flex-shrink-0 flex-grow-0 object-cover"
+                        style={{ translate: `${-100 * imageIndex}%` }}
+                    />
+                ))}
+                <NavigationControls
+                    leftButtonProps={{ onClick: prevImage }}
+                    rightButtonProps={{ onClick: nextImage }}
+                    length={imgLength}
+                    position={imageIndex}
+                    jump={goTo}
                 />
-            ))}
-            <NavigationControls
-                leftButtonProps={{ onClick: prevImage }}
-                rightButtonProps={{ onClick: nextImage }}
-                length={imgLength}
-                position={imageIndex}
-                jump={goTo}
-            />
-        </div>
-    );
+            </div>
+        );
 }
 
 function NavigationControls({
@@ -108,7 +111,7 @@ function NavigationControls({
     return (
         <>
             <button
-                className={`${commonClassName} top-0 bottom-0 left-0`}
+                className={`${commonClassName} bottom-0 left-0 top-0`}
                 {...leftButtonProps}
             >
                 <div className={commonDivClassName}>
@@ -116,21 +119,21 @@ function NavigationControls({
                 </div>
             </button>
             <button
-                className={`${commonClassName} top-0 bottom-0 right-0`}
+                className={`${commonClassName} bottom-0 right-0 top-0`}
                 {...rightButtonProps}
             >
                 <div className={commonDivClassName}>
                     <IconCaretRight {...commonIconProps} />
                 </div>
             </button>
-            <div className="absolute bottom-2 hidden sm:flex inset-x-0 justify-center">
+            <div className="absolute inset-x-0 bottom-2 hidden justify-center sm:flex">
                 {Array.from({ length }).map((_, index) => {
                     const active = index === position;
                     return (
                         <button
                             key={index}
                             onClick={() => jump(index)}
-                            className="hover:bg-white/30 rounded-full hover:outline hover:outline-1 hover:outline-[#0C4EA3]/50"
+                            className="rounded-full hover:bg-white/30 hover:outline hover:outline-1 hover:outline-[#0C4EA3]/50"
                         >
                             <IconPointFilled
                                 fill={active ? '#0C4EA3' : 'white'}
