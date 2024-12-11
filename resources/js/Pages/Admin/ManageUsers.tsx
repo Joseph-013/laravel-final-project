@@ -122,6 +122,7 @@ export default function ManageUsers({ users, bannedUsers }: ManageUsersProps) {
                         </div>
                         <Table>
                             <TableCaption>
+                                List of all users.
                                 {/* <Pagination>
                                     <PaginationContent>
                                         <PaginationItem>
