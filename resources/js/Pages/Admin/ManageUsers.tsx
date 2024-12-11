@@ -80,7 +80,9 @@ export default function ManageUsers({
                     </TabsList>
                     <TabsContent value="Users">
                         <div className="flex items-center justify-between">
-                            <h1 className="text-xl font-bold">All Users</h1>
+                            <h1 className="text-2xl font-extrabold text-primary">
+                                All Users
+                            </h1>
                             <HeaderSearch
                                 handleSearch={(text) => {}}
                                 className="ml-auto w-96"
@@ -130,7 +132,9 @@ export default function ManageUsers({
                     </TabsContent>
                     <TabsContent value="Banned">
                         <div className="flex items-center justify-between">
-                            <h1 className="text-xl font-bold">Banned Users</h1>
+                            <h1 className="text-2xl font-extrabold text-primary">
+                                Banned Users
+                            </h1>
                             <HeaderSearch
                                 handleSearch={(text) => {}}
                                 className="ml-auto w-96"
