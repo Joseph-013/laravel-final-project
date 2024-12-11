@@ -9,7 +9,7 @@ import {
 } from '@/Components/ui/table';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
-import { Product } from './Products';
+import { Product } from '../Products';
 
 export interface OrderType {
     id?: number;
@@ -26,7 +26,7 @@ export interface OrderType {
     created_at: string;
 }
 
-export default function Orders({ orders }: { orders: OrderType[] }) {
+export default function ManageOrders({ orders }: { orders: OrderType[] }) {
     const colorMap: Record<
         'Cart' | 'Pending' | 'Completed' | 'Cancelled',
         'sky' | 'orange' | 'green' | 'red'

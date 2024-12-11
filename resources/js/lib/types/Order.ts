@@ -1,3 +1,5 @@
+import { Timestamps } from './Timestamps';
+
 export type Order = {
     id: number;
     user_id: number;
@@ -9,7 +11,4 @@ export type Order = {
     order_deadline_time: string;
     pickup_type: 'Pickup' | 'Delivery';
     status: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
-    created_at: Date;
-    updated_at: Date;
-    deleted_at?: Date;
-};
+} & Timestamps;
