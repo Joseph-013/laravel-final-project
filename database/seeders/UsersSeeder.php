@@ -42,7 +42,7 @@ class UsersSeeder extends Seeder
             'social_username' => 'qweqwe',
             'contact_number' => '0958447434',
             'default_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('qweqweqwe'),
         ]);
     }
 }
