@@ -21,7 +21,7 @@ class PasswordController extends Controller
         ]);
 
         $request->user()->update([
-            'password' => Hash::make($validated['new_password']),
+            'password' => $validated['new_password'],
         ]);
 
         return redirect()->back();
@@ -55,7 +55,7 @@ class PasswordController extends Controller
 
         // Update the password if validation passes
         $request->user()->update([
-            'password' => Hash::make($validated['new_password']),
+            'password' => $validated['new_password'],
         ]);
 
         // Redirect back with success message
