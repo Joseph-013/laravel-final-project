@@ -56,41 +56,46 @@ export default function ManageProducts({ products }: ManageProductsProps) {
                             key={product.id}
                             className="overflow-hidden rounded-lg bg-white shadow-md"
                         >
-                            <div className="p-0">
-                                {product.imageSrc ? (
-                                    <div
-                                        className="relative h-48 w-full cursor-pointer"
-                                        onClick={() => {
-                                            setSelectedProduct(product);
-                                        }}
+                            <div className="bg-white">
+                                <div className="relative p-0">
+                                    {product.imageSrc ? (
+                                        <div
+                                            className="relative h-48 w-full cursor-pointer"
+                                            onClick={() => {
+                                                setSelectedProduct(product);
+                                            }}
+                                        >
+                                            <img
+                                                src={product.imageSrc}
+                                                alt={product.name}
+                                                className="absolute inset-0 h-full w-full object-cover"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="flex h-48 w-full items-center justify-center bg-gray-200">
+                                            <span className="text-gray-500">
+                                                No Image
+                                            </span>
+                                        </div>
+                                    )}
+                                    <span
+                                        className={`absolute right-2 top-2 inline-block rounded-full px-2 py-1 text-xs font-semibold ${
+                                            product.active
+                                                ? 'bg-green-500 text-white'
+                                                : 'bg-gray-500 text-white'
+                                        }`}
                                     >
-                                        <img
-                                            src={product.imageSrc}
-                                            alt={product.name}
-                                            className="absolute inset-0 h-full w-full object-cover"
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="flex h-48 w-full items-center justify-center bg-gray-200">
-                                        <span className="text-gray-500">
-                                            No Image
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-                            <div className="p-4">
-                                <h2 className="mb-2 text-xl font-semibold">
-                                    {product.name}
-                                </h2>
-                                <span
-                                    className={`inline-block rounded-full px-2 py-1 text-xs font-semibold ${
-                                        product.active
-                                            ? 'bg-green-100 text-green-800'
-                                            : 'bg-gray-100 text-gray-800'
-                                    }`}
-                                >
-                                    {product.active ? 'Active' : 'Inactive'}
-                                </span>
+                                        {product.active ? 'Active' : 'Inactive'}
+                                    </span>
+                                </div>
+                                <div className="p-4">
+                                    <h2 className="mb-2 text-xl font-semibold">
+                                        {product.name}
+                                    </h2>
+                                    <p className="mb-2 line-clamp-2 text-sm text-gray-600">
+                                        {product.description}
+                                    </p>
+                                </div>
                             </div>
                             <div className="flex justify-between border-t p-4">
                                 <button
