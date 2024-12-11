@@ -29,7 +29,7 @@ export default function HeaderSearch({
     handleSearch,
     className,
 }: {
-    inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+    inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
     buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
     handleSearch: (text: string) => void;
     className?: string;
@@ -41,6 +41,7 @@ export default function HeaderSearch({
             className={`flex h-10 ${className} overflow-clip rounded-full border-2 border-primary`}
         >
             <input
+                type="text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 className="h-full w-full rounded-l-full border-none bg-background pl-5 text-sm"

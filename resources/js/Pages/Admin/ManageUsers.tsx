@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/Components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, router } from '@inertiajs/react';
 import { toast } from 'sonner';
@@ -25,7 +25,8 @@ import { toast } from 'sonner';
 //   }
 
 interface ManageProductsProps {
-    products: Product[];
+    users: User;
+    bannedUsers;
 }
 
 export default function ManageUsers({
