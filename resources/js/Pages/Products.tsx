@@ -1,3 +1,4 @@
+import HeaderSearch from '@/Components/HeaderSearch';
 import { ProductGridItem } from '@/Components/ProductCard';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
@@ -17,7 +18,20 @@ export default function Products({ products }: { products: Product[] }) {
     // products = sampleProducts;
 
     return (
-        <UserLayout>
+        <UserLayout
+            header={
+                <HeaderSearch
+                    className="ml-10 w-full max-w-80"
+                    inputProps={{
+                        type: 'text',
+                        placeholder: 'Search',
+                    }}
+                    handleSearch={(text) => {
+                        console.log(text);
+                    }}
+                />
+            }
+        >
             <Head title="Products" />
             <h1 className="mb-2 p-2 text-2xl font-extrabold text-primary">
                 Our Products and Services:

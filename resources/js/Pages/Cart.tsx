@@ -96,6 +96,7 @@ export default function Cart({ carts }: { carts: CartType[] }) {
                         <TableRow>
                             <TableHead>Product/Service</TableHead>
                             <TableHead>Specifications</TableHead>
+                            <TableHead>Address</TableHead>
                             <TableHead>Files</TableHead>
                             <TableHead>Deadline Date</TableHead>
                             <TableHead>Deadline Time</TableHead>
@@ -110,6 +111,9 @@ export default function Cart({ carts }: { carts: CartType[] }) {
                                 <TableCell>{cart.product?.name}</TableCell>
                                 <TableCell className="text-sm">
                                     {cart.specifications}
+                                </TableCell>
+                                <TableCell className="text-sm">
+                                    {cart.address}
                                 </TableCell>
                                 <TableCell>
                                     <Button

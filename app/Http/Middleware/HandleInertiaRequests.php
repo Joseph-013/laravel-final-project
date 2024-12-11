@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
@@ -34,6 +35,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'authenticated' => Auth::check(),
             'toastContent' => $request->session()->pull('toast'),
+            'cartCount' => Order::where([
+                'user_id' => Auth::id()
+            ])->cart()->get()->count() ?? null,
             'auth' => [
                 'user' => $request->user(),
             ],

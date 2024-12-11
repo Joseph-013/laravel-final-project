@@ -1,4 +1,3 @@
-import HeaderSearch from '@/Components/HeaderSearch';
 import Line from '@/Components/Line';
 import {
     DropdownMenu,
@@ -15,6 +14,7 @@ import {
     IconUserCircle,
 } from '@tabler/icons-react';
 
+import { PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
@@ -22,33 +22,33 @@ import { HeaderNavLink } from './LayoutComponents';
 interface UserLayoutProps {
     children: React.ReactNode;
     className?: string;
+    header?: React.ReactNode;
 }
 
-export default function UserLayout({ children, className }: UserLayoutProps) {
+export default function UserLayout({
+    children,
+    className,
+    header,
+}: UserLayoutProps) {
     return (
-        <BaseLayout headerContent={<HeaderContent />} className={className}>
+        <BaseLayout
+            headerContent={<HeaderContent header={header} />}
+            className={className}
+        >
             {children}
         </BaseLayout>
     );
 }
 
-export function HeaderContent() {
-    const cartCount: number = 10;
+export function HeaderContent({ header }: { header: React.ReactNode }) {
+    const { cartCount }: { cartCount: number | null } =
+        usePage<PageProps>().props;
 
     const authenticated: boolean = usePage().props.authenticated as boolean;
 
     return (
         <div className="flex w-full items-center justify-end gap-x-5">
-            <HeaderSearch
-                className="ml-10 w-full max-w-80"
-                inputProps={{
-                    type: 'text',
-                    placeholder: 'Search',
-                }}
-                handleSearch={(text) => {
-                    console.log(text);
-                }}
-            />
+            {header}
             <nav>
                 {/* Mobile View */}
                 <DropdownMenu>

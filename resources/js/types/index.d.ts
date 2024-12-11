@@ -11,4 +11,7 @@ export type PageProps<
     auth: {
         user: User;
     };
+    authenticated: boolean;
+    toastContent: string | null;
+    cartCount: number | null;
 };
