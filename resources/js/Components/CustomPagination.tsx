@@ -59,15 +59,14 @@ function CustomPagination({ page }) {
     }
 
     return (
-        <div className="flex w-fit max-w-full justify-between overflow-clip rounded-full bg-[#EEEEEE] px-1 py-1 shadow-md shadow-black/40">
+        <div className="flex w-fit max-w-full justify-between overflow-clip rounded-full bg-background px-1 py-1">
             <Pagination className="contents">
                 <PaginationContent className="contents">
                     <PaginationItem>
                         <PaginationPrevious
                             onClick={() => handlePaging(page.links[0].url)}
-                            className={`h-full rounded-l-full ${
-                                page.current_page === 1 &&
-                                'cursor-not-allowed hover:bg-transparent'
+                            className={`h-full cursor-pointer rounded-l-full hover:bg-primary hover:text-secondary ${
+                                page.current_page === 1 && 'cursor-not-allowed'
                             }`}
                         />
                     </PaginationItem>
@@ -95,6 +94,7 @@ function CustomPagination({ page }) {
                                             }
                                         >
                                             <PaginationLink
+                                                className="cursor-pointer hover:bg-primary hover:text-secondary"
                                                 onClick={() =>
                                                     handlePaging(link.url)
                                                 }
@@ -117,9 +117,9 @@ function CustomPagination({ page }) {
                                     page.links[page.links.length - 1].url,
                                 )
                             }
-                            className={`h-full rounded-r-full ${
+                            className={`h-full cursor-pointer rounded-r-full hover:bg-primary hover:text-secondary ${
                                 page.current_page === page.last_page &&
-                                'cursor-not-allowed hover:bg-transparent'
+                                'cursor-not-allowed'
                             }`}
                         />
                     </PaginationItem>

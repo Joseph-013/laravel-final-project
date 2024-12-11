@@ -83,7 +83,10 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                                 Message us to know more.
                             </h2>
                             <div className="mt-8 flex justify-center">
-                                <button className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl">
+                                <button
+                                    href={`${route('products')}#stickers`}
+                                    className="rounded-2xl bg-[#FFD700] px-6 py-4 text-xl font-extrabold text-primary shadow-md hover:bg-[#FFD700]/90 sm:text-2xl"
+                                >
                                     Show me!
                                 </button>
                             </div>

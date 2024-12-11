@@ -1,4 +1,5 @@
 import ConfirmDialog from '@/Components/ConfirmDialog';
+import CustomPagination from '@/Components/CustomPagination';
 import HeaderSearch from '@/Components/HeaderSearch';
 import { Button } from '@/Components/ui/button';
 import {
@@ -26,15 +27,27 @@ import { toast } from 'sonner';
 //   }
 
 interface ManageProductsProps {
-    users: User;
-    bannedUsers: User;
+    // users: User[];
+    // bannedUsers: User[];
+    paginatedUsers: User[];
+    paginatedBannedUsers: User[];
+
+    queryParameters: Record<
+        string,
+        string | number | boolean | string[] | number[] | undefined
+    >;
 }
 
+// type AllowedManageProductProps = keyof ManageProductsProps;
+
 export default function ManageUsers({
-    users,
-    bannedUsers,
+    // users,
+    // bannedUsers,
+    paginatedUsers,
+    paginatedBannedUsers,
+    queryParameters,
 }: ManageProductsProps) {
-    //     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    queryParameters = queryParameters || {};
 
     const handleDelete = (id: number) => {
         router.delete(route('admin.banUser', id), {
@@ -68,6 +81,30 @@ export default function ManageUsers({
     //       setSelectedProduct(product);
     //     };
 
+    // const handleUserSearch = (text: string) => {
+    //     if (text) queryParameters['searchUsers'] = text;
+    //     else delete queryParameters['searchUsers'];
+    //     handleSearch();
+    // };
+
+    // const handleBannedUserSearch = (text: string) => {
+    //     if (text) queryParameters['searchBannedUsers'] = text;
+    //     else delete queryParameters['searchBannedUsers'];
+    //     handleSearch();
+    // };
+
+    function handleSearch(param: string, text: string) {
+        if (text) queryParameters[param] = text;
+        else delete queryParameters[param];
+
+        router.get(route('admin.users'), queryParameters, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+
+        console.log('queryParameters', queryParameters);
+    }
+
     return (
         <AdminLayout>
             <Head title="Manage Products" />
@@ -83,13 +120,18 @@ export default function ManageUsers({
                                 All Users
                             </h1>
                             <HeaderSearch
-                                handleSearch={(text) => {}}
+                                handleSearch={(text) =>
+                                    handleSearch('searchUsers', text)
+                                }
                                 className="ml-auto w-96"
-                            />{' '}
+                                inputProps={{
+                                    placeholder: 'Search Users',
+                                }}
+                            />
                         </div>
                         <Table>
                             <TableCaption>
-                                List of all offered products and services.
+                                <CustomPagination page={paginatedUsers} />
                             </TableCaption>
                             <TableHeader>
                                 <TableRow>
@@ -102,7 +144,7 @@ export default function ManageUsers({
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {users.map((user) => (
+                                {paginatedUsers.data.map((user) => (
                                     <TableRow key={user.id}>
                                         <TableCell className="font-medium">
                                             {user.username}
@@ -142,13 +184,18 @@ export default function ManageUsers({
                                 Banned Users
                             </h1>
                             <HeaderSearch
-                                handleSearch={(text) => {}}
+                                handleSearch={(text) =>
+                                    handleSearch('searchBannedUsers', text)
+                                }
                                 className="ml-auto w-96"
-                            />{' '}
+                                inputProps={{
+                                    placeholder: 'Search Banned Users',
+                                }}
+                            />
                         </div>
                         <Table>
                             <TableCaption>
-                                List of all offered products and services.
+                                <CustomPagination page={paginatedBannedUsers} />
                             </TableCaption>
                             <TableHeader>
                                 <TableRow>
@@ -161,7 +208,7 @@ export default function ManageUsers({
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {bannedUsers.map((user) => (
+                                {paginatedBannedUsers.data.map((user) => (
                                     <TableRow key={user.id}>
                                         <TableCell className="font-medium">
                                             {user.username}

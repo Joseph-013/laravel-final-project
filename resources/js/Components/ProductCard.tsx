@@ -36,7 +36,10 @@ export default function ProductCard({ product, href }: ProductCardProps) {
 
 export function ProductGridItem({ product, href }: ProductCardProps) {
     return (
-        <div className="flex h-full w-full items-center justify-center">
+        <div
+            className="flex h-full w-full items-center justify-center"
+            id={product.keyword}
+        >
             <ProductCard product={product} href={href} />
         </div>
     );
