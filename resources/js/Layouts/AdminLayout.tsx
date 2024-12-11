@@ -1,6 +1,6 @@
 import Line from '@/Components/Line';
 import { Badge } from '@/Components/ui/badge';
-import { IconLogout, IconPackage } from '@tabler/icons-react';
+import { IconLogout } from '@tabler/icons-react';
 import BaseLayout from './BaseLayout';
 import { HeaderNavLink } from './LayoutComponents';
 
@@ -25,7 +25,6 @@ export function HeaderContent() {
                 <ul className="hidden h-full items-center gap-x-1 sm:flex">
                     <li className="contents">
                         <HeaderNavLink
-                            icon={<IconPackage />}
                             href={route('admin.index')}
                             targetRouteNames={['admin.index']}
                         >
@@ -33,21 +32,21 @@ export function HeaderContent() {
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink icon={<IconPackage />} 
+                        <HeaderNavLink
                             href={route('admin.users')}
-                            targetRouteNames={['admin.users']}>
+                            targetRouteNames={['admin.users']}
+                        >
                             Users
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink icon={<IconPackage />} href="#">
-                            Orders
-                        </HeaderNavLink>
+                        <HeaderNavLink href="#">Orders</HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink icon={<IconPackage />} 
+                        <HeaderNavLink
                             href={route('admin.showcase')}
-                            targetRouteNames={['admin.showcase']}>
+                            targetRouteNames={['admin.showcase']}
+                        >
                             Showcase
                         </HeaderNavLink>
                     </li>
