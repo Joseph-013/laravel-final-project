@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('quantity')->default(1);
             $table->date('order_deadline_date')->nullable();
             $table->time('order_deadline_time');
+            $table->text('address');
             $table->enum('pickup_type', ['Pickup', 'Delivery']);
             $table->enum('status', ['Cart', 'Pending', 'Completed', 'Cancelled'])->default('Pending');
             $table->timestamps();

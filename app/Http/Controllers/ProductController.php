@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -11,7 +12,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return Inertia::render('Products', ['products' => $products]);
+        return Inertia::render('Products', [
+            'products' => $products,
+        ]);
     }
 
     public function create()
@@ -33,7 +36,12 @@ class ProductController extends Controller
 
     {
         $product = Product::where('keyword', $keyword)->firstOrFail();
-        return Inertia::render('OrderForm', ['product' => $product]);
+        $default_address = Auth::user()->default_address;
+
+        return Inertia::render('OrderForm', [
+            'product' => $product,
+            'default_address' => $default_address
+        ]);
         //
     }
 

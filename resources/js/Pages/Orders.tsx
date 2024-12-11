@@ -12,17 +12,17 @@ import { Head } from '@inertiajs/react';
 import { Product } from './Products';
 
 export interface OrderType {
-    id: number;
-    user_id: number;
+    id?: number;
+    user_id?: number;
     product_id: number;
     product?: Product;
     specifications: string;
-    //
     quantity: number;
+    address: string;
     order_deadline_date?: string;
     order_deadline_time: string;
-    pickup_type: 'Pickup' | 'Delivery';
-    status: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
+    pickup_type?: 'Pickup' | 'Delivery';
+    status?: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
 }
 
 export default function Orders({ orders }: { orders: OrderType[] }) {
@@ -44,6 +44,7 @@ export default function Orders({ orders }: { orders: OrderType[] }) {
                         <TableHead>ID</TableHead>
                         <TableHead>Product/Service</TableHead>
                         <TableHead>Specifications</TableHead>
+                        <TableHead>Address</TableHead>
                         <TableHead>Deadline Date</TableHead>
                         <TableHead>Deadline Time</TableHead>
                         <TableHead>Pickup Type</TableHead>
@@ -58,6 +59,7 @@ export default function Orders({ orders }: { orders: OrderType[] }) {
                             </TableCell>
                             <TableCell>{item.product?.name}</TableCell>
                             <TableCell>{item.specifications}</TableCell>
+                            <TableCell>{item.address}</TableCell>
                             <TableCell className="min-w-24">
                                 {item.order_deadline_date || '--'}
                             </TableCell>

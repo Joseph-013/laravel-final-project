@@ -14,25 +14,29 @@ import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { OrderType } from './Orders';
 import { Product } from './Products';
 
-interface FormData {
-    product_id: number;
-    specifications: string;
+interface FormData extends OrderType {
+    // product_id: number;
+    // specifications: string;
     files: File[];
-    quantity: number;
-    order_deadline_date: string;
-    order_deadline_time: string;
-    pickup_type: string;
+    use_default_address: boolean;
+    // quantity: number;
+    // order_deadline_date: string;
+    // order_deadline_time: string;
+    // pickup_type: string;
     authorized: boolean;
 }
 
 export default function OrderForm({
     product,
     formData,
+    default_address,
 }: {
     formData: FormData;
     product: Product;
+    default_address: string;
 }) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,9 +55,11 @@ export default function OrderForm({
             specifications: '',
             files: [],
             quantity: 1,
+            address: default_address,
+            use_default_address: true,
             order_deadline_date: '',
             order_deadline_time: '',
-            pickup_type: '',
+            pickup_type: undefined,
             authorized: false,
         });
 
@@ -62,6 +68,10 @@ export default function OrderForm({
             setData(formData);
         }
     }, [formData, setData]);
+
+    useEffect(() => {
+        if (data.use_default_address) setData('address', default_address);
+    }, [data, setData, default_address]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -72,6 +82,7 @@ export default function OrderForm({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         // post
         post(route('orders.store'), {
             preserveScroll: true,
@@ -320,7 +331,7 @@ export default function OrderForm({
                         </span>
                         <Select
                             required
-                            onValueChange={(value) =>
+                            onValueChange={(value: 'Pickup' | 'Delivery') =>
                                 setData('pickup_type', value)
                             }
                             value={data.pickup_type}
@@ -342,6 +353,69 @@ export default function OrderForm({
                         {errors.pickup_type && (
                             <ColorBadge color="red">
                                 {errors.pickup_type}
+                            </ColorBadge>
+                        )}
+                    </InputContainer>
+
+                    <InputContainer title="Address" required>
+                        <span>
+                            Where should the item/s be{' '}
+                            <span
+                                className={
+                                    data.pickup_type ? 'font-bold' : undefined
+                                }
+                            >
+                                {(data.pickup_type &&
+                                    (data.pickup_type === 'Pickup'
+                                        ? 'picked up'
+                                        : 'delivered')) ||
+                                    'picked up or delivered'}
+                            </span>
+                            ?
+                        </span>
+                        <div className="flex items-center">
+                            <Checkbox
+                                name="useDefaultAddress"
+                                id="useDefaultAddress"
+                                checked={data.use_default_address}
+                                onChange={(e) => {
+                                    setData(
+                                        'use_default_address',
+                                        e.target.checked,
+                                    );
+                                }}
+                                className="checked:bg-primary active:bg-primary"
+                            />
+                            <label
+                                htmlFor="useDefaultAddress"
+                                className={`cursor-pointer select-none pl-2 ${data.address === undefined && 'font-bold text-sky-600'}`}
+                            >
+                                Use my default address.
+                            </label>
+                        </div>
+                        <Input
+                            type="text"
+                            disabled={data.use_default_address}
+                            value={
+                                data.use_default_address
+                                    ? default_address
+                                    : data.address
+                            }
+                            placeholder="* required"
+                            required
+                            onChange={(e) => setData('address', e.target.value)}
+                            onFocus={(e) => {
+                                if (
+                                    !data.use_default_address &&
+                                    e.target.value === default_address
+                                ) {
+                                    e.target.select();
+                                }
+                            }}
+                        />
+                        {errors.address && (
+                            <ColorBadge color="red">
+                                {errors.address}
                             </ColorBadge>
                         )}
                     </InputContainer>

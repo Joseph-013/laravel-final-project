@@ -17,6 +17,7 @@ class Order extends Model
         'order_deadline_date',
         'order_deadline_time',
         'pickup_type',
+        'address',
         'status'
     ];
 

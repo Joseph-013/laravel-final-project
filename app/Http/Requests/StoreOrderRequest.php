@@ -30,6 +30,7 @@ class StoreOrderRequest extends FormRequest
             'quantity' => 'required|integer|min:1|max:65535',
             'order_deadline_date' => 'nullable|date|after_or_equal:today',
             'order_deadline_time' => 'required|date_format:H:i',
+            'address' => 'required|string|max:65535',
             'pickup_type' => 'required|in:Pickup,Delivery',
         ];
     }

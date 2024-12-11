@@ -44,9 +44,11 @@ class OrderController extends Controller
             'product_id' => $data['product_id'],
             'specifications' => $data['specifications'],
             'quantity' => $data['quantity'],
+            'address' => $data['address'],
             'order_deadline_date' => $data['order_deadline_date'],
             'order_deadline_time' => $data['order_deadline_time'],
             'pickup_type' => $data['pickup_type'],
+            'address' => $data['address'] ?? Auth::user()->default_address,
             'status' => 'Pending',
         ]);
 
