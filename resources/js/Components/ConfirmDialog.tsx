@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,9 +8,21 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from "@/Components/ui/alert-dialog";
+} from '@/Components/ui/alert-dialog';
+import { useState } from 'react';
 
-function ConfirmDialog({ children, onclick, ...props }) {
+function ConfirmDialog({
+    children,
+    onclick,
+    ...props
+}: {
+    children?: React.ReactNode;
+    onclick: () => void;
+    trigger: React.ReactNode;
+    title: string;
+    description?: string;
+    accept?: string;
+}) {
     const [open, setOpen] = useState(false);
 
     // const handleAction = () => {
@@ -21,9 +32,7 @@ function ConfirmDialog({ children, onclick, ...props }) {
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
-            <AlertDialogTrigger asChild>
-                <button>{props.trigger}</button>
-            </AlertDialogTrigger>
+            <AlertDialogTrigger asChild>{props?.trigger}</AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>{props.title}</AlertDialogTitle>
@@ -31,12 +40,14 @@ function ConfirmDialog({ children, onclick, ...props }) {
                         {props.description}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
+                {children}
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                         onClick={() => {
                             onclick();
                         }}
+                        className="bg-destructive hover:bg-destructive/80"
                     >
                         {props.accept}
                     </AlertDialogAction>

@@ -35,31 +35,31 @@ export default function ManageUsers({
     //     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     const handleDelete = (id: number) => {
-            router.delete(route('admin.banUser', id), {
-                onSuccess: () => {
-                    toast.success('User Banned Successfully!');
-                },
-                onError: () => {
-                    toast.error('Error Banning User.');
-                },
-                preserveScroll: true, // Ensures the scroll position is maintained
-            });
+        router.delete(route('admin.banUser', id), {
+            onSuccess: () => {
+                toast.success('User Banned Successfully!');
+            },
+            onError: () => {
+                toast.error('Error Banning User.');
+            },
+            preserveScroll: true, // Ensures the scroll position is maintained
+        });
     };
 
     const handleRetrieve = (id: number) => {
-            router.patch(
-                route('admin.unbanUser', id),
-                {},
-                {
-                    onSuccess: () => {
-                        toast.success('User Unbanned Successfully!');
-                    },
-                    onError: () => {
-                        toast.error('Error Unbanning User.');
-                    },
-                    preserveScroll: true,
+        router.patch(
+            route('admin.unbanUser', id),
+            {},
+            {
+                onSuccess: () => {
+                    toast.success('User Unbanned Successfully!');
                 },
-            );
+                onError: () => {
+                    toast.error('Error Unbanning User.');
+                },
+                preserveScroll: true,
+            },
+        );
     };
 
     //     const handleEdit = (product: Product) => {
@@ -111,20 +111,22 @@ export default function ManageUsers({
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             <div className="flex justify-end gap-2">
-                                            <ConfirmDialog
-                                                trigger={
-                                                    <Button
-                                                    variant="destructive"
-                                                    className="bg-red-500 text-white hover:bg-red-600"
-                                                >
-                                                    Ban User
-                                                </Button>
-                                                }
-                                                title={`Confirm Ban?`}
-                                                description="The user will be banned and will not be able to access their account."
-                                                accept="Confirm"
-                                                onclick={() => handleDelete(user.id)}
-                                            ></ConfirmDialog>       
+                                                <ConfirmDialog
+                                                    trigger={
+                                                        <Button
+                                                            variant="destructive"
+                                                            className="bg-red-500 text-white hover:bg-red-600"
+                                                        >
+                                                            Ban User
+                                                        </Button>
+                                                    }
+                                                    title={`Confirm Ban?`}
+                                                    description="The user will be banned and will not be able to access their account."
+                                                    accept="Confirm"
+                                                    onclick={() =>
+                                                        handleDelete(user.id)
+                                                    }
+                                                ></ConfirmDialog>
                                             </div>
                                         </TableCell>
                                     </TableRow>
@@ -168,21 +170,22 @@ export default function ManageUsers({
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             <div className="flex justify-end gap-2">
-                                            <ConfirmDialog
-                                                trigger={
-                                                    <Button
-                                                    variant="destructive"
-                                                    className="bg-emerald-500 text-white hover:bg-emerald-600"
-                                                >
-                                                    Unban User
-                                                </Button>
-                                                }
-                                                title={`Confirm Unban?`}
-                                                description="The user will be banned and will not be able to access their account."
-                                                accept="Confirm"
-                                                onclick={() => handleRetrieve(user.id)}
-                                            ></ConfirmDialog> 
-                                                
+                                                <ConfirmDialog
+                                                    trigger={
+                                                        <Button
+                                                            variant="destructive"
+                                                            className="bg-emerald-500 text-white hover:bg-emerald-600"
+                                                        >
+                                                            Unban User
+                                                        </Button>
+                                                    }
+                                                    title={`Confirm Unban?`}
+                                                    description="The user will be banned and will not be able to access their account."
+                                                    accept="Confirm"
+                                                    onclick={() =>
+                                                        handleRetrieve(user.id)
+                                                    }
+                                                ></ConfirmDialog>
                                             </div>
                                         </TableCell>
                                     </TableRow>
