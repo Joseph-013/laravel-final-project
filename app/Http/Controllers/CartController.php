@@ -52,6 +52,7 @@ class CartController extends Controller
             'pickup_type' => $data['pickup_type'],
             'address' => $data['address'] ?? Auth::user()->default_address,
             'status' => 'Cart',
+            'added_to_cart_at' => now(),
         ]);
 
         OrderFiles::createAndStore($data['files'], $order->id);

@@ -12,12 +12,12 @@ export const colorClasses = {
 
 export default function ColorBadge({
     children,
-    color = 'neutral', // Default color fallback
+    color, // Default color fallback
 }: {
     children: React.ReactNode;
     color?: keyof typeof colorClasses;
 }) {
-    const className = colorClasses[color];
+    const className = colorClasses[color || 'neutral'];
 
     return (
         <div

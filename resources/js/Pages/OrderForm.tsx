@@ -95,7 +95,6 @@ export default function OrderForm({
 
     function handleAddToCart() {
         post(route('cart.store'), {
-            preserveScroll: true,
             onSuccess: () => {
                 reset();
                 clearFileInput();

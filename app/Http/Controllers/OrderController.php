@@ -12,6 +12,8 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+    public static function storeOrder() {}
+
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +22,6 @@ class OrderController extends Controller
         $orders = Order::where('user_id', Auth::id())
             ->where('status', '!=', 'Cart')
             ->with('product')->with('files')
-            ->orderByRaw("FIELD(status, 'Pending', 'Completed', 'Cancelled')")
             ->orderBy('updated_at', 'desc')->get();
 
         return Inertia::render('Orders', ['orders' => $orders]);
