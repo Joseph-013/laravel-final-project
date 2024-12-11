@@ -60,6 +60,11 @@ class ProductsSeeder extends Seeder
                 'keyword' => 'lamination',
             ],
             [
+                'name' => 'Cup Sleeves',
+                'description' => 'Aesthetic cup sleeves for event.',
+                'keyword' => 'cup-sleeves',
+            ],
+            [
                 'name' => 'Magnets',
                 'description' => 'Custom-printed magnets for home and office.',
                 'keyword' => 'magnets',

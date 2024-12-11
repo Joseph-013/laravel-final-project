@@ -111,7 +111,6 @@ function OrdersTable({
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>ID</TableHead>
                     <TableHead>Product/Service</TableHead>
                     <TableHead>Specifications</TableHead>
                     <TableHead>Address</TableHead>
@@ -125,9 +124,6 @@ function OrdersTable({
             <TableBody className="textsm">
                 {orders.map((order) => (
                     <TableRow key={order.id}>
-                        <TableCell className="font-medium">
-                            {order.id}
-                        </TableCell>
                         <TableCell>{order.product?.name}</TableCell>
                         <TableCell>{order.specifications}</TableCell>
                         <TableCell>{order.address}</TableCell>
