@@ -52,6 +52,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'showcase' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/showcase'),
+            'url' => '/storage/showcase',
+            'visibility' => 'public',
+        ],
+
         'orders' => [
             'driver' => 'local',
             'root' => storage_path('app/private/orders'),

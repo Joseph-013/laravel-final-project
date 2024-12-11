@@ -186,11 +186,11 @@ public function banUser($id)
     ]);
 
 
-    $carousels = CarouselPhoto::all();
+    // $carousels = CarouselPhoto::all();
 
-    return Inertia::render('Admin/ManageShowcase', [
-        'carousels' => $carousels,
-    ]);
+    // return Inertia::render('Admin/ManageShowcase', [
+    //     'carousels' => $carousels,
+    // ]);
 }
 
 public function storeShowcase(Request $request)
@@ -212,12 +212,25 @@ public function storeShowcase(Request $request)
 
     $showcase->title = $request->input('title');
     
+
     // Handle image upload
     if ($request->hasFile('photoLink')) {
-        $imagePath = $request->file('photoLink')->store('showcase', 'public');
-        $showcase->photoLink = $imagePath;
+        $file = $request->file('photoLink');
+        $filename = $file->getClientOriginalName();
+
+
+        $file->storeAs('showcase', $filename, 'public');
+
+        $urlPath = 'storage/showcase/' . $filename;
+        
+        $image = Image::read($urlPath)->cover(1200, 600, 'center');
+        $image->save();
+
+        $showcase->photoLink = 'showcase/' . $filename;
+
+
     } else {
-        $showcase->photoLink = 'showcase/default.jpg';
+        $showcase->photoLink = 'products/default.jpg';
     }
 
     $showcase->save();
@@ -244,12 +257,34 @@ public function updateShowcase(Request $request, $id)
 
     $showcase->title = $request->input('title');
 
+    // if ($request->hasFile('photoLink')) {
+    //     // Delete old image
+    //     if ($showcase->photoLink && Storage::exists($showcase->photoLink)) {
+    //         Storage::delete($showcase->photoLink);
+    //     }
+    //     $showcase->photoLink = $request->file('photoLink')->store('showcase', 'public');
+    // }
+
     if ($request->hasFile('photoLink')) {
-        // Delete old image
-        if ($showcase->photoLink && Storage::exists($showcase->photoLink)) {
-            Storage::delete($showcase->photoLink);
+        $filename = str_replace('showcase/', '', $showcase->photoLink);
+
+        // dd($showcase->photoLink);
+        // dd(Storage::disk('showcase')->exists($filename));
+        if (Storage::disk('showcase')->exists($filename)) {
+            
+            Storage::disk('showcase')->delete($filename);
         }
-        $showcase->photoLink = $request->file('photoLink')->store('showcase', 'public');
+        $file = $request->file('photoLink');
+        $filename = $file->getClientOriginalName();
+
+        $file->storeAs('showcase', $filename, 'public');
+
+        $urlPath = 'storage/showcase/' . $filename;
+        
+        $image = Image::read($urlPath)->cover(1200, 600, 'center');
+        $image->save();
+
+        $showcase->photoLink = 'showcase/' . $filename;
     }
 
 
@@ -260,7 +295,14 @@ public function updateShowcase(Request $request, $id)
 
 public function destroyShowcase($id)
 {
-    $showcase = CarouselPhoto::find($id);
+    $showcase = CarouselPhoto::findOrFail($id);
+    
+    $filename = str_replace('showcase/', '', $showcase->photoLink);
+    
+    if (Storage::disk('showcase')->exists($filename)) {
+        Storage::disk('showcase')->delete($filename);
+    }
+    
     $showcase->delete();
 
     return redirect()->route('admin.showcase')->with('success', 'Showcase deleted successfully');

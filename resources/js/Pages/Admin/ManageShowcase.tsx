@@ -18,6 +18,7 @@ import {
 import HeaderSearch from '@/Components/HeaderSearch';
 import CreateShowcaseDialog from '@/Components/CreateShowcaseDialog';
 import EditShowcaseDialog from '@/Components/EditShowcaseDialog';
+import { toast } from 'sonner';
   
 //   interface Product {
 //     id: number;
@@ -39,10 +40,10 @@ const handleDelete = (id: number) => {
     if (confirm('Are you sure you want to delete this showcase photo?')) {
         router.delete(route('admin.destroyShowcase', id), {
             onSuccess: () => {
-                //put alert here
+                toast.success('Showcase Photo Deleted Successfully!')
             },
             onError: () => {
-                alert('Failed to delete product.');
+                toast.error('Error Deleting Showcase Photo.')
             },
             preserveScroll: true, // Ensures the scroll position is maintained
         });
