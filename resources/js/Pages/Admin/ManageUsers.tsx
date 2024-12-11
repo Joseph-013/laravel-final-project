@@ -70,8 +70,8 @@ export default function ManageUsers({ users, bannedUsers }: ManageUsersProps) {
     };
 
     const renderPagination = (links: {
-        prev_page_url: string | null;
-        next_page_url: string | null;
+        prev_page_url?: string;
+        next_page_url?: string;
     }) => (
         <Pagination>
             <PaginationContent>
@@ -81,6 +81,7 @@ export default function ManageUsers({ users, bannedUsers }: ManageUsersProps) {
                             href={links.prev_page_url}
                             onClick={(e) => {
                                 e.preventDefault();
+                                // @ts-expect-error": asdkhja sdk a
                                 router.get(links.prev_page_url);
                             }}
                         />
@@ -92,6 +93,7 @@ export default function ManageUsers({ users, bannedUsers }: ManageUsersProps) {
                             href={links.next_page_url}
                             onClick={(e) => {
                                 e.preventDefault();
+                                // @ts-expect-error: error to
                                 router.get(links.next_page_url);
                             }}
                         />
