@@ -11,67 +11,49 @@ import {
 } from '@/Components/ui/select';
 import { Textarea } from '@/Components/ui/textarea';
 import UserLayout from '@/Layouts/UserLayout';
+import { StoreOrderRequest } from '@/lib/types/StoreOrderRequest';
+import { cn } from '@/lib/utils';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { OrderType } from './Orders';
 import { Product } from './Products';
-
-interface FormData extends OrderType {
-    // product_id: number;
-    // specifications: string;
-    files: File[];
-    use_default_address: boolean;
-    // quantity: number;
-    // order_deadline_date: string;
-    // order_deadline_time: string;
-    // pickup_type: string;
-    authorized: boolean;
-}
 
 export default function OrderForm({
     product,
-    formData,
-    default_address,
+    defaultAddress,
+    initialValues,
 }: {
-    formData: FormData;
     product: Product;
-    default_address: string;
+    defaultAddress?: string;
+    initialValues?: StoreOrderRequest;
 }) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { data, setData, post, errors, reset, clearErrors } =
-        useForm<FormData>({
-            // product_id: product.id!,
-            // specifications: 'asdasdasda sda sdasda dsasd asd fgh',
-            // files: [],
-            // quantity: 1,
-            // order_deadline_date: '2024-12-18',
-            // order_deadline_time: '18:48',
-            // pickup_type: 'Delivery',
-            // authorized: true,
-
+        useForm<StoreOrderRequest>({
             product_id: product.id!,
             specifications: '',
             files: [],
             quantity: 1,
-            address: default_address,
-            use_default_address: true,
-            order_deadline_date: '',
+            address: defaultAddress ?? '',
+            order_deadline_date: new Date(),
             order_deadline_time: '',
-            pickup_type: undefined,
-            authorized: false,
+            pickup_type: 'Pickup',
         });
 
-    useEffect(() => {
-        if (formData) {
-            setData(formData);
-        }
-    }, [formData, setData]);
+    const [useDefaultAddr, setUseDefaultAddr] = useState(!!!defaultAddress);
+    const [confirmed, setConfirmed] = useState(false);
 
     useEffect(() => {
-        if (data.use_default_address) setData('address', default_address);
-    }, [data, setData, default_address]);
+        if (initialValues) {
+            setData(initialValues);
+        }
+    }, [initialValues, setData]);
+
+    useEffect(() => {
+        if (useDefaultAddr) setData({ ...data, address: defaultAddress! });
+        else setData({ ...data, address: '' });
+    }, [useDefaultAddr]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -276,12 +258,18 @@ export default function OrderForm({
                                 <Input
                                     type="date"
                                     className="w-fit"
-                                    value={data.order_deadline_date}
+                                    value={
+                                        data.order_deadline_date
+                                            .toISOString()
+                                            .split('T')[0]
+                                    }
                                     onChange={(e) =>
-                                        setData(
-                                            'order_deadline_date',
-                                            e.target.value,
-                                        )
+                                        setData({
+                                            ...data,
+                                            order_deadline_date:
+                                                e.currentTarget.valueAsDate ??
+                                                new Date(),
+                                        })
                                     }
                                 />
                             </div>
@@ -370,12 +358,9 @@ export default function OrderForm({
                             <Checkbox
                                 name="useDefaultAddress"
                                 id="useDefaultAddress"
-                                checked={data.use_default_address}
+                                checked={useDefaultAddr}
                                 onChange={(e) => {
-                                    setData(
-                                        'use_default_address',
-                                        e.target.checked,
-                                    );
+                                    setUseDefaultAddr(e.target.checked);
                                 }}
                                 className="checked:bg-primary active:bg-primary"
                             />
@@ -388,19 +373,15 @@ export default function OrderForm({
                         </div>
                         <Input
                             type="text"
-                            disabled={data.use_default_address}
-                            value={
-                                data.use_default_address
-                                    ? default_address
-                                    : data.address
-                            }
+                            disabled={useDefaultAddr}
+                            value={data.address}
                             placeholder="* required"
                             required
                             onChange={(e) => setData('address', e.target.value)}
                             onFocus={(e) => {
                                 if (
-                                    !data.use_default_address &&
-                                    e.target.value === default_address
+                                    !useDefaultAddr &&
+                                    e.target.value === defaultAddress
                                 ) {
                                     e.target.select();
                                 }
@@ -419,15 +400,16 @@ export default function OrderForm({
                                 required
                                 name="authorized"
                                 id="authorized"
-                                checked={data.authorized}
-                                onChange={(e) =>
-                                    setData('authorized', e.target.checked)
-                                }
+                                checked={confirmed}
+                                onChange={(e) => setConfirmed(e.target.checked)}
                                 className="checked:bg-primary active:bg-primary"
                             />
                             <label
                                 htmlFor="authorized"
-                                className={`cursor-pointer pl-2 ${data.authorized || 'font-bold text-red-500'}`}
+                                className={cn(
+                                    `cursor-pointer pl-2`,
+                                    !confirmed && 'font-bold text-red-500',
+                                )}
                             >
                                 I confirm that the details provided are correct.
                             </label>
