@@ -1,3 +1,4 @@
+import HeaderSearch from '@/Components/HeaderSearch';
 import ImageSlider from '@/Components/ImageSlider';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head } from '@inertiajs/react';
@@ -26,7 +27,20 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
     };
 
     return (
-        <UserLayout>
+        <UserLayout
+            header={
+                <HeaderSearch
+                    className="ml-10 w-full max-w-80"
+                    inputProps={{
+                        type: 'text',
+                        placeholder: 'Search',
+                    }}
+                    handleSearch={(text) => {
+                        console.log(text);
+                    }}
+                />
+            }
+        >
             <Head title="Home" />
             <ImageSlider imgSrc={carouselImages} autoScroll startsFrom={1} />
             <section>
