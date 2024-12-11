@@ -69,7 +69,7 @@ class RegisteredUserController extends Controller
          'social_username' => $request->social_username,
          'contact_number' => $request->contact_number,
          'default_address' => $request->default_address,
-         'password' => Hash::make($request->password),
+         'password' => $request->password,
       ]);
 
       event(new Registered($user));
