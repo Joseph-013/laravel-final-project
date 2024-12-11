@@ -58,7 +58,7 @@ class RegisteredUserController extends Controller
             'regex:/^09\d{9}$/', // Philippine mobile number format
             Rule::unique('users', 'contact_number')
          ],
-         'default_address' => 'nullable|string|max:1000',
+         'default_address' => 'required|string|max:1000',
          'password' => ['required', 'confirmed', Rules\Password::defaults()],
       ]);
 
