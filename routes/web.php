@@ -73,7 +73,7 @@ Route::middleware(['auth', 'isAdmin'])
         Route::post('storeShowcase', [AdminController::class, 'storeShowcase'])->name('storeShowcase');
         Route::patch('showcase/{id}', [AdminController::class, 'updateShowcase'])->name('updateShowcase');
         Route::delete('showcase/{id}', [AdminController::class, 'destroyShowcase'])->name('destroyShowcase');
-});
+    });
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/assets.php';

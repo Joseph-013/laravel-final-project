@@ -84,14 +84,7 @@ export default function OrderForm({
         e.preventDefault();
 
         // post
-        post(route('orders.store'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                reset();
-                toast.success('Order successfully submitted.');
-                clearErrors();
-            },
-        });
+        post(route('orders.store'));
     };
 
     function clearFileInput() {

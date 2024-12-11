@@ -19,7 +19,9 @@ class OrderController extends Controller
     {
         $orders = Order::where('user_id', Auth::id())
             ->where('status', '!=', 'Cart')
-            ->with('product')->with('files')->get();
+            ->with('product')->with('files')
+            ->orderByRaw("FIELD(status, 'Pending', 'Completed', 'Cancelled')")
+            ->orderBy('updated_at', 'desc')->get();
 
         return Inertia::render('Orders', ['orders' => $orders]);
     }
@@ -54,7 +56,9 @@ class OrderController extends Controller
 
         OrderFiles::createAndStore($data['files'], $order->id);
 
-        return back();
+        Toast::success('Order successfully submitted!');
+
+        return redirect()->route('orders.index');
     }
 
     /**

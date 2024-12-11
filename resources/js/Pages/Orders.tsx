@@ -22,14 +22,16 @@ export interface OrderType {
     order_deadline_date?: string;
     order_deadline_time: string;
     pickup_type?: 'Pickup' | 'Delivery';
-    status?: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
+    status: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
+    created_at: string;
 }
 
 export default function Orders({ orders }: { orders: OrderType[] }) {
     const colorMap: Record<
-        'Pending' | 'Completed' | 'Cancelled',
-        'orange' | 'green' | 'red'
+        'Cart' | 'Pending' | 'Completed' | 'Cancelled',
+        'sky' | 'orange' | 'green' | 'red'
     > = {
+        Cart: 'sky',
         Pending: 'orange',
         Completed: 'green',
         Cancelled: 'red',
@@ -48,6 +50,7 @@ export default function Orders({ orders }: { orders: OrderType[] }) {
                         <TableHead>Deadline Date</TableHead>
                         <TableHead>Deadline Time</TableHead>
                         <TableHead>Pickup Type</TableHead>
+                        <TableHead>Ordered At</TableHead>
                         <TableHead>Status</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -65,6 +68,7 @@ export default function Orders({ orders }: { orders: OrderType[] }) {
                             </TableCell>
                             <TableCell>{item.order_deadline_time}</TableCell>
                             <TableCell>{item.pickup_type}</TableCell>
+                            <TableCell>{item.created_at}</TableCell>
                             <TableCell>
                                 <ColorBadge color={colorMap[item.status]}>
                                     {item.status}

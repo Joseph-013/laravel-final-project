@@ -20,7 +20,8 @@ class CartController extends Controller
         $carts = Order::where(
             'user_id',
             Auth::id()
-        )->cart()->with('product')->with('files')->get();
+        )->cart()->with('product')->with('files')
+            ->orderBy('created_at', 'desc')->get();
 
         return Inertia::render('Cart', ['carts' => $carts]);
     }
@@ -55,7 +56,9 @@ class CartController extends Controller
 
         OrderFiles::createAndStore($data['files'], $order->id);
 
-        return back();
+        Toast::success('Added to cart successfully!');
+
+        return redirect()->route('cart');
     }
 
     /**
