@@ -23,7 +23,7 @@ class OrderController extends Controller
             ->orderByRaw("FIELD(status, 'Pending', 'Completed', 'Cancelled')")
             ->orderBy('updated_at', 'desc')->get();
 
-        return Inertia::render('Orders', ['orders' => $orders]);
+        return Inertia::render('Admin/ManageOrders', ['orders' => $orders]);
     }
 
     /**

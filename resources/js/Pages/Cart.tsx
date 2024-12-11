@@ -21,7 +21,7 @@ import {
 } from '@tabler/icons-react';
 import React from 'react';
 import { toast } from 'sonner';
-import { OrderType } from './Admin/Orders';
+import { OrderType } from './Admin/ManageOrders';
 
 export interface OrderFile {
     id: number;
