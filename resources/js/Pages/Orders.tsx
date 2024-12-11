@@ -1,4 +1,7 @@
-import ColorBadge, { colorClasses } from '@/Components/ColorBadge';
+import ColorBadge, {
+    AllowedColors,
+    colorClasses,
+} from '@/Components/ColorBadge';
 import {
     Table,
     TableBody,
@@ -135,7 +138,9 @@ function OrdersTable({
                         <TableCell>{order.pickup_type}</TableCell>
                         <TableCell>{order.formatted_updated_at}</TableCell>
                         <TableCell>
-                            <ColorBadge color={colorMap[order.status!]}>
+                            <ColorBadge
+                                color={colorMap[order.status!] as AllowedColors}
+                            >
                                 {order.status}
                             </ColorBadge>
                         </TableCell>

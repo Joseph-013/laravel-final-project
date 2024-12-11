@@ -10,12 +10,14 @@ export const colorClasses = {
     // Add more colors as needed
 };
 
+export type AllowedColors = keyof typeof colorClasses;
+
 export default function ColorBadge({
     children,
     color, // Default color fallback
 }: {
     children: React.ReactNode;
-    color?: keyof typeof colorClasses;
+    color?: AllowedColors;
 }) {
     const className = colorClasses[color || 'neutral'];
 
