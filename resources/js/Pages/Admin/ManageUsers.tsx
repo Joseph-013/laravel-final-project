@@ -1,55 +1,50 @@
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head, router } from '@inertiajs/react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { 
+  TrashIcon, 
+  EyeIcon,
+  UserPlusIcon,
+  UserCheckIcon,
+  UserXIcon 
+} from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import CustomPagination from '@/Components/CustomPagination';
 import HeaderSearch from '@/Components/HeaderSearch';
-import { Button } from '@/Components/ui/button';
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/Components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
-import AdminLayout from '@/Layouts/AdminLayout';
-import { User } from '@/types';
-import { Head, router } from '@inertiajs/react';
-import { toast } from 'sonner';
 
-//   interface Product {
-//     id: number;
-//     name: string;
-//     description:string;
-//     keyword: string;
-//     active: boolean;
-//     image_file: string | null;
-//   }
-
-interface ManageProductsProps {
-    // users: User[];
-    // bannedUsers: User[];
-    paginatedUsers: User[];
-    paginatedBannedUsers: User[];
-
-    queryParameters: Record<
-        string,
-        string | number | boolean | string[] | number[] | undefined
-    >;
+interface User {
+    id: number;
+    username: string;
+    fullname: string;
+    email: string;
+    profilePicture?: string;
 }
 
-// type AllowedManageProductProps = keyof ManageProductsProps;
+interface ManageUsersProps {
+    paginatedUsers: {
+        data: User[];
+        current_page: number;
+        last_page: number;
+    };
+    paginatedBannedUsers: {
+        data: User[];
+        current_page: number;
+        last_page: number;
+    };
+    queryParameters: Record<string, string | number | boolean | string[] | number[] | undefined>;
+}
 
 export default function ManageUsers({
-    // users,
-    // bannedUsers,
     paginatedUsers,
     paginatedBannedUsers,
     queryParameters,
-}: ManageProductsProps) {
+}: ManageUsersProps) {
     queryParameters = queryParameters || {};
+    const [activeTab, setActiveTab] = useState('Users');
 
-    const handleDelete = (id: number) => {
+    const handleBanUser = (id: number) => {
         router.delete(route('admin.banUser', id), {
             onSuccess: () => {
                 toast.success('User Banned Successfully!');
@@ -57,11 +52,11 @@ export default function ManageUsers({
             onError: () => {
                 toast.error('Error Banning User.');
             },
-            preserveScroll: true, // Ensures the scroll position is maintained
+            preserveScroll: true,
         });
     };
 
-    const handleRetrieve = (id: number) => {
+    const handleUnbanUser = (id: number) => {
         router.patch(
             route('admin.unbanUser', id),
             {},
@@ -73,25 +68,9 @@ export default function ManageUsers({
                     toast.error('Error Unbanning User.');
                 },
                 preserveScroll: true,
-            },
+            }
         );
     };
-
-    //     const handleEdit = (product: Product) => {
-    //       setSelectedProduct(product);
-    //     };
-
-    // const handleUserSearch = (text: string) => {
-    //     if (text) queryParameters['searchUsers'] = text;
-    //     else delete queryParameters['searchUsers'];
-    //     handleSearch();
-    // };
-
-    // const handleBannedUserSearch = (text: string) => {
-    //     if (text) queryParameters['searchBannedUsers'] = text;
-    //     else delete queryParameters['searchBannedUsers'];
-    //     handleSearch();
-    // };
 
     function handleSearch(param: string, text: string) {
         if (text) queryParameters[param] = text;
@@ -101,160 +80,185 @@ export default function ManageUsers({
             preserveState: true,
             preserveScroll: true,
         });
-
-        console.log('queryParameters', queryParameters);
     }
 
     return (
         <AdminLayout>
-            <Head title="Manage Products" />
-            <div className="flex items-center justify-between">
-                <Tabs defaultValue="Users" className="w-full">
-                    <TabsList>
-                        <TabsTrigger value="Users">All Users</TabsTrigger>
-                        <TabsTrigger value="Banned">Banned Users</TabsTrigger>
+            <Head title="Manage Users" />
+            <div className="container mx-auto px-4 py-8">
+                <Tabs 
+                    defaultValue="Users" 
+                    value={activeTab} 
+                    onValueChange={setActiveTab}
+                    className="w-full"
+                >
+                    <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+                        <div>
+                            <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
+                                {activeTab === 'Users' ? 'All Users' : 'Banned Users'}
+                            </h1>
+                            <p className="text-gray-500">
+                                {activeTab === 'Users' 
+                                    ? 'Manage and monitor active users' 
+                                    : 'View and manage banned users'}
+                            </p>
+                        </div>
+                        <HeaderSearch
+                            handleSearch={(text) => handleSearch(
+                                activeTab === 'Users' ? 'searchUsers' : 'searchBannedUsers', 
+                                text
+                            )}
+                            className="w-full max-w-md"
+                            inputProps={{
+                                placeholder: `Search ${activeTab} Users`,
+                            }}
+                        />
+                    </div>
+
+                    <TabsList className="mb-4">
+                        <TabsTrigger value="Users">
+                            <UserCheckIcon className="mr-2 h-4 w-4" />
+                            Active Users
+                        </TabsTrigger>
+                        <TabsTrigger value="Banned">
+                            <UserXIcon className="mr-2 h-4 w-4" />
+                            Banned Users
+                        </TabsTrigger>
                     </TabsList>
+
                     <TabsContent value="Users">
-                        <div className="flex items-center justify-between">
-                            <h1 className="text-2xl font-extrabold text-primary">
-                                All Users
-                            </h1>
-                            <HeaderSearch
-                                handleSearch={(text) =>
-                                    handleSearch('searchUsers', text)
-                                }
-                                className="ml-auto w-96"
-                                inputProps={{
-                                    placeholder: 'Search Users',
-                                }}
-                            />
-                        </div>
-                        <Table>
-                            <TableCaption>
-                                <CustomPagination page={paginatedUsers} />
-                            </TableCaption>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Username</TableHead>
-                                    <TableHead>Full Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead className="text-right">
-                                        Actions
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {paginatedUsers.data.map((user) => (
-                                    <TableRow key={user.id}>
-                                        <TableCell className="font-medium">
-                                            {user.username}
-                                        </TableCell>
-                                        <TableCell className="font-medium">
-                                            {user.fullname}
-                                        </TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>
-                                            <div className="flex justify-end gap-2">
+                        {paginatedUsers.data.length === 0 ? (
+                            <div className="text-center py-16 bg-gray-50 rounded-lg">
+                                <EyeIcon className="mx-auto w-16 h-16 text-gray-400 mb-4" />
+                                <p className="text-xl text-gray-600">
+                                    No active users found.
+                                </p>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {paginatedUsers.data.map((user) => (
+                                        <div 
+                                            key={user.id} 
+                                            className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden transition-all hover:shadow-md"
+                                        >
+                                            <div className="p-4 flex items-center">
+                                                {user.profilePicture ? (
+                                                    <img
+                                                        src={user.profilePicture}
+                                                        alt={user.fullname}
+                                                        className="w-16 h-16 rounded-full object-cover mr-4"
+                                                    />
+                                                ) : (
+                                                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mr-4">
+                                                        <UserPlusIcon className="text-gray-500" />
+                                                    </div>
+                                                )}
+                                                <div className='h-28'>
+                                                    <h2 className="text-xl font-bold text-gray-800 mb-1">
+                                                        {user.fullname}
+                                                    </h2>
+                                                    <p className="text-gray-600 text-sm">
+                                                        @{user.username}
+                                                    </p>
+                                                    <p className="text-gray-500 text-xs">
+                                                        {user.email}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="border-t p-4">
                                                 <ConfirmDialog
                                                     trigger={
-                                                        <Button
-                                                            variant="destructive"
-                                                            className="bg-red-500 text-white hover:bg-red-600"
-                                                        >
+                                                        <button className="w-full flex items-center justify-center gap-2 text-red-500 hover:bg-red-500/10 px-3 py-2 rounded-md transition-colors">
+                                                            <TrashIcon className="w-4 h-4" />
                                                             Ban User
-                                                        </Button>
+                                                        </button>
                                                     }
-                                                    title={`Confirm Ban?`}
-                                                    description="The user will be banned and will not be able to access their account."
-                                                    accept="Confirm"
-                                                    onclick={() =>
-                                                        handleDelete(user.id)
-                                                    }
-                                                ></ConfirmDialog>
+                                                    title="Confirm Ban"
+                                                    description="Are you sure you want to ban this user? They will lose account access."
+                                                    accept="Ban User"
+                                                    cancel="Cancel"
+                                                    onclick={() => handleBanUser(user.id)}
+                                                />
                                             </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="mt-6 flex justify-center">
+                                    <CustomPagination page={paginatedUsers} />
+                                </div>
+                            </>
+                        )}
                     </TabsContent>
+
                     <TabsContent value="Banned">
-                        <div className="flex items-center justify-between">
-                            <h1 className="text-2xl font-extrabold text-primary">
-                                Banned Users
-                            </h1>
-                            <HeaderSearch
-                                handleSearch={(text) =>
-                                    handleSearch('searchBannedUsers', text)
-                                }
-                                className="ml-auto w-96"
-                                inputProps={{
-                                    placeholder: 'Search Banned Users',
-                                }}
-                            />
-                        </div>
-                        <Table>
-                            <TableCaption>
-                                <CustomPagination page={paginatedBannedUsers} />
-                            </TableCaption>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Username</TableHead>
-                                    <TableHead>Full Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead className="text-right">
-                                        Actions
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {paginatedBannedUsers.data.map((user) => (
-                                    <TableRow key={user.id}>
-                                        <TableCell className="font-medium">
-                                            {user.username}
-                                        </TableCell>
-                                        <TableCell className="font-medium">
-                                            {user.fullname}
-                                        </TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>
-                                            <div className="flex justify-end gap-2">
+                        {paginatedBannedUsers.data.length === 0 ? (
+                            <div className="text-center py-16 bg-gray-50 rounded-lg">
+                                <EyeIcon className="mx-auto w-16 h-16 text-gray-400 mb-4" />
+                                <p className="text-xl text-gray-600">
+                                    No banned users found.
+                                </p>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {paginatedBannedUsers.data.map((user) => (
+                                        <div 
+                                            key={user.id} 
+                                            className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden transition-all hover:shadow-md"
+                                        >
+                                            <div className="p-4 flex items-center">
+                                                {user.profilePicture ? (
+                                                    <img
+                                                        src={user.profilePicture}
+                                                        alt={user.fullname}
+                                                        className="w-16 h-16 rounded-full object-cover mr-4"
+                                                    />
+                                                ) : (
+                                                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mr-4">
+                                                        <UserXIcon className="text-gray-500" />
+                                                    </div>
+                                                )}
+                                                <div className='h-28'>
+                                                    <h2 className="text-xl font-bold text-gray-800 mb-1">
+                                                        {user.fullname}
+                                                    </h2>
+                                                    <p className="text-gray-600 text-sm">
+                                                        @{user.username}
+                                                    </p>
+                                                    <p className="text-gray-500 text-xs">
+                                                        {user.email}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="border-t p-4">
                                                 <ConfirmDialog
                                                     trigger={
-                                                        <Button
-                                                            variant="destructive"
-                                                            className="bg-emerald-500 text-white hover:bg-emerald-600"
-                                                        >
+                                                        <button className="w-full flex items-center justify-center gap-2 text-emerald-500 hover:bg-emerald-500/10 px-3 py-2 rounded-md transition-colors">
+                                                            <UserCheckIcon className="w-4 h-4" />
                                                             Unban User
-                                                        </Button>
+                                                        </button>
                                                     }
-                                                    title={`Confirm Unban?`}
-                                                    description="The user will be banned and will not be able to access their account."
-                                                    accept="Confirm"
-                                                    onclick={() =>
-                                                        handleRetrieve(user.id)
-                                                    }
-                                                ></ConfirmDialog>
+                                                    title="Confirm Unban"
+                                                    description="Are you sure you want to unban this user? They will regain account access."
+                                                    accept="Unban User"
+                                                    cancel="Cancel"
+                                                    onclick={() => handleUnbanUser(user.id)}
+                                                />
                                             </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="mt-6 flex justify-center">
+                                    <CustomPagination page={paginatedBannedUsers} />
+                                </div>
+                            </>
+                        )}
                     </TabsContent>
                 </Tabs>
             </div>
-
-            {/* <ControlContainer>
-                <CreateProductDialog />
-            </ControlContainer> */}
-
-            {/* {selectedProduct && (
-          <EditProductDialog
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-          />
-        )} */}
         </AdminLayout>
     );
 }
