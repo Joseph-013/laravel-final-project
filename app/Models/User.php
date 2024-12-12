@@ -9,50 +9,49 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-   use HasFactory, Notifiable;
-   use SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
-   // protected $primaryKey = 'username';
-   // public $incrementing = false;
-   // protected $keyType = 'string';
+    // protected $primaryKey = 'username';
+    // public $incrementing = false;
+    // protected $keyType = 'string';
 
-   protected $fillable = [
-      'username',
-      'fullname',
-      'email',
-      'social_username',
-      'contact_number',
-      'default_address',
-      'role',
-      'password'
-      
-   ];
+    protected $fillable = [
+        'username',
+        'fullname',
+        'email',
+        'social_username',
+        'contact_number',
+        'default_address',
+        'role',
+        'password'
 
-   protected $hidden = [
-      'password',
-      'remember_token',
-   ];
+    ];
 
-   // Relationships
-   public function orders()
-   {
-      return $this->hasMany(Order::class, 'username', 'username');
-   }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-   public function cart()
-   {
-      return $this->hasMany(Cart::class, 'username', 'username');
-   }
+    // Relationships
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'username', 'username');
+    }
 
-   // Optional: Custom method to get full name
-   public function getFullNameAttribute()
-   {
-      return trim("{$this->firstname} {$this->middlename} {$this->lastname}");
-   }
+    public function cart()
+    {
+        return $this->hasMany(Cart::class, 'username', 'username');
+    }
 
-   // Optional: Mutator for password (optional, Laravel hashes by default)
-   public function setPasswordAttribute($value)
-   {
-      $this->attributes['password'] = bcrypt($value);
-   }
+    // Optional: Custom method to get full name
+    public function getFullNameAttribute()
+    {
+        return trim("{$this->firstname} {$this->middlename} {$this->lastname}");
+    }
+
+    // Optional: Mutator for password (optional, Laravel hashes by default)
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

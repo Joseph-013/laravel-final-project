@@ -168,9 +168,11 @@ class AdminController extends Controller
         // $userQuery = User::query();
         // $bannedUserQuery = User::query()->onlyTrashed();
 
-        $paginatedUsers = $userQuery->paginate(20);
+        $paginationCount = 15;
 
-        $paginatedBannedUsers = $bannedUserQuery->paginate(20);
+        $paginatedUsers = $userQuery->paginate($paginationCount);
+
+        $paginatedBannedUsers = $bannedUserQuery->paginate($paginationCount);
 
         // dump('users', $paginatedUsers);
         // dump('banned users', $paginatedBannedUsers);

@@ -11,13 +11,43 @@ import { router } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 function CustomPagination({ page }) {
+    // function scrollToElement() {
+    //     const element = document.getElementById('scroll-target');
+    //     if (element) {
+    //         element.scrollIntoView({
+    //             behavior: 'smooth',
+    //             block: 'center',
+    //             inline: 'center',
+    //         });
+    //     }
+    // }
     function scrollToElement() {
         const element = document.getElementById('scroll-target');
-        if (element) {
-            element.scrollIntoView({
+        const parentContainer = document.getElementById(
+            'pagination-pagelink-container',
+        );
+
+        if (element && parentContainer) {
+            const elementRect = element.getBoundingClientRect();
+            const containerRect = parentContainer.getBoundingClientRect();
+
+            // Calculate the offset to center the element within the container
+            const offsetTop =
+                elementRect.top -
+                containerRect.top +
+                parentContainer.scrollTop -
+                (containerRect.height / 2 - elementRect.height / 2);
+            const offsetLeft =
+                elementRect.left -
+                containerRect.left +
+                parentContainer.scrollLeft -
+                (containerRect.width / 2 - elementRect.width / 2);
+
+            // Smoothly scroll the parent container to center the element
+            parentContainer.scrollTo({
+                top: offsetTop,
+                left: offsetLeft,
                 behavior: 'smooth',
-                block: 'center',
-                inline: 'center',
             });
         }
     }
@@ -71,7 +101,10 @@ function CustomPagination({ page }) {
                         />
                     </PaginationItem>
 
-                    <div className="flex flex-1 flex-row overflow-x-auto">
+                    <div
+                        className="flex flex-1 flex-row overflow-x-auto"
+                        id="pagination-pagelink-container"
+                    >
                         {page.links.map((link, index) => {
                             if (
                                 index !== 0 &&
