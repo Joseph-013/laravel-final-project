@@ -1,3 +1,4 @@
+import ColorBadge from '@/Components/ColorBadge';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -10,41 +11,31 @@ import {
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
 import { Button } from '@/Components/ui/button';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/Components/ui/select';
 import UserLayout from '@/Layouts/UserLayout';
-import { Order, OrderStatus } from '@/lib/types/Order';
+import { Order } from '@/lib/types/Order';
 import { Head, useForm } from '@inertiajs/react';
 import { DateTime } from 'luxon';
 
-export default function ManageSingularOrder({
+export default function ViewOrder({
     order,
     success,
 }: {
     order: Order;
     success?: string;
 }) {
-    const {
-        data,
-        setData,
-        patch,
-        isDirty,
-        delete: destroy,
-    } = useForm<Pick<Order, 'status'>>({
+    const { data, setData, patch } = useForm<Pick<Order, 'status'>>({
         status: order.status,
     });
 
-    const handleSubmit = () => {
-        patch(route('admin.orders.updateStatus', order.id));
+    const colorMap = {
+        Cart: 'sky',
+        Pending: 'orange',
+        Completed: 'green',
+        Cancelled: 'red',
     };
 
-    const handleDelete = () => {
-        destroy(route('admin.orders.destroy', order.id));
+    const handleCancel = () => {
+        patch(route('orders.cancel', order.id));
     };
 
     return (
@@ -54,47 +45,49 @@ export default function ManageSingularOrder({
                 <div className="container mx-auto">
                     <div className="flex">
                         <div className="flex-grow">
-                            <h1 className="text-xl font-bold">
-                                {success ? success : `Manage Order`}
-                            </h1>
-                            <p>Manage a particular order</p>
+                            <h1 className="text-xl font-bold">Your Order</h1>
+                            <p>View details about your order</p>
                         </div>
-                        <div>
-                            <AlertDialog>
-                                <Button variant={'destructive'} asChild>
-                                    <AlertDialogTrigger>
-                                        Delete
-                                    </AlertDialogTrigger>
-                                </Button>
-
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>
-                                            Delete Confirmation
-                                        </AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            Are you sure you want to delete this
-                                            order? This action cannot be undone.
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel>
-                                            Cancel
-                                        </AlertDialogCancel>
-                                        <Button
-                                            variant={'destructive'}
-                                            type="button"
-                                            onClick={handleDelete}
-                                            asChild
-                                        >
-                                            <AlertDialogAction>
-                                                Delete
-                                            </AlertDialogAction>
+                        {order.status !== 'Cancelled' &&
+                            order.status !== 'Completed' && (
+                                <div>
+                                    <AlertDialog>
+                                        <Button variant={'destructive'} asChild>
+                                            <AlertDialogTrigger>
+                                                Cancel
+                                            </AlertDialogTrigger>
                                         </Button>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
-                        </div>
+
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>
+                                                    Cancel Confirmation
+                                                </AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Are you sure you want to
+                                                    cancel this order? This
+                                                    action cannot be undone.
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>
+                                                    No
+                                                </AlertDialogCancel>
+                                                <Button
+                                                    variant={'destructive'}
+                                                    type="button"
+                                                    onClick={handleCancel}
+                                                    asChild
+                                                >
+                                                    <AlertDialogAction>
+                                                        Cancel Order
+                                                    </AlertDialogAction>
+                                                </Button>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                </div>
+                            )}
                     </div>
 
                     <div className="space-y-4 rounded p-3 outline outline-1 outline-gray-200">
@@ -155,37 +148,17 @@ export default function ManageSingularOrder({
 
                             <div className="space-y-1">
                                 <span className="font-bold">Status: </span>
-                                <Select
-                                    value={data.status}
-                                    onValueChange={(value) =>
-                                        setData({
-                                            status: value as OrderStatus,
-                                        })
+                                <ColorBadge
+                                    color={
+                                        colorMap[order.status] as
+                                            | 'sky'
+                                            | 'orange'
+                                            | 'green'
+                                            | 'red'
                                     }
                                 >
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Theme" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Pending">
-                                            Pending
-                                        </SelectItem>
-                                        <SelectItem value="Completed">
-                                            Completed
-                                        </SelectItem>
-                                        <SelectItem value="Cancelled">
-                                            Cancelled
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                {isDirty && (
-                                    <Button
-                                        type="button"
-                                        onClick={handleSubmit}
-                                    >
-                                        Update
-                                    </Button>
-                                )}
+                                    {order.status}
+                                </ColorBadge>
                             </div>
 
                             <p>

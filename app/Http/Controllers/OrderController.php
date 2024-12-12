@@ -21,10 +21,14 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $status_query = $request->query('status');
-        $orders = Order::where('user_id', Auth::id())
-            ->where('status', '!=', 'Cart')
+        $is_admin = Auth::user()->role === 'admin';
+
+        $orders = Order::where('status', '!=', 'Cart')
             ->with('product')
             ->with('files')
+            ->when(!$is_admin, function(Builder $query) {
+                $query->where('user_id', Auth::id());
+            })
             ->when($status_query, function(Builder $query, string $status_query) {
                 $query->where('status','=', $status_query);
             })
@@ -32,7 +36,11 @@ class OrderController extends Controller
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
 
-        return Inertia::render('Admin/ManageOrders', ['orders' => $orders->items(), 'currentPage'=>$orders->currentPage(), 'lastPage'=>$orders->lastPage(), 'prevPageUrl'=>$orders->previousPageUrl(),'nextPageUrl'=>$orders->nextPageUrl()]);
+        if($is_admin)
+        {
+            return Inertia::render('Admin/ManageOrders', ['orders' => $orders->items(), 'currentPage'=>$orders->currentPage(), 'lastPage'=>$orders->lastPage(), 'prevPageUrl'=>$orders->previousPageUrl(),'nextPageUrl'=>$orders->nextPageUrl()]);
+        }
+        return Inertia::render('Orders', ['orders' => $orders->items(), 'currentPage'=>$orders->currentPage(), 'lastPage'=>$orders->lastPage(), 'prevPageUrl'=>$orders->previousPageUrl(),'nextPageUrl'=>$orders->nextPageUrl()]);
     }
 
     /**
@@ -77,27 +85,37 @@ class OrderController extends Controller
     {
         $order = Order::with('user')->with('files')->with('product')->find($id);
 
-        return Inertia::render('Admin/ManageSingularOrder',['order'=>$order]);
-    }
+        $is_admin = Auth::user()->role === 'admin';
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        if($is_admin)
+        {
+            return Inertia::render('Admin/ManageSingularOrder',['order'=>$order]);
+        }
+        return Inertia::render('ViewOrder',['order'=>$order]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateStatus(Request $request, string $id)
     {
         $order = Order::find($id);
         $order->status = $request->input('status');
         $order->save();
 
-        return Toast::success('Successfully updated the order');
+        return back()->with('success', 'The order status has been successfully updated.');
+    }
+
+    /**
+     * Cancel the order.
+     */
+    public function cancel(Request $request, string $id)
+    {
+        $order = Order::find($id);
+        $order->status = 'Cancelled';
+        $order->save();
+
+        return back()->with('success', 'The order has been successfully cancelled.');
     }
 
     /**
@@ -105,15 +123,13 @@ class OrderController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        // check if order belongs to user
         $order = Order::where([
-            'user_id' => $request->user()->id,
             'id' => $id
         ])->firstOrFail();
 
         // delete order
         $order->delete();
 
-        return redirect()->route('orders.index');
+        return redirect()->route('admin.orders.index');
     }
 }

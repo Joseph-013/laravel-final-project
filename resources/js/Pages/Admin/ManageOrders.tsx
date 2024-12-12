@@ -40,7 +40,9 @@ export default function ManageOrders(props: ManageOrdersProps) {
             <div className="overflow-hidden rounded">
                 <Link
                     href={
-                        statusIsPending ? '/orders' : '/orders?status=Pending'
+                        statusIsPending
+                            ? '/admin/orders'
+                            : '/admin/orders?status=Pending'
                     }
                 >
                     <Button
@@ -53,8 +55,8 @@ export default function ManageOrders(props: ManageOrdersProps) {
                 <Link
                     href={
                         statusIsCompleted
-                            ? '/orders'
-                            : '/orders?status=Completed'
+                            ? '/admin/orders'
+                            : '/admin/orders?status=Completed'
                     }
                 >
                     <Button
@@ -67,8 +69,8 @@ export default function ManageOrders(props: ManageOrdersProps) {
                 <Link
                     href={
                         statusIsCancelled
-                            ? '/orders'
-                            : '/orders?status=Cancelled'
+                            ? '/admin/orders'
+                            : '/admin/orders?status=Cancelled'
                     }
                 >
                     <Button
@@ -121,7 +123,7 @@ function OrderListItem({ order }: { order: Order }) {
     };
 
     return (
-        <Link href={`/orders/${order.id}`} className="m-0 block p-0">
+        <Link href={`/admin/orders/${order.id}`} className="m-0 block p-0">
             <div className="space-y-1 rounded p-3 shadow-lg">
                 <div className="flex items-center justify-center">
                     <div
