@@ -17,33 +17,10 @@ class OrdersSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['Cart', 'Pending', 'Completed', 'Cancelled'];
+        // Omitted cart for now since it's not needed for "manage orders" testing
+        $statuses = ['Pending', 'Completed', 'Cancelled'];
 
-        $products = Product::all();
-
-        // for debugging: user id=1
-
-
-        // $users = User::all()->reject(function ($user) {
-        //     return $user->id === 1; // Exclude user with id 1
-        // });
-
-
-        // foreach ($users as $user) {
-        //     for ($i = 0; $i < 10; $i++) {
-        //         $randomProduct = $products->random();
-
-        //         Order::create([
-        //             'user_id' => $user->id,
-        //             'product_id' => $randomProduct->id,
-        //             'specifications' => fake()->sentence(),
-        //             'quantity' => random_int(1, 10),
-        //             'order_deadline_date' => fake()->date(),
-        //             'order_deadline_time' => fake()->time(),
-        //             'pickup_type' => fake()->randomElement(['Pickup', 'Delivery']),
-        //             'status' => fake()->randomElement($statuses),
-        //         ]);
-        //     }
-        // }
+        $limit = random_int(5, 20);
+        Order::factory()->count($limit)->state(['user_id'=>4, 'status'=>fake()->randomElement($statuses)])->create();
     }
 }
