@@ -9,6 +9,7 @@ use App\Models\OrderFiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrderController extends Controller
 {
@@ -17,13 +18,19 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $status_query = $request->query('status');
         $orders = Order::where('user_id', Auth::id())
             ->where('status', '!=', 'Cart')
-            ->with('product')->with('files')
+            ->with('product')
+            ->with('files')
+            ->when($status_query, function(Builder $query, string $status_query) {
+                $query->where('status','=', $status_query);
+            })
             ->orderByRaw("FIELD(status, 'Pending', 'Completed', 'Cancelled')")
-            ->orderBy('updated_at', 'desc')->paginate(10);
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
 
         return Inertia::render('Admin/ManageOrders', ['orders' => $orders->items(), 'currentPage'=>$orders->currentPage(), 'lastPage'=>$orders->lastPage(), 'prevPageUrl'=>$orders->previousPageUrl(),'nextPageUrl'=>$orders->nextPageUrl()]);
     }

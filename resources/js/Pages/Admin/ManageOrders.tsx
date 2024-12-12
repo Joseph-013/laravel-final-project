@@ -6,27 +6,79 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/Components/inertia-adjusted/pagination';
+import { Button } from '@/Components/ui/button';
 import UserLayout from '@/Layouts/UserLayout';
 import { Order } from '@/lib/types/Order';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { DateTime } from 'luxon';
 
-export default function ManageOrders({
-    orders,
-    currentPage,
-    lastPage,
-    prevPageUrl,
-    nextPageUrl,
-}: {
+type ManageOrdersProps = {
     orders: Order[];
     currentPage: number;
     lastPage: number;
     prevPageUrl?: string;
     nextPageUrl?: string;
-}) {
+};
+
+export default function ManageOrders(props: ManageOrdersProps) {
+    const { orders, currentPage, lastPage, prevPageUrl, nextPageUrl } = props;
+
+    const { url, component } = usePage();
+    const urlParams = new URL(`localhost:8000${url}`).searchParams;
+    const currStatusFilter = urlParams.get('status');
+
+    const statusIsPending =
+        currStatusFilter && currStatusFilter.toLowerCase() === 'pending';
+    const statusIsCompleted =
+        currStatusFilter && currStatusFilter.toLowerCase() === 'completed';
+    const statusIsCancelled =
+        currStatusFilter && currStatusFilter.toLowerCase() === 'cancelled';
+
     return (
         <UserLayout>
             <Head title="Orders" />
+            <div className="overflow-hidden rounded">
+                <Link
+                    href={
+                        statusIsPending ? '/orders' : '/orders?status=Pending'
+                    }
+                >
+                    <Button
+                        variant={!statusIsPending ? 'outline' : undefined}
+                        className="rounded-none"
+                    >
+                        Pending
+                    </Button>
+                </Link>
+                <Link
+                    href={
+                        statusIsCompleted
+                            ? '/orders'
+                            : '/orders?status=Completed'
+                    }
+                >
+                    <Button
+                        variant={!statusIsCompleted ? 'outline' : undefined}
+                        className="rounded-none"
+                    >
+                        Completed
+                    </Button>
+                </Link>
+                <Link
+                    href={
+                        statusIsCancelled
+                            ? '/orders'
+                            : '/orders?status=Cancelled'
+                    }
+                >
+                    <Button
+                        variant={!statusIsCancelled ? 'outline' : undefined}
+                        className="rounded-none"
+                    >
+                        Cancelled
+                    </Button>
+                </Link>
+            </div>
             <div className="space-y-2 p-2">
                 {orders.length > 0 ? (
                     orders.map((currentOrder) => (
