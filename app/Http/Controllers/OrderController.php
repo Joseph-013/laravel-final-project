@@ -93,7 +93,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $order = Order::find($id);
+        $order->status = $request->input('status');
+        $order->save();
+
+        return Toast::success('Successfully updated the order');
     }
 
     /**
@@ -110,6 +114,6 @@ class OrderController extends Controller
         // delete order
         $order->delete();
 
-        return back()->with('success');
+        return redirect()->route('orders.index');
     }
 }

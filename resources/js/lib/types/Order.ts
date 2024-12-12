@@ -3,6 +3,8 @@ import { Product } from './Product';
 import { Timestamps } from './Timestamps';
 import { User } from './User';
 
+export type OrderStatus = 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
+
 export type Order = {
     id: number;
     user_id: number;
@@ -13,7 +15,7 @@ export type Order = {
     order_deadline_date: Date;
     order_deadline_time: string;
     pickup_type: 'Pickup' | 'Delivery';
-    status: 'Cart' | 'Pending' | 'Completed' | 'Cancelled';
+    status: OrderStatus;
     user?: User;
     product?: Product;
     files?: OrderFile[];
