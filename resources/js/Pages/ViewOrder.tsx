@@ -11,10 +11,12 @@ import {
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
 import { Button } from '@/Components/ui/button';
+import { Dialog, DialogContent } from '@/Components/ui/dialog';
 import UserLayout from '@/Layouts/UserLayout';
 import { Order } from '@/lib/types/Order';
 import { Head, useForm } from '@inertiajs/react';
 import { DateTime } from 'luxon';
+import { useState } from 'react';
 
 export default function ViewOrder({
     order,
@@ -33,6 +35,8 @@ export default function ViewOrder({
         Completed: 'green',
         Cancelled: 'red',
     };
+
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const handleCancel = () => {
         patch(route('orders.cancel', order.id));
@@ -179,6 +183,57 @@ export default function ViewOrder({
                                 </span>
                                 {order.specifications}
                             </p>
+                            <div>
+                                <h3 className="text-md mb-2 font-bold">
+                                    Pictures
+                                </h3>
+                                {order.files && order.files.length > 0 ? (
+                                    <>
+                                        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                                            {order.files.map((file) => (
+                                                <div
+                                                    key={file.id}
+                                                    className="relative aspect-square cursor-pointer"
+                                                    onClick={() =>
+                                                        setSelectedImage(
+                                                            file.filename,
+                                                        )
+                                                    }
+                                                >
+                                                    <img
+                                                        src={file.filename}
+                                                        alt="Order attachment"
+                                                        className="h-full w-full rounded-lg object-cover transition-opacity hover:opacity-90"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <Dialog
+                                            open={!!selectedImage}
+                                            onOpenChange={() =>
+                                                setSelectedImage(null)
+                                            }
+                                        >
+                                            <DialogContent className="h-fit max-h-[95vh] w-fit max-w-[95vw] p-2 sm:p-4">
+                                                {selectedImage && (
+                                                    <div className="relative flex h-full w-full items-center justify-center">
+                                                        <img
+                                                            src={selectedImage}
+                                                            alt="Order attachment"
+                                                            className="max-h-[85vh] max-w-full rounded-lg object-contain"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </DialogContent>
+                                        </Dialog>
+                                    </>
+                                ) : (
+                                    <p className="italic text-gray-500">
+                                        No images attached
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
