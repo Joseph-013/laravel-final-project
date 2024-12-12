@@ -12,6 +12,8 @@ use Inertia\Inertia;
 
 class OrderController extends Controller
 {
+    public static function storeOrder() {}
+
     /**
      * Display a listing of the resource.
      */

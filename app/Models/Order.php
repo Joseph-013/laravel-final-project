@@ -21,8 +21,10 @@ class Order extends Model
         'order_deadline_time',
         'pickup_type',
         'address',
-        'status'
+        'status',
     ];
+
+    protected $appends = ['formatted_created_at', 'formatted_updated_at'];
 
     protected static function boot()
     {
@@ -78,5 +80,15 @@ class Order extends Model
     public function getOrderDeadlineTimeAttribute($value)
     {
         return Carbon::parse($value)->format('g:i A'); // Example: "4:50 PM"
+    }
+
+    public function getFormattedCreatedAtAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('M d, Y h:i A');
+    }
+
+    public function getFormattedUpdatedAtAttribute()
+    {
+        return Carbon::parse($this->updated_at)->format('M d, Y h:i A');
     }
 }

@@ -7,10 +7,14 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product, href }: ProductCardProps) {
+    const className =
+        window.location.hash === `#${product.keyword}`
+            ? 'border-[0.5rem] border-sky-500'
+            : 'border-[1px] border-slate-300';
     return (
         <Link
             href={href}
-            className="group flex h-[30rem] w-full flex-col rounded-2xl border-[1px] border-slate-300 shadow-md"
+            className={`group flex h-[30rem] w-full flex-col rounded-3xl shadow-md ${className}`}
         >
             <div className="relative h-[23rem] w-full overflow-hidden rounded-b-none rounded-t-2xl">
                 <img
@@ -36,7 +40,10 @@ export default function ProductCard({ product, href }: ProductCardProps) {
 
 export function ProductGridItem({ product, href }: ProductCardProps) {
     return (
-        <div className="flex h-full w-full items-center justify-center">
+        <div
+            className="flex h-full w-full items-center justify-center"
+            id={product.keyword}
+        >
             <ProductCard product={product} href={href} />
         </div>
     );

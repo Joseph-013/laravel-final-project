@@ -19,6 +19,7 @@ class UsersSeeder extends Seeder
             'fullname' => 'Joseph Victor Paduga',
             'email' => 'sephpaduga@gmail.com',
             'social_username' => 'JVpaduga',
+            'role' => 'admin',
             'contact_number' => '09150054673',
             'default_address' => '1621 Piy Margal St, 478 Z-47, Manila, 1008 Metro Manila',
             'password' => Hash::make('password'),
@@ -43,16 +44,6 @@ class UsersSeeder extends Seeder
             'contact_number' => '0958447434',
             'default_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
             'password' => Hash::make('qweqweqwe'),
-        ]);
-
-        DB::table('users')->insert([
-            'username' => 'hansy',
-            'fullname' => 'Hans Ramos',
-            'email' => 'hans@mail.com',
-            'social_username' => 'hansy',
-            'contact_number' => '09123456789',
-            'default_address' => 'Paranaque City',
-            'password' => Hash::make('Password1234!'),
         ]);
     }
 }

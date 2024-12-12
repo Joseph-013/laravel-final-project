@@ -1,8 +1,12 @@
 export interface User {
     id: number;
-    name: string;
+    username: string;
+    fullname: string;
     email: string;
-    email_verified_at?: string;
+    social_username: string;
+    contact_number: string;
+    default_address: string;
+    role: 'user' | 'admin';
 }
 
 export type PageProps<
@@ -11,4 +15,7 @@ export type PageProps<
     auth: {
         user: User;
     };
+    authenticated: boolean;
+    toastContent: string | null;
+    cartCount: number | null;
 };

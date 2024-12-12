@@ -1,6 +1,5 @@
 import ColorBadge from '@/Components/ColorBadge';
 import ControlContainer from '@/Components/ControlContainer';
-import Line from '@/Components/Line';
 import { Button } from '@/Components/ui/button';
 import {
     Dialog,
@@ -11,15 +10,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/Components/ui/dialog';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/Components/ui/table';
 import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
-import {
-    IconCircleMinus,
-    IconExternalLink,
-    IconSend,
-} from '@tabler/icons-react';
-import React from 'react';
+import { IconExternalLink, IconSend } from '@tabler/icons-react';
 import { toast } from 'sonner';
 import { OrderType } from './Admin/ManageOrders';
 
@@ -36,10 +38,12 @@ interface CartType extends OrderType {
 }
 
 export default function Cart({ carts }: { carts: CartType[] }) {
-    console.log('carts', carts);
-    function handleDeleteCartItem(id: number) {
+    function handleDeleteCartItem(id: number | undefined) {
         router.delete(route('cart.destroy', id), {
-            onSuccess: () => toast.info('Cart item successfully removed.'),
+            onSuccess: () =>
+                toast.info('Cart item successfully removed.', {
+                    duration: 2000,
+                }),
             onError: () =>
                 toast.warning('Cannot delete cart item at this time.'),
         });
@@ -87,65 +91,68 @@ export default function Cart({ carts }: { carts: CartType[] }) {
                 </Link>
             </div>
             <div className="w-full overflow-x-scroll">
-                <table className="w-full min-w-[30rem] text-left">
-                    <thead>
-                        <tr>
-                            <th>Product/Service</th>
-                            <th>Specifications</th>
-                            <th>Files</th>
-                            <th>Deadline Date</th>
-                            <th>Deadline Time</th>
-                            <th>Pickup Type</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <Table className="w-full min-w-[30rem]">
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Product/Service</TableHead>
+                            <TableHead>Specifications</TableHead>
+                            <TableHead>Address</TableHead>
+                            <TableHead>Files</TableHead>
+                            <TableHead>Deadline Date</TableHead>
+                            <TableHead>Deadline Time</TableHead>
+                            <TableHead>Pickup Type</TableHead>
+                            <TableHead>Added At</TableHead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {carts.map((cart) => (
-                            <React.Fragment key={cart.id}>
-                                <tr>
-                                    <td colSpan={7}>
-                                        <Line
-                                            variant={'h'}
-                                            className="my-1 border-t-[1px] border-black/20"
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{cart.product?.name}</td>
-                                    <td className="text-sm">
-                                        {cart.specifications}
-                                    </td>
-                                    <td>
-                                        <Button
-                                            onClick={() =>
-                                                handleOpenFiles(cart.files)
-                                            }
-                                            variant="outline"
-                                        >
-                                            <IconExternalLink />
-                                            {`(${cart.files.length})`}
-                                            &nbsp;File
-                                            {cart.files.length > 1 && `s`}
-                                        </Button>
-                                    </td>
-                                    <td>{cart.order_deadline_date}</td>
-                                    <td>{cart.order_deadline_time}</td>
-                                    <td>{cart.pickup_type}</td>
-                                    <td>
-                                        <button
-                                            onClick={() =>
-                                                handleDeleteCartItem(cart.id)
-                                            }
-                                            className="rounded-md p-2 outline-1 hover:outline"
-                                        >
-                                            <IconCircleMinus size={24} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            </React.Fragment>
+                            <TableRow key={cart.id}>
+                                <TableCell>{cart.product?.name}</TableCell>
+                                <TableCell className="text-sm">
+                                    {cart.specifications}
+                                </TableCell>
+                                <TableCell className="text-sm">
+                                    {cart.address}
+                                </TableCell>
+                                <TableCell>
+                                    <Button
+                                        onClick={() =>
+                                            handleOpenFiles(cart.files)
+                                        }
+                                        variant="outline"
+                                    >
+                                        <IconExternalLink />
+                                        {`(${cart.files.length})`}
+                                        &nbsp;File
+                                        {cart.files.length > 1 && `s`}
+                                    </Button>
+                                </TableCell>
+                                <TableCell>
+                                    {cart.order_deadline_date}
+                                </TableCell>
+                                <TableCell>
+                                    {cart.order_deadline_time}
+                                </TableCell>
+                                <TableCell>{cart.pickup_type}</TableCell>
+                                <TableCell>
+                                    {cart.formatted_created_at}
+                                </TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="outline"
+                                        className="w-[5em] hover:bg-red-200 hover:font-bold hover:text-red-600"
+                                        onClick={() =>
+                                            handleDeleteCartItem(cart.id)
+                                        }
+                                    >
+                                        Delete
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
                         ))}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </div>
             {carts.length !== 0 && (
                 <ControlContainer>
