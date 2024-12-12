@@ -44,5 +44,15 @@ class UsersSeeder extends Seeder
             'default_address' => 'Col. Bravo St. Central Signal Village, Taguig City',
             'password' => Hash::make('qweqweqwe'),
         ]);
+
+        DB::table('users')->insert([
+            'username' => 'hansy',
+            'fullname' => 'Hans Ramos',
+            'email' => 'hans@mail.com',
+            'social_username' => 'hansy',
+            'contact_number' => '09123456789',
+            'default_address' => 'Paranaque City',
+            'password' => Hash::make('Password1234!'),
+        ]);
     }
 }
