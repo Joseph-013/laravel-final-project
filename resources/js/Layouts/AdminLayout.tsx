@@ -40,7 +40,12 @@ export function HeaderContent() {
                         </HeaderNavLink>
                     </li>
                     <li className="contents">
-                        <HeaderNavLink href="#">Orders</HeaderNavLink>
+                        <HeaderNavLink
+                            href={route('admin.orders')}
+                            targetRouteNames={['admin.orders']}
+                        >
+                            Orders
+                        </HeaderNavLink>
                     </li>
                     <li className="contents">
                         <HeaderNavLink

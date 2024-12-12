@@ -27,17 +27,12 @@ Route::middleware('auth', 'isUser')->group(function () {
     Route::get('/products/{keyword}', [ProductController::class, 'showByKeyword'])->name('product.form');
 
     // Orders
-    // Route::get('/orders', [OrderController::class, 'index'])->name('orders');
-    // Route::post('/orders', [OrderController::class, 'create'])->name('orders.create');
-    Route::resource('orders', OrderController::class)->names([
-        'index' => 'orders.index',
-        'create' => 'orders.create',
-        'store' => 'orders.store',
-        'show' => 'orders.show',
-        'edit' => 'orders.edit',
-        'update' => 'orders.update',
-        'destroy' => 'orders.destroy',
-    ]);
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/orders', 'index')->name('orders.index');
+        Route::post('/orders', 'store')->name('orders.store');
+        Route::get('/orders/{id}', 'show')->name('orders.show');
+        Route::patch('/orders/{id}', 'cancel')->name('orders.cancel');
+    });
 
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
@@ -53,7 +48,7 @@ Route::middleware('auth', 'isUser')->group(function () {
 
 // Admin
 Route::middleware(['auth', 'isAdmin'])
-    ->prefix('/admin/')
+    ->prefix('/admin')
     ->name('admin.')
     ->group(function () {
 
@@ -67,6 +62,14 @@ Route::middleware(['auth', 'isAdmin'])
         Route::get('users', [AdminController::class, 'users'])->name('users');
         Route::delete('{id}/banUser', [AdminController::class, 'banUser'])->name('banUser');
         Route::patch('{id}/unbanUser', [AdminController::class, 'unbanUser'])->name('unbanUser');
+
+        //manage order routes
+        Route::controller(OrderController::class)->group(function () {
+            Route::get('/orders', 'index')->name('orders.index');
+            Route::get('/orders/{id}', 'show')->name('orders.show');
+            Route::patch('/orders/{id}', 'updateStatus')->name('orders.updateStatus');
+            Route::delete('/orders/{id}', 'destroy')->name('orders.destroy');
+        });
 
         //manage showcase routes
         Route::get('showcase', [AdminController::class, 'showcase'])->name('showcase');

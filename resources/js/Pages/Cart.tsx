@@ -24,7 +24,7 @@ import { DialogClose } from '@radix-ui/react-dialog';
 import { IconExternalLink, IconSend } from '@tabler/icons-react';
 import { ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
-import { OrderType } from './Orders';
+import { OrderType } from './Admin/ManageOrders';
 
 export interface OrderFile {
     id: number;
