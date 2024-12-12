@@ -66,7 +66,9 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::with('user')->with('files')->with('product')->find($id);
+
+        return Inertia::render('Admin/ManageSingularOrder',['order'=>$order]);
     }
 
     /**
