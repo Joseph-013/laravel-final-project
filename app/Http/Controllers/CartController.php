@@ -96,7 +96,7 @@ class CartController extends Controller
 
     public function batchSend(Request $request)
     {
-        $carts = Order::where('user_id', Auth::id())->get();
+        $carts = Order::where('user_id', Auth::id())->cart()->get();
 
         if ($carts->isNotEmpty()) {
             Order::where('user_id', Auth::id())->update(['status' => 'Pending']);
