@@ -11,9 +11,25 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $queryParameters = [];
+
+        $query = Product::query();
+
+        if (request('searchProducts')) {
+            $query->where(function ($query) {
+                $searchTerm = '%' . request('searchProducts') . '%';
+                $query->where('name', 'like', $searchTerm)
+                    ->orWhere('description', 'like', $searchTerm)
+                    ->orWhere('keyword', 'like', $searchTerm);
+            });
+            $queryParameters['searchProducts'] = request('searchProducts');
+        }
+
+        $products = $query->where('active', true)->get();
+
         return Inertia::render('Products', [
             'products' => $products,
+            'queryParameters' => $queryParameters
         ]);
     }
 

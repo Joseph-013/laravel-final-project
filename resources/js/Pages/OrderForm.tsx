@@ -184,6 +184,28 @@ export default function OrderForm({
                         )}
                     </InputContainer>
 
+                    <InputContainer title="Quantity/Copies" required>
+                        How many times should we produce this order?
+                        <Input
+                            type="number"
+                            min={1}
+                            value={data.quantity}
+                            onChange={(e) =>
+                                setData('quantity', parseInt(e.target.value))
+                            }
+                            onBlur={(e) => {
+                                if (isNaN(parseInt(e.target.value))) {
+                                    setData('quantity', 1);
+                                }
+                            }}
+                        />
+                        {errors.quantity && (
+                            <ColorBadge color="red">
+                                {errors.quantity}
+                            </ColorBadge>
+                        )}
+                    </InputContainer>
+
                     <InputContainer title="File Upload" required>
                         <span className="inline">
                             For your file/s, please upload them here (accepts
@@ -223,28 +245,6 @@ export default function OrderForm({
                         />
                         {errors.files && errors.files.length === 0 && (
                             <ColorBadge color="red">{errors.files}</ColorBadge>
-                        )}
-                    </InputContainer>
-
-                    <InputContainer title="Quantity/Copies" required>
-                        How many times should we produce this order?
-                        <Input
-                            type="number"
-                            min={1}
-                            value={data.quantity}
-                            onChange={(e) =>
-                                setData('quantity', parseInt(e.target.value))
-                            }
-                            onBlur={(e) => {
-                                if (isNaN(parseInt(e.target.value))) {
-                                    setData('quantity', 1);
-                                }
-                            }}
-                        />
-                        {errors.quantity && (
-                            <ColorBadge color="red">
-                                {errors.quantity}
-                            </ColorBadge>
                         )}
                     </InputContainer>
 

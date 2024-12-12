@@ -1,7 +1,7 @@
 import HeaderSearch from '@/Components/HeaderSearch';
 import { ProductGridItem } from '@/Components/ProductCard';
 import UserLayout from '@/Layouts/UserLayout';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 
 export type Product = {
     id?: number;
@@ -12,10 +12,30 @@ export type Product = {
     active: boolean;
 };
 
-export default function Products({ products }: { products: Product[] }) {
-    console.log('products', products);
+export default function Products({
+    products,
+    queryParameters,
+}: {
+    products: Product[];
+    queryParameters: Record<
+        string,
+        string | number | boolean | string[] | number[] | undefined
+    >;
+}) {
+    queryParameters = queryParameters || {};
 
-    // products = sampleProducts;
+    function handleProductSearch(text: string) {
+        const updatedParameters = { ...queryParameters }; // Create a copy
+        if (text) updatedParameters['searchProducts'] = text;
+        else delete updatedParameters['searchProducts'];
+
+        console.log('Updated Query:', updatedParameters);
+
+        router.get(route('products'), updatedParameters, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    }
 
     return (
         <UserLayout
@@ -23,12 +43,9 @@ export default function Products({ products }: { products: Product[] }) {
                 <HeaderSearch
                     className="ml-10 w-full max-w-80"
                     inputProps={{
-                        type: 'text',
-                        placeholder: 'Search',
+                        placeholder: 'Search Products',
                     }}
-                    handleSearch={(text) => {
-                        console.log(text);
-                    }}
+                    handleSearch={handleProductSearch}
                 />
             }
         >
