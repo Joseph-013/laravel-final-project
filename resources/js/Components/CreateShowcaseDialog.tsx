@@ -4,8 +4,8 @@ import {
     IconAlertTriangleFilled,
     IconCirclePlusFilled,
 } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
-import Checkbox from './Checkbox';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import LabeledInput from './LabeledInput';
 import { Button } from './ui/button';
 import {
@@ -16,7 +16,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from './ui/dialog';
-import { toast } from 'sonner';
 
 interface CreateProduct extends Product {
     photoLink: File | undefined;
@@ -29,7 +28,6 @@ export default function CreateShowcaseDialog() {
             photoLink: undefined,
         });
 
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData(e.target.name as keyof Product, e.target.value);
     };
@@ -37,9 +35,7 @@ export default function CreateShowcaseDialog() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null; // Get the first file
         if (file) {
-            console.log(file);
             setData('photoLink', file);
-          
         }
     };
 
@@ -48,7 +44,7 @@ export default function CreateShowcaseDialog() {
 
         const formData = new FormData();
         formData.append('title', data.name);
-        
+
         if (data.photoLink) {
             formData.append('photoLink', data.photoLink);
         }
@@ -58,13 +54,13 @@ export default function CreateShowcaseDialog() {
             onSuccess: () => {
                 reset();
                 setDialogOpen(false);
-                toast.success('Showcase Photo Added Successfully!')
+                toast.success('Showcase Photo Added Successfully!');
             },
             // Optional: handle validation errors
             onError: () => {
-                toast.error('Error Adding Showcase Photo.')
+                toast.error('Error Adding Showcase Photo.');
                 // Handle any errors if needed
-            }
+            },
         });
     };
 
@@ -74,7 +70,8 @@ export default function CreateShowcaseDialog() {
         <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
             <DialogTrigger asChild>
                 <button className="flex items-center gap-x-1 rounded-lg bg-secondary px-2 py-1 text-xs text-black">
-                    <IconCirclePlusFilled className="text-primary" /> Add Showcase
+                    <IconCirclePlusFilled className="text-primary" /> Add
+                    Showcase
                 </button>
             </DialogTrigger>
             <DialogContent>

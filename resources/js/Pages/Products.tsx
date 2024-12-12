@@ -13,8 +13,6 @@ export type Product = {
 };
 
 export default function Products({ products }: { products: Product[] }) {
-    console.log('products', products);
-
     // products = sampleProducts;
 
     return (

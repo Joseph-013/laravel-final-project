@@ -19,7 +19,7 @@ import { useState } from 'react';
  * <HeaderSearch
  *   inputProps={{ placeholder: 'Search', type: 'text' }}
  *   buttonProps={{ onClick: handleSearchSubmit }}
- *   handleSearch={(text) => console.log(text)}
+ *   handleSearch={(text) => null}
  *   className="custom-class"
  * />
  * ```

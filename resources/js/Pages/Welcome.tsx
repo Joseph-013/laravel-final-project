@@ -36,7 +36,7 @@ export default function Welcome({ carouselImages }: WelcomeProps) {
                         placeholder: 'Search',
                     }}
                     handleSearch={(text) => {
-                        console.log(text);
+                        null;
                     }}
                 />
             }

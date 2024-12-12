@@ -5,6 +5,7 @@ import {
     IconCirclePlusFilled,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import Checkbox from './Checkbox';
 import LabeledInput from './LabeledInput';
 import { Button } from './ui/button';
@@ -16,7 +17,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from './ui/dialog';
-import { toast } from 'sonner';
 
 interface CreateProduct extends Product {
     image_file: File | undefined;
@@ -57,9 +57,7 @@ export default function CreateProductDialog() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null; // Get the first file
         if (file) {
-            console.log(file);
             setData('image_file', file);
-          
         }
     };
 
@@ -70,7 +68,7 @@ export default function CreateProductDialog() {
         formData.append('name', data.name);
         formData.append('keyword', data.keyword); // Using keyword as category
         formData.append('description', data.description);
-        
+
         if (data.image_file) {
             formData.append('image_file', data.image_file);
         }
@@ -80,13 +78,13 @@ export default function CreateProductDialog() {
             onSuccess: () => {
                 reset();
                 setDialogOpen(false);
-                toast.success('Product Added Successfully!')
+                toast.success('Product Added Successfully!');
             },
             // Optional: handle validation errors
             onError: () => {
-                toast.error('Error Adding Product.')
+                toast.error('Error Adding Product.');
                 // Handle any errors if needed
-            }
+            },
         });
     };
 
