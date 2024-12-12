@@ -25,11 +25,13 @@ export default function Products({
     queryParameters = queryParameters || {};
 
     function handleProductSearch(text: string) {
-        console.log('text', text);
-        if (text) queryParameters['searchProducts'] = text;
-        else delete queryParameters['searchProducts'];
+        const updatedParameters = { ...queryParameters }; // Create a copy
+        if (text) updatedParameters['searchProducts'] = text;
+        else delete updatedParameters['searchProducts'];
 
-        router.get(route('products'), queryParameters, {
+        console.log('Updated Query:', updatedParameters);
+
+        router.get(route('products'), updatedParameters, {
             preserveState: true,
             preserveScroll: true,
         });
@@ -41,8 +43,7 @@ export default function Products({
                 <HeaderSearch
                     className="ml-10 w-full max-w-80"
                     inputProps={{
-                        type: 'text',
-                        placeholder: 'Search',
+                        placeholder: 'Search Products',
                     }}
                     handleSearch={handleProductSearch}
                 />
