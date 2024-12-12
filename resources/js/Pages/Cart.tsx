@@ -22,6 +22,7 @@ import UserLayout from '@/Layouts/UserLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { IconExternalLink, IconSend } from '@tabler/icons-react';
+import { ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { OrderType } from './Orders';
 
@@ -83,12 +84,15 @@ export default function Cart({ carts }: { carts: CartType[] }) {
         <UserLayout>
             <Head title="Cart" />
             <div className="w-full p-3">
-                <Link
-                    href={route('products')}
-                    className="w-fit rounded-md bg-primary px-5 py-2 text-primary-foreground"
-                >
-                    &lt; Products
-                </Link>
+                <span>
+                    <Link
+                        href={route('products')}
+                        className="flex w-fit items-center rounded-md bg-primary px-5 py-2 text-primary-foreground transition hover:bg-primary/90"
+                    >
+                        <ChevronLeft className="mr-2" size={20} />
+                        Products
+                    </Link>
+                </span>
             </div>
             <div className="w-full overflow-x-scroll">
                 <Table className="w-full min-w-[30rem]">

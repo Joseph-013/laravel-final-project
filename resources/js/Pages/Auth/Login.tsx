@@ -29,8 +29,6 @@ export default function Login({
         });
     };
 
-    // status = 'Successfully logged out.';
-
     return (
         <div className="relative min-h-screen">
             <div className="absolute top-0 -z-10 -mt-20 h-full w-full bg-[url('/img/ohsheet_cover_whitebg.png')] bg-cover bg-center opacity-[0.08]"></div>
@@ -50,9 +48,6 @@ export default function Login({
                                 <h1 className="mb-10 text-4xl font-extrabold leading-normal text-primary">
                                     Sign in
                                 </h1>
-                                {/* <p className="text-sm leading-normal">
-                                    Paper, prints, and many more. 🖨️
-                                </p> */}
                                 <InputLabel htmlFor="email" value="Email" />
                                 <TextInput
                                     id="email"
