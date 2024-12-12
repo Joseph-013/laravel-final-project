@@ -21,9 +21,9 @@ class OrderController extends Controller
             ->where('status', '!=', 'Cart')
             ->with('product')->with('files')
             ->orderByRaw("FIELD(status, 'Pending', 'Completed', 'Cancelled')")
-            ->orderBy('updated_at', 'desc')->get();
+            ->orderBy('updated_at', 'desc')->paginate(10);
 
-        return Inertia::render('Admin/ManageOrders', ['orders' => $orders]);
+        return Inertia::render('Admin/ManageOrders', ['orders' => $orders->items(), 'currentPage'=>$orders->currentPage(), 'lastPage'=>$orders->lastPage(), 'prevPageUrl'=>$orders->previousPageUrl(),'nextPageUrl'=>$orders->nextPageUrl()]);
     }
 
     /**
