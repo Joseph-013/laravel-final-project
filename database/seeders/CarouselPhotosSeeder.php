@@ -16,19 +16,19 @@ class CarouselPhotosSeeder extends Seeder
         DB::table('carousel_photos')->insert(
             [
                 [
-                    'photoLink' => 'storage/showcase/bunny.jpg',
+                    'photoLink' => 'showcase/bunny.jpg',
                     'title' => fake()->unique()->word(),
                 ],
                 [
-                    'photoLink' => 'storage/showcase/halloween prints.png',
+                    'photoLink' => 'showcase/halloween prints.png',
                     'title' => fake()->unique()->word(),
                 ],
                 [
-                    'photoLink' => 'storage/showcase/doc.png',
+                    'photoLink' => 'showcase/doc.png',
                     'title' => fake()->unique()->word(),
                 ],
                 [
-                    'photoLink' => 'storage/showcase/x-mas prints.png',
+                    'photoLink' => 'showcase/x-mas prints.png',
                     'title' => fake()->unique()->word(),
                 ],
             ]
